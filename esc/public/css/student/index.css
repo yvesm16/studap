@@ -1,0 +1,12 @@
+body{
+  background-image: url('../../img/backgrounds.jpeg');
+  background-size: 100%;
+}
+
+.indexMargin{
+  background-color: white;
+}
+
+.home{
+  text-align: center;
+}

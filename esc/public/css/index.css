@@ -1,0 +1,18 @@
+body{
+  background-image: url('../img/backgrounds.jpeg');
+  background-size: 100%;
+}
+
+.indexMargin{
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+  padding: 3%;
+  text-align: center;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.loginForm{
+  text-align: left;
+}
