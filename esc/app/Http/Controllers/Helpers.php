@@ -2,15 +2,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
+use Request;
 
 class Helpers extends Controller {
     public static function setDatatable($cQryObj, $aColumns = array(), $sIndexColumn = "")
     {
-        $iDisplayStart   = Input::get('iDisplayStart');
-        $iDisplayLength = Input::get('iDisplayLength');
-        $iSortCol   = Input::get('iSortCol_0');
-        $iSortingCols = Input::get('iSortingCols');
-        $sSearch    = Input::get('sSearch');
+        $iDisplayStart   = Request::input('iDisplayStart');
+        $iDisplayLength = Request::input('iDisplayLength');
+        $iSortCol   = Request::input('iSortCol_0');
+        $iSortingCols = Request::input('iSortingCols');
+        $sSearch    = Request::input('sSearch');
 
         /* LIMIT */
         $sLimit = "";
@@ -22,8 +23,8 @@ class Helpers extends Controller {
         $sOrder = "";
         if (isset($iSortCol)) {
             for ($i=0; $i < intval($iSortingCols); $i++) {
-                if (Input::get('bSortable_'.intval(Input::get('iSortCol_'.$i))) == "true") {
-                    $sOrder .= $aColumns[intval(Input::get('iSortCol_'.$i))]."*".Input::get('sSortDir_'.$i).',';
+                if (Request::input('bSortable_'.intval(Request::input('iSortCol_'.$i))) == "true") {
+                    $sOrder .= $aColumns[intval(Request::input('iSortCol_'.$i))]."*".Request::input('sSortDir_'.$i).',';
                 }
             }
         }
@@ -40,13 +41,13 @@ class Helpers extends Controller {
 
         for ($i=0; $i < count($aColumns); $i++) {
             if(isset($aColumns[$i]) && !empty($aColumns[$i])) {
-                if (Input::get('bSearchable_'.$i) == "true" && Input::get('sSearch_'.$i) != '') {
+                if (Request::input('bSearchable_'.$i) == "true" && Request::input('sSearch_'.$i) != '') {
                     if ($sWhere == "") {
                         $sWhere = "WHERE ";
                     } else {
                         $sWhere = "AND ";
                     }
-                    $sWhere .= $aColumns[$i].", ".Input::get('sSearch_'.$i);
+                    $sWhere .= $aColumns[$i].", ".Request::input('sSearch_'.$i);
                 }
             }
         }
@@ -101,7 +102,7 @@ class Helpers extends Controller {
         $cQryObjResult 	= $cQryObjTemp->get();
 
         $output = array(
-            "sEcho"					=> intval(Input::get('sEcho')),
+            "sEcho"					=> intval(Request::input('sEcho')),
             "iTotalRecords" 		=> count($cQryObjOrig->get()),
             "iTotalDisplayRecords" 	=> count($cQryObjOrig->get()),
             "aaData" 				=> array(),
