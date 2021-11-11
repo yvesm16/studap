@@ -337,7 +337,7 @@ class UserController extends Controller
               return Redirect::to('director/home')
                 ->with('success','Signature was successfully uploaded!');
 
-              return $request->file('fileUpload')->store('documents');
+              return $request->file('fileUpload')->store('public/documents');
             }
           }
         }

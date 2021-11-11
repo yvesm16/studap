@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'getStudentID',[UserController::class, 'getStudentID']);
       Route::match(array('GET', 'POST'), 'postStudentID',[UserController::class, 'postStudentID']);
       Route::match(array('GET', 'POST'), 'getCourses',[UserController::class, 'getCourses']);
+      Route::match(array('GET', 'POST'), 'tracker/crediting',[CreditController::class, 'trackerCrediting']);
+      Route::match(array('GET', 'POST'), 'tracker/crediting/details/{slug}',[CreditController::class, 'trackerCreditingDetailsPage']);
       Route::match(array('GET', 'POST'), 'crediting',[CreditController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postCredit',[CreditController::class, 'postCredit']);
     });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\SubjectCrediting;
 use App\Models\Schedule;
 use App\Models\Concerns;
 use App\Models\Credit;
@@ -13,6 +14,7 @@ class AjaxController extends Controller
 {
   public function ajax(Request $request){
         $user = new User;
+        $subject_crediting = new SubjectCrediting;
         $schedule = new Schedule;
         $concerns = new Concerns;
         $credit = new Credit;
@@ -174,6 +176,32 @@ class AjaxController extends Controller
                           $aRow->fname . ' ' . $aRow->lname,
                           $aRow->email,
                           $aRow->section,
+                          $button
+                      );
+                      $dtResult['aaData'][] = $data;
+                  }
+                  unset($dtResult['objResult']);
+                  echo json_encode($dtResult);
+                  break;
+
+              case "studentCreditList":
+                  $dtResult = Helpers::setDatatable($subject_crediting->getDataTable(Auth::id()),array('course_abbr','equivalent_course_abbr'));
+
+                  foreach($dtResult['objResult'] as $aRow) {
+
+                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+
+                      if($aRow->status == 0){
+                        $status = "<span class='label label-default'>Pending</span>";
+                      }else{
+                        $status = "<span class='label label-success'>Completed</span>";
+                      }
+
+                      $data = array(
+                          $aRow->course_abbr,
+                          $aRow->equivalent_course_abbr,
+                          $aRow->created_at,
+                          $status,
                           $button
                       );
                       $dtResult['aaData'][] = $data;

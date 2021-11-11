@@ -20,13 +20,13 @@
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('student/home'); }} ">Home</a></li>
         <li <?php echo (str_contains($actual_link,'schedule')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('student/schedule'); }}">Schedule</a></li>
         <li><a href="#">Appeal</a></li>
-        <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
+        <li <?php echo (str_contains($actual_link,'student/crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
         <li <?php echo (str_contains($actual_link,'tracker')) ? 'class="active"' : ''; ?> class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ URL::to('student/tracker/consultation') }}">Consultation</a></li>
             <li><a href="#">Appeal</a></li>
-            <li><a href="#">Crediting</a></li>
+            <li><a href="{{ URL::to('student/tracker/crediting') }}">Crediting</a></li>
           </ul>
         </li>
       </ul>

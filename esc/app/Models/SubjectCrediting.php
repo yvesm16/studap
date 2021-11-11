@@ -49,6 +49,21 @@ class SubjectCrediting extends Model
         ->get();
     }
 
+    public function getAllDataBySlug($slug){
+      return DB::table('subject_crediting')
+        ->join('users','users.id','=','subject_crediting.admin_id')
+        ->join('files','files.user_id','=','subject_crediting.admin_id')
+        ->where('subject_crediting.slug',$slug)
+        ->where('files.status',1)
+        ->select(DB::raw('
+            subject_crediting.*,
+            users.fname as fname,
+            users.lname as lname,
+            files.path as path
+        '))
+        ->get();
+    }
+
     public function updateDataByID($id,$data){
       DB::table('subject_crediting')
         ->where('id',$id)
@@ -62,4 +77,22 @@ class SubjectCrediting extends Model
         ->get();
     }
 
+    public function getDataTable($id){
+      return DB::table('subject_crediting')
+        ->join('credit_course','credit_course.id','=','subject_crediting.credit_course_id')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->where('users.id',$id)
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
+            credit_course.created_at as created_at,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            subject_crediting.course_abbr as course_abbr,
+            subject_crediting.equivalent_course_abbr as equivalent_course_abbr
+        '));
+    }
 }

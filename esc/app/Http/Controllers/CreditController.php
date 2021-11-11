@@ -301,4 +301,55 @@ class CreditController extends Controller
       return $pdf->download($creditDetails->slug . '.pdf');
     }
 
+    public function trackerCrediting() {
+      $user = new User;
+      $credit = new Credit;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'pending' => $credit->countByStatus(0),
+        'completed' => $credit->countByStatus(1)
+      ];
+
+      return view('student.creditTracker',$data);
+    }
+
+    public function trackerCreditingDetailsPage($slug) {
+      $credit = new Credit;
+      $user = new User;
+      $files = new Files;
+      $course = new Course;
+      $subject = new SubjectCrediting;
+      $userDetails = $user->getData('id',Auth::id());
+      $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
+      $creditDetails = $credit->getDataByParameter('slug',$slug);
+      $studentDetails = $user->getData('id',$creditDetails->student_id);
+
+      // dd($_SERVER['REQUEST_URI']);
+      if ($creditDetails->status == 1) {
+        $allSubjects = $subject->getAllDataBySlug($slug);
+      }else{
+        $allSubjects = $subject->getAllDataByCreditID($creditDetails->id);
+      }
+      
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'signature' => $directorSignature,
+        'studentDetails' => $studentDetails,
+        'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
+        'currentCourse' => $course->getCourseByID($studentDetails->course_id),
+        'creditDetails' => $creditDetails,
+        'allSubjects' => $allSubjects
+      ];
+
+      // dd($allSubjects);
+      return view('student.creditDetails',$data);
+    }
+
 }
