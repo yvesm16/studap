@@ -8,6 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
+  <script src="{{ URL::asset('js/student/creditTracker.js'); }}"></script>
   <link href="{{ URL::asset('datatables/css/jquery.dataTables.min.css'); }}" rel="stylesheet">
   <link href="{{ URL::asset('datatables/css/jquery.dataTables.css'); }}" rel="stylesheet">
   <script src="{{ URL::asset('datatables/js/jquery.dataTables.js'); }}"></script>
@@ -64,10 +65,11 @@
                     <table width="100%" class="table table-striped table-bordered table-hover" id="studentCreditList">
                         <thead>
                         <tr>
-                            <th>Course</th>
-                            <th>Equivalent Course</th>
-                            <th>Status</th>
+                            <th>Trans. No.</th>
+                            <th>Concerns</th>
+                            <th>Institue</th>
                             <th>Date Created</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -83,42 +85,4 @@
 </body>
 </html>
 
-<script>
-  $(document).ready(function(){
-    var BASE_URL = $("#hdnBaseUrl").val();
-    // var pathname = window.location.pathname;
-    // if(pathname.split('/')[3] == 1){
-    //   $('.downloadReportDiv').css('display','block');
-    // }else{
-    //   $('.downloadReportDiv').css('display','none');
-    // }
-
-    $(function() {
-        $('#studentCreditList').dataTable({
-            "scrollCollapse": true,
-            "sDom": '<"top"f>rt<"bottom"ip><"clear">',
-            "bServerSide": true,
-            "pagingType": "full_numbers",
-            "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=studentCreditList",
-            "aoColumnDefs": [{
-                "bSortable": false,
-                "aTargets": []
-            }],
-            "oLanguage": {
-                "oPaginate": {
-                    "sPrevious": "<", // This is the link to the previous page
-                    "sNext": ">" // This is the link to the next page
-                },
-                "sSearch": "",
-                "sSearchPlaceholder": "Search Records"
-            }
-        });
-    });
-
-    $('#studentCreditList').delegate('.viewDetails','click', function (){
-      window.location.href = BASE_URL + '/student/tracker/crediting/details/' + $(this).data('id');
-    });
-
-  });
-</script>
+@include('global.studentCreditTrackerModal')

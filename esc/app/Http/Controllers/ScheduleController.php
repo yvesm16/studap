@@ -516,7 +516,7 @@ class ScheduleController extends Controller
 
     $studentDetails = $user->getData('id',$appointmentDetails->student_id);
 
-    $auditDetails = $audit->getAllDataByParameter('row_id',$request->input('appointment_id'));
+    $auditDetails = $audit->getAllDataByParameter('row_id',$request->input('appointment_id'), 'table_name', 'professor_schedule');
 
     return Response::json(array(
         'result' => true,

@@ -212,7 +212,6 @@ $(document).ready(function() {
 
   $('#consultationTable').delegate('.disapproveAppointment','click', function (){
       $('#remarks_appointment_id').val($(this).data('id'));
-      console.log($(this).data('id'));
       $('#remarksModal').modal('toggle');
   });
 

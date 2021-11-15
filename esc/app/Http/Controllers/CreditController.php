@@ -301,7 +301,7 @@ class CreditController extends Controller
       return $pdf->download($creditDetails->slug . '.pdf');
     }
 
-    public function trackerCrediting() {
+    public function getTrackerCrediting() {
       $user = new User;
       $credit = new Credit;
       $userDetails = $user->getData('id',Auth::id());
@@ -317,39 +317,81 @@ class CreditController extends Controller
       return view('student.creditTracker',$data);
     }
 
-    public function trackerCreditingDetailsPage($slug) {
-      $credit = new Credit;
+    public function getStudentCreditDetails(Request $request) {
       $user = new User;
-      $files = new Files;
+      $credit = new Credit;
       $course = new Course;
-      $subject = new SubjectCrediting;
-      $userDetails = $user->getData('id',Auth::id());
-      $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
-      $creditDetails = $credit->getDataByParameter('slug',$slug);
-      $studentDetails = $user->getData('id',$creditDetails->student_id);
+      $audit = new AuditTrail;
 
-      // dd($_SERVER['REQUEST_URI']);
-      if ($creditDetails->status == 1) {
-        $allSubjects = $subject->getAllDataBySlug($slug);
-      }else{
-        $allSubjects = $subject->getAllDataByCreditID($creditDetails->id);
+      $creditDetails = $credit->getDataByParameter('id', $request->input('credit_course_id'));
+
+      $studentDetails = $user->getData('id',$creditDetails->student_id);
+      $remarks = $this->getSubjectCreditingDisapprovedWithRemarks($request->input('credit_course_id'));
+
+      $auditDetails = $audit->getAllDataByParameter('row_id',$request->input('credit_course_id'), 'table_name', 'credit_course');
+      // dd($remarks);
+      return Response::json(array(
+          'result' => true,
+          'credit_course_id' => $request->input('credit_course_id'),
+          'student_name' => $studentDetails->fname . ' ' . $studentDetails->lname,
+          'institute' => $creditDetails->institute,          
+          'new_program' => $course->getCourseByID($creditDetails->new_course_id),
+          'original_program' => $course->getCourseByID($studentDetails->course_id),
+          'remarks' => $remarks,
+          'auditDetails' => $auditDetails,
+          'status' => count($auditDetails)
+      ));
+    }
+
+    private function getSubjectCreditingDisapprovedWithRemarks($credit_course_id) {
+      $subject = new SubjectCrediting;
+      $subject_details = $subject->getAllDataCreditIDAndByStatus($credit_course_id,0);
+      $remarks = [];
+
+      foreach($subject_details as $key => $subject_detail) {
+        $remarks[$key] = $subject_detail->course_abbr . ' - ' . $subject_detail->remarks;
       }
       
+      if ($remarks) {
+        array_unshift($remarks,"Denied:");
+      }
 
-      $data = [
-        'id' => Auth::id(),
-        'fname' => $userDetails->fname,
-        'lname' => $userDetails->lname,
-        'signature' => $directorSignature,
-        'studentDetails' => $studentDetails,
-        'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
-        'currentCourse' => $course->getCourseByID($studentDetails->course_id),
-        'creditDetails' => $creditDetails,
-        'allSubjects' => $allSubjects
-      ];
-
-      // dd($allSubjects);
-      return view('student.creditDetails',$data);
+      return $remarks = $remarks ? $remarks : '';
     }
+
+    // public function trackerCreditingDetailsPage($slug) {
+    //   $credit = new Credit;
+    //   $user = new User;
+    //   $files = new Files;
+    //   $course = new Course;
+    //   $subject = new SubjectCrediting;
+    //   $userDetails = $user->getData('id',Auth::id());
+    //   $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
+    //   $creditDetails = $credit->getDataByParameter('slug',$slug);
+    //   $studentDetails = $user->getData('id',$creditDetails->student_id);
+
+    //   // dd($_SERVER['REQUEST_URI']);
+    //   if ($creditDetails->status == 1) {
+    //     $allSubjects = $subject->getAllDataBySlug($slug);
+    //   }else{
+    //     $allSubjects = $subject->getAllDataByCreditID($creditDetails->id);
+    //   }
+      
+
+    //   $data = [
+    //     'id' => Auth::id(),
+    //     'fname' => $userDetails->fname,
+    //     'lname' => $userDetails->lname,
+    //     'signature' => $directorSignature,
+    //     'studentDetails' => $studentDetails,
+    //     'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
+    //     'currentCourse' => $course->getCourseByID($studentDetails->course_id),
+    //     'creditDetails' => $creditDetails,
+    //     'allSubjects' => $allSubjects
+    //   ];
+
+    //   // dd($allSubjects);
+    //   return view('student.creditDetails',$data);
+    // }
 
 }

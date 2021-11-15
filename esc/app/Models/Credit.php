@@ -34,12 +34,31 @@ class Credit extends Model
         ->select(DB::raw('
             credit_course.id as id,
             credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
             users.fname as fname,
             users.lname as lname,
             users.student_id as student_id,
-            users.email as email,
+            users.email as email
+        '));
+    }
+
+    public function getStudentDataTable($student_id){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->where('credit_course.student_id',$student_id)
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
             credit_course.section as section,
-            credit_course.status as status
+            credit_course.concerns as concerns,
+            credit_course.institute as institute,
+            credit_course.status as status,
+            credit_course.created_at as created_at,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
         '));
     }
 

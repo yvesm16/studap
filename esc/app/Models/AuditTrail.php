@@ -21,9 +21,10 @@ class AuditTrail extends Model
         ->insert($data);
     }
 
-    public function getAllDataByParameter($column,$id){
+    public function getAllDataByParameter($column,$id,$table_name,$table_value){
       return DB::table('audit_trail')
         ->where($column,$id)
+        ->where($table_name,$table_value)
         ->get();
     }
 

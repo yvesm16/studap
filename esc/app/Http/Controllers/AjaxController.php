@@ -185,11 +185,11 @@ class AjaxController extends Controller
                   break;
 
               case "studentCreditList":
-                  $dtResult = Helpers::setDatatable($subject_crediting->getDataTable(Auth::id()),array('course_abbr','equivalent_course_abbr'));
+                  $dtResult = Helpers::setDatatable($credit->getStudentDataTable(Auth::id()),array('concerns','institute','credit_course.created_at','credit_course.status'));
 
                   foreach($dtResult['objResult'] as $aRow) {
 
-                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->id'>View Details</button>";
 
                       if($aRow->status == 0){
                         $status = "<span class='label label-default'>Pending</span>";
@@ -198,8 +198,9 @@ class AjaxController extends Controller
                       }
 
                       $data = array(
-                          $aRow->course_abbr,
-                          $aRow->equivalent_course_abbr,
+                          $aRow->id,
+                          $aRow->concerns,
+                          $aRow->institute,
                           $aRow->created_at,
                           $status,
                           $button
