@@ -16,6 +16,32 @@
 
 <div class="container indexMargin home">
   <p>
+        <!-- Modal -->
+
+    @if(count($signature) == 0)
+      <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#signatureModal').modal('show');
+        });
+      </script>
+    @endif
+    @if(session('success'))
+      <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#successModal').modal('show');
+        });
+      </script>
+    @endif
+    @if(session('failed'))
+      <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#signatureModal').modal('hide');
+            $('#failedModal').modal('show');
+        });
+      </script>
+    @endif
+  </p>
+  <p>
     <img src="{{ URL::asset('img/iicslogo.png')}}" width="100px" style="margin-top: 1%">
     <h1>Welcome to IICS E-Services</h1>
     Student Consultation || Student Appeal on Course Grade || Course Crediting

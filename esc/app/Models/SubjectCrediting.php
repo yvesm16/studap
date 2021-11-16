@@ -77,10 +77,11 @@ class SubjectCrediting extends Model
         ->update($data);
     }
 
-    public function getAllDataBySlugAndByStatus($slug,$status){
+    public function getAllDataByCreditSlugAndSubjectStatus($slug,$status){
       return DB::table('subject_crediting')
-        ->where('slug',$slug)
-        ->where('status',$status)
+        ->join('credit_course','credit_course.id','=','subject_crediting.credit_course_id')
+        ->where('credit_course.slug',$slug)
+        ->where('subject_crediting.status',$status)
         ->get();
     }
 

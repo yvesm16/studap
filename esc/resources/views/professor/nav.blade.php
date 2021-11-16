@@ -21,6 +21,10 @@
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/home'); }} ">Home</a></li>
         <li <?php echo (str_contains($actual_link,'schedule')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/schedule'); }} ">Schedule</a></li>
         <li <?php echo (str_contains($actual_link,'requests')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/requests/0'); }} ">Requests</a></li>
+        
+        @if ($isProfessorChairperson)
+          <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
+        @endif
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
@@ -59,36 +63,64 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Change Password</h4>
+        <h4 class="modal-title">Settings</h4>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <label for="pwd">Current Password:</label>
-            <input type="password" class="form-control" id="currentPassword" placeholder="Enter password" name="currentPassword">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#home">Change Password</a></li>
+          <li><a data-toggle="tab" href="#menu1">Signature</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="home" class="tab-pane fade in active">
+            <div class="form-group">
+              <label for="pwd">Current Password:</label>
+              <input type="password" class="form-control" id="currentPassword" placeholder="Enter password" name="currentPassword">
+            </div>
+            <div class="form-group">
+              <label for="npwd">New Password:</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter password" name="newPassword">
+            </div>
+            <div class="form-group">
+              <label for="npwd">Confirm Password:</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" name="confirmPassword">
+            </div>
+            <div class="alert alert-success" style="display: none" id="successPassword">
+                Password was successfully updated!
+            </div>
+            <div class="alert alert-danger" style="display: none" id="failedPassword">
+                <span id="failedContent"></span>
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" id="submitChangePassword">Submit</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="npwd">New Password:</label>
-            <input type="password" class="form-control" id="newPassword" placeholder="Enter password" name="newPassword">
+          <div id="menu1" class="tab-pane fade" style="padding-top: 1%">
+            <form action="{{ URL::to('professor/uploadSignature') }}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="form-group">
+                <input type="file" name="fileUpload" class="form-control-file" id="fileUpload">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Upload</button>
+              </div>
+          </form>
+            <p>
+              <span id="spanSignature">
+                No current signature
+              </span>
+            </p>
           </div>
-          <div class="form-group">
-            <label for="npwd">Confirm Password:</label>
-            <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" name="confirmPassword">
-          </div>
-          <div class="alert alert-success" style="display: none" id="successPassword">
-              Password was successfully updated!
-          </div>
-          <div class="alert alert-danger" style="display: none" id="failedPassword">
-              <span id="failedContent"></span>
-          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="submitChangePassword">Submit</button>
       </div>
     </div>
 
   </div>
-</div>
+</div>  
 
 <script>
 $(document).ready(function(){
@@ -97,3 +129,126 @@ $(document).ready(function(){
     });
 });
 </script>
+
+<script>
+  $(document).ready(function(){
+
+    var BASE_URL = $("#hdnBaseUrl").val();
+
+    $('[data-toggle="popover"]').popover({
+      container: 'body'
+    });
+
+    $(window).on('load', function() {
+      $.ajax({
+          url: BASE_URL + '/professor/getSignature',
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          data: {},
+          dataType    :'json',
+          success: function (data) {
+            if(data.result == true){
+              $("#spanSignature").html('<a href=' + BASE_URL + '/' + data.data['path'].replace('public','storage') + ' target=blank>Current Signature</a>');
+            }else{
+              document.getElementById("spanSignature").textContent = 'No current signature';
+            }
+          }
+      });
+    });
+
+    $('.crediting').on('click',function(){
+      $.ajax({
+          url: BASE_URL + '/professor/getSignature',
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          data: {},
+          dataType    :'json',
+          success: function (data) {
+            if(data.result == true){
+              window.location.href = BASE_URL + '/professor/crediting/0';
+            }else{
+              $('#signatureModal').modal('show');
+              return false;
+            }
+          }
+      });
+    });
+
+  });
+</script>
+
+<div id="successModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Success!</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success">
+          <strong>Success!</strong> Signature was successfully uploaded!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div id="failedModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Failed!</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger">
+          <strong>Failed!</strong> Invalid file format or size is greater than 2MB!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<div id="signatureModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Signature</h4>
+      </div>
+      <form action="{{ URL::to('professor/uploadSignature') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+            <div class="form-group">
+              <input type="file" name="fileUpload" class="form-control-file" id="fileUpload">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

@@ -25,7 +25,7 @@ class CreateSubjectCreditingTable extends Migration
           $table->integer('admin_id')->unsigned()->comment('Admin')->nullable();
           $table->foreign('admin_id')->references('id')->on('users');
           $table->string('remarks',225)->nullable();
-          $table->integer('status')->comment('0-Pending|1-Approved|2-Disapproved');
+          $table->integer('status')->comment('0-Pending|1-EvaluatedByProfessor|2-EvaluatedByDirector|3-EvaluatedByRegistrar|4-Done|5-Disapproved');
           $table->timestamp('created_at')->useCurrent();
           $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

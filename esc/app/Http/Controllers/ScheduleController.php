@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Course;
 use App\Models\Schedule;
 use App\Models\Concerns;
 use App\Models\AuditTrail;
@@ -166,6 +167,13 @@ class ScheduleController extends Controller
         }
       }
     }
+    
+    private function isProfessorChairperson($id){
+      $course = new Course;
+      $course_details = $course->getChairperson($id);
+
+      return $course_details ? true : false;
+    }
 
     public function getUserSchedule(Request $request){
       $user = new User;
@@ -174,16 +182,14 @@ class ScheduleController extends Controller
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
-        'lname' => $userDetails->lname
+        'lname' => $userDetails->lname,
+        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 
       return view('professor.schedule',$data);
     }
 
     public function postSlot(Request $request){
-
-
-
       $schedule = new Schedule;
       $audit = new AuditTrail;
 
@@ -375,7 +381,6 @@ class ScheduleController extends Controller
     }
 
     public function getSlotDetails(Request $request){
-
       $schedule = new Schedule;
 
       $scheduleDetails = $schedule->getDataByID($request->input('slot_id'));
@@ -388,7 +393,6 @@ class ScheduleController extends Controller
     }
 
     public function updateSlotDetails(Request $request){
-
       $schedule = new Schedule;
       $audit = new AuditTrail;
 
@@ -500,7 +504,8 @@ class ScheduleController extends Controller
       'approved' => $schedule->getCountByStatus(1,'professor_id'),
       'completed' => $schedule->getCountByStatus(4,'professor_id'),
       'disapproved' => $schedule->getCountByStatus(2,'professor_id'),
-      'status' => $status
+      'status' => $status,
+      'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
     ];
 
     return view('professor.request',$data);

@@ -22,4 +22,31 @@ class Course extends Model
         ->first();
     }
 
+    public function getChairperson($user_id){
+      return DB::table('course')
+        ->where('chairperson',$user_id)
+        ->where('status',1)
+        ->first();
+    }
+
+    public function getDirector($user_id){
+      return DB::table('course')
+        ->where('director',$user_id)
+        ->where('status',1)
+        ->first();
+    }
+
+    public function getSecretary($user_id){
+      return DB::table('course')
+        ->where('secretary',$user_id)
+        ->where('status',1)
+        ->first();
+    }
+
+    public function getActiveCourseDetails($column,$data){
+      return DB::table('course')
+        ->where($column,$data)
+        ->where('status',1)
+        ->first();
+    }
 }

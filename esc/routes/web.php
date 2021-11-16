@@ -74,7 +74,10 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'updateAppointmentStatus',[ScheduleController::class, 'updateAppointmentStatus']);
       Route::match(array('GET', 'POST'), 'getAppointmentDetails',[ScheduleController::class, 'getAppointmentDetails']);
       Route::match(array('GET', 'POST'), 'updateMeeting',[ScheduleController::class, 'updateMeeting']);
-
+      Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'chairpersonCredit']);
+      Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'chairpersonCreditDetailsPage']);
+      Route::match(array('GET', 'POST'), 'uploadSignature',[UserController::class, 'uploadSignature']);
+      Route::match(array('GET', 'POST'), 'getSignature',[UserController::class, 'getSignature']);
     });
 
     Route::group(['prefix' => 'director'], function(){
@@ -82,11 +85,14 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'uploadSignature',[UserController::class, 'uploadSignature']);
       Route::match(array('GET', 'POST'), 'getSignature',[UserController::class, 'getSignature']);
       Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'directorCredit']);
-      Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'detailsPage']);
-      Route::match(array('GET', 'POST'), 'updateDetails',[CreditController::class, 'updateDetails']);
-      Route::match(array('GET', 'POST'), 'getCreditRequestStatus',[CreditController::class, 'getCreditRequestStatus']);
-      Route::match(array('GET', 'POST'), 'updateCreditStatus',[CreditController::class, 'updateCreditStatus']);
+      Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'directorCreditDetailsPage']);
 
+    });
+
+    Route::group(['prefix' => 'credit'], function(){
+      Route::match(array('GET', 'POST'), 'getSubjectCreditStatus',[CreditController::class, 'getSubjectCreditStatus']);
+      Route::match(array('GET', 'POST'), 'updateDetails',[CreditController::class, 'updateDetails']);
+      Route::match(array('GET', 'POST'), 'updateCreditStatus',[CreditController::class, 'updateCreditStatus']);
     });
 
     Route::group(['prefix' => 'assistant'], function(){

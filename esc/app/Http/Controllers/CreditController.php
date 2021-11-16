@@ -113,32 +113,37 @@ class CreditController extends Controller
 
       $files->insertData($data);
 
-      $allActiveAdmin = $user->getAllActiveUserByType(2);
+      $credit_details = $credit->getDataByParameter('id',$creditLastID);
 
-      foreach($allActiveAdmin as $admin){
-        $auditLastID = $audit->getLastID();
-        if($auditLastID == null){
-          $auditLastID = 1;
-        }else{
-          $auditLastID += 1;
-        }
-        $data = [
-          'slug' => md5($auditLastID),
-          'table_name' => 'credit_course',
-          'row_id' => $credit->getLastID(),
-          'targetReceiver' => $admin->id,
-          'triggeredBy' => Auth::id(),
-          'status' => 0
-        ];
-        $audit->insertData($data);
+      $auditLastID = $audit->getLastID();
+      if($auditLastID == null){
+        $auditLastID = 1;
+      }else{
+        $auditLastID += 1;
       }
+      $data = [
+        'slug' => md5($auditLastID),
+        'table_name' => 'credit_course',
+        'row_id' => $credit->getLastID(),
+        'targetReceiver' => $this->getTargetReceiver($credit_details),
+        'triggeredBy' => Auth::id(),
+        'status' => 0
+      ];
+      $audit->insertData($data);
 
       return Redirect::to('student/crediting')
         ->with('success','Credit Request was successfully submitted!');
 
     }
 
-    public function detailsPage($slug){
+    private function isProfessorChairperson($id){
+      $course = new Course;
+      $course_details = $course->getChairperson($id);
+
+      return $course_details ? true : false;
+    }
+
+    private function detailsPage($slug){
       $credit = new Credit;
       $user = new User;
       $files = new Files;
@@ -170,7 +175,20 @@ class CreditController extends Controller
         'creditDetails' => $creditDetails,
         'allSubjects' => $allSubjects
       ];
+      // dd($data);
+      return $data;
+    }
+    
+    public function chairpersonCreditDetailsPage($slug){
+      $data = $this->detailsPage($slug);
+      
+      $data['isProfessorChairperson'] = $this->isProfessorChairperson(Auth::id());
 
+      return view('professor.details',$data);
+    }
+
+    public function directorCreditDetailsPage($slug){
+      $data = $this->detailsPage($slug);
       return view('director.details',$data);
     }
 
@@ -181,73 +199,101 @@ class CreditController extends Controller
       $course = new Course;
       $subject = new SubjectCrediting;
 
-      if($request->status == 1){
-        $data = [
-          'status' => $request->status,
-          'admin_id' => Auth::id()
-        ];
-      }else{
-        $data = [
-          'status' => $request->status,
-          'admin_id' => Auth::id(),
-          'remarks' => $request->remarks
-        ];
-      }
+      $data = [
+        'status' => $request->status,
+        'admin_id' => Auth::id()
+      ];
 
+      if($request->status == 5){
+        $data['remarks'] = $request->remarks;
+      }
 
       $subject->updateDataByID($request->subject_id,$data);
 
       return Response::json(array(
           'result' => true
       ));
-
     }
 
-    public function getCreditRequestStatus(Request $request){
+    public function getSubjectCreditStatus(Request $request){
+      $credit = new Credit;
       $subject = new SubjectCrediting;
-      $result = $subject->getAllDataBySlugAndByStatus($request->slug,0);
-      if(count($result) > 0){
-        return Response::json(array(
-            'result' => true
-        ));
-      }else{
+      // $request->status = 0-Pending|1-EvaluatedByProfessor|2-EvaluatedByDirector|3-CheckedBySecretary|4-EvaluatedByRegistrar|5-Done
+      $all_approved_subject = $subject->getAllDataByCreditSlugAndSubjectStatus($request->slug,$request->status);
+      $credit_details = $credit->getDataByParameter('slug',$request->slug);
+
+      if(count($all_approved_subject) == 0 && $credit_details->status < $request->status+1){
         return Response::json(array(
             'result' => false
         ));
+      }else{
+        return Response::json(array(
+            'result' => true
+        ));
+      }
+    }
+
+    private function getTargetReceiver($credit_details){
+      $user = new User;
+      $course = new Course;
+
+      $current_user = $user->getData('id',Auth::id());
+
+      if ($current_user->type == 0) {
+        $next_target = $course->getCourseByID($current_user->course_id);
+        $next_target_id = $next_target->chairperson;
+      } else if ($current_user->type == 1) {
+        $next_target = $course->getChairperson(Auth::id());
+        $next_target_id = $next_target->director;
+      } else if ($current_user->type == 2) {
+        $next_target = $course->getSecretary(Auth::id());
+        $next_target_id = $next_target->secretary;
+      } else if ($current_user->type == 3) {
+        $next_target = $user->getData('type',4);
+        $next_target_id = $next_target->id;
+      } else {
+        $next_target_id = $credit_details->student_id;
       }
 
+      return $next_target_id;
+    }
+
+    private function updateCreditStatusInsertAudit($credit_details){
+      $audit = new AuditTrail;
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $data = [
+        'slug' => md5($audit->getLastID()),
+        'table_name' => 'credit_course',
+        'row_id' => $credit_details->id,
+        'targetReceiver' => $this->getTargetReceiver($credit_details),
+        'triggeredBy' => Auth::id(),
+        'status' => 0
+      ];
+
+      $audit->insertData($data);
     }
 
     public function updateCreditStatus(Request $request){
       $credit = new Credit;
       $user = new User;
       $files = new Files;
-      $course = new Course;
       $subject = new SubjectCrediting;
-      $audit = new AuditTrail;
 
       $data = [
-        'status' => 1
+        'status' => $request->status
       ];
 
-      $credit->updateDataByParamater('slug',$request->input('slug'),$data);
+      $credit->updateDataByParamater('slug',$request->slug,$data);
 
-      $creditDatails = $credit->getDataByParameter('slug',$request->input('slug'));
+      $credit_details = $credit->getDataByParameter('slug',$request->slug);
+      
+      $this->updateCreditStatusInsertAudit($credit_details);
+      $userDetails = $user->getData('id',$credit_details->student_id);
 
-      $data = [
-        'slug' => md5($audit->getLastID()),
-        'table_name' => 'credit_course',
-        'row_id' => $creditDatails->id,
-        'targetReceiver' => $creditDatails->student_id,
-        'triggeredBy' => Auth::id(),
-        'status' => 0
-      ];
-
-      $audit->insertData($data);
-
-      $userDetails = $user->getData('id',$creditDatails->student_id);
       try {
-        session()->put('slug', $creditDatails->slug);
+        session()->put('slug', $credit_details->slug);
         session()->put('fname', $userDetails->fname);
         session()->put('lname', $userDetails->lname);
 
@@ -262,7 +308,6 @@ class CreditController extends Controller
       return Response::json(array(
           'result' => true
       ));
-
     }
 
     public function detailsPagePDF($slug){
@@ -329,7 +374,7 @@ class CreditController extends Controller
       $remarks = $this->getSubjectCreditingDisapprovedWithRemarks($request->input('credit_course_id'));
 
       $auditDetails = $audit->getAllDataByParameter('row_id',$request->input('credit_course_id'), 'table_name', 'credit_course');
-      // dd($remarks);
+      // dd($creditDetails);
       return Response::json(array(
           'result' => true,
           'credit_course_id' => $request->input('credit_course_id'),
@@ -339,7 +384,7 @@ class CreditController extends Controller
           'original_program' => $course->getCourseByID($studentDetails->course_id),
           'remarks' => $remarks,
           'auditDetails' => $auditDetails,
-          'status' => count($auditDetails)
+          'status' => $creditDetails->status
       ));
     }
 

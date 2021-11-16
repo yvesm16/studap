@@ -65,27 +65,18 @@ $(document).ready(function() {
                   document.getElementById("remarksDetail").value = '';
                 }
                 
-                if(data.status == 1){
+                if(data.status == 0){
                   $('#firstStep').css('background-color','green');
                   document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
                   document.getElementById("firstStepText").textContent = 'Completed';
-                }else if (data.status == 2) {
-                  if(data.appointment_status == 1){
-                    $('#firstStep').css('background-color','green');
-                    $('#secondStep').css('background-color','green');
-                    document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                    document.getElementById("firstStepText").textContent = 'Completed';
-                    document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                    document.getElementById("secondStepText").textContent = 'Completed';
-                  }else{
-                    $('#firstStep').css('background-color','green');
-                    $('#secondStep').css('background-color','red');
-                    document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                    document.getElementById("firstStepText").textContent = 'Completed';
-                    document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                    document.getElementById("secondStepText").textContent = 'Disapproved';
-                  }
-                }else if (data.status == 3) {
+                }else if (data.status == 1) {
+                  $('#firstStep').css('background-color','green');
+                  $('#secondStep').css('background-color','green');
+                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
+                  document.getElementById("firstStepText").textContent = 'Completed';
+                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
+                  document.getElementById("secondStepText").textContent = 'Completed';
+                }else if (data.status == 2 || data.status == 3) {
                   $('#firstStep').css('background-color','green');
                   $('#secondStep').css('background-color','green');
                   $('#thirdStep').css('background-color','green');

@@ -79,7 +79,6 @@ class UserController extends Controller
           ->withInput()
           ->with('error','Password does not match!');
       }
-
     }
 
     public function verifyUser($slug){
@@ -101,7 +100,6 @@ class UserController extends Controller
         return Redirect::to('/')
           ->with('error','Account is already verified!');
       }
-
     }
 
     public function forgotPassword(Request $request){
@@ -135,9 +133,6 @@ class UserController extends Controller
             'success' => false
         ));
       }
-
-
-
     }
 
     public function resetPassword(Request $request){
@@ -173,6 +168,10 @@ class UserController extends Controller
               return Redirect::to('professor/home');
             }elseif($userDetails->type == 2){
               return Redirect::to('director/home');
+            }elseif($userDetails->type == 3){
+              return Redirect::to('director/home');
+            }elseif($userDetails->type == 4){
+              return Redirect::to('director/home');
             }else{
               return Redirect::to('professor/home');
             }
@@ -204,14 +203,26 @@ class UserController extends Controller
       return view('student.index',$data);
     }
 
+    private function isProfessorChairperson($id){
+      $course = new Course;
+      $course_details = $course->getChairperson($id);
+
+      return $course_details ? true : false;
+    }
+
     public function professorHome(){
       $user = new User;
+      $files = new Files;
+
       $userDetails = $user->getData('id',Auth::id());
+      $chairpersonSignature = $files->getAllActiveFileByUserByParameter('type',0);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
-        'lname' => $userDetails->lname
+        'lname' => $userDetails->lname,
+        'signature' => $chairpersonSignature,
+        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 
       return view('professor.index',$data);
@@ -220,8 +231,8 @@ class UserController extends Controller
     public function directorHome(){
       $user = new User;
       $files = new Files;
-      $userDetails = $user->getData('id',Auth::id());
 
+      $userDetails = $user->getData('id',Auth::id());
       $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
 
       $data = [
@@ -234,23 +245,34 @@ class UserController extends Controller
       return view('director.index',$data);
     }
 
-    public function directorCredit(){
+    private function getCredit(){
       $user = new User;
       $files = new Files;
       $credit = new Credit;
       $userDetails = $user->getData('id',Auth::id());
 
-      $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
+      $chairpersonSignature = $files->getAllActiveFileByUserByParameter('type',0);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'signature' => $directorSignature,
+        'signature' => $chairpersonSignature,
         'pending' => $credit->countByStatus(0),
-        'completed' => $credit->countByStatus(1)
+        'completed' => $credit->countByStatus(1),
+        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 
+      return $data;
+    }
+
+    public function chairpersonCredit(){
+      $data = $this->getCredit();
+      return view('professor.credit',$data);
+    }
+
+    public function directorCredit(){
+      $data = $this->getCredit();
       return view('director.credit',$data);
     }
 
@@ -293,17 +315,28 @@ class UserController extends Controller
     }
 
     public function uploadSignature(Request $request){
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+
+      if($userDetails->type == 1){
+        $user_home = 'professor/home';
+      }elseif($userDetails->type == 2){
+        $user_home = 'director/home';
+      }else{
+        $user_home = 'professor/home';
+      }
+
       if($request->file('fileUpload')->getError() != 1){
         if($request->file('fileUpload') == null){
-          return Redirect::to('director/home')
+          return Redirect::to($user_home)
             ->with('failed','Signature was successfully uploaded!');
         }else{
           if($request->file('fileUpload')->extension() != 'jpeg' && $request->file('fileUpload')->extension() != 'jpg' && $request->file('fileUpload')->extension() != 'png'){
-            return Redirect::to('director/home')
+            return Redirect::to($user_home)
               ->with('failed','Signature was successfully uploaded!');
           }else{
             if($request->file('fileUpload')->getSize() > 2097152){
-              return Redirect::to('director/home')
+              return Redirect::to($user_home)
                 ->with('failed','Signature was successfully uploaded!');
             }else{
               $files = new Files;
@@ -334,7 +367,7 @@ class UserController extends Controller
 
               $files->insertData($data);
 
-              return Redirect::to('director/home')
+              return Redirect::to($user_home)
                 ->with('success','Signature was successfully uploaded!');
 
               return $request->file('fileUpload')->store('public/documents');
@@ -342,7 +375,7 @@ class UserController extends Controller
           }
         }
       }else{
-        return Redirect::to('director/home')
+        return Redirect::to($user_home)
           ->with('failed','Signature was successfully uploaded!');
       }
 
@@ -350,7 +383,6 @@ class UserController extends Controller
 
     public function getSignature(Request $request){
       $files = new Files;
-
       $fileDetails = $files->getAllActiveFileByUserByParameter('type',0);
 
       if(count($fileDetails) == 0){
