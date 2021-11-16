@@ -38,7 +38,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/crediting/0') }}" style="color: #8a6d3b">
+                  <a href="{{ URL::to('director/crediting/1') }}" style="color: #8a6d3b">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -62,7 +62,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/crediting/1') }}" style="color: #3c763d">
+                  <a href="{{ URL::to('director/crediting/2') }}" style="color: #3c763d">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -111,7 +111,7 @@
   $(document).ready(function(){
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
-    if(pathname.split('/')[3] == 1){
+    if(pathname.split('/')[3] == 2){
       $('.downloadReportDiv').css('display','block');
     }else{
       $('.downloadReportDiv').css('display','none');

@@ -246,7 +246,7 @@ class CreditController extends Controller
         $next_target = $course->getChairperson(Auth::id());
         $next_target_id = $next_target->director;
       } else if ($current_user->type == 2) {
-        $next_target = $course->getSecretary(Auth::id());
+        $next_target = $course->getDirector(Auth::id());
         $next_target_id = $next_target->secretary;
       } else if ($current_user->type == 3) {
         $next_target = $user->getData('type',4);

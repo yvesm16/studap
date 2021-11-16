@@ -245,34 +245,34 @@ class UserController extends Controller
       return view('director.index',$data);
     }
 
-    private function getCredit(){
+    private function getCredit($pending_status,$completed_status){
       $user = new User;
       $files = new Files;
       $credit = new Credit;
       $userDetails = $user->getData('id',Auth::id());
 
-      $chairpersonSignature = $files->getAllActiveFileByUserByParameter('type',0);
+      $signature = $files->getAllActiveFileByUserByParameter('type',0);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'signature' => $chairpersonSignature,
-        'pending' => $credit->countByStatus(0),
-        'completed' => $credit->countByStatus(1),
-        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
+        'signature' => $signature,
+        'pending' => $credit->countByStatus($pending_status),
+        'completed' => $credit->countByStatus($completed_status)
       ];
 
       return $data;
     }
 
     public function chairpersonCredit(){
-      $data = $this->getCredit();
+      $data = $this->getCredit(0,1);
+      $data['isProfessorChairperson'] = $this->isProfessorChairperson(Auth::id());
       return view('professor.credit',$data);
     }
 
     public function directorCredit(){
-      $data = $this->getCredit();
+      $data = $this->getCredit(1,2);
       return view('director.credit',$data);
     }
 

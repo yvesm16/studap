@@ -157,7 +157,7 @@
           dataType    :'json',
           success: function (data) {
             if(data.result == true){
-              window.location.href = BASE_URL + '/director/crediting/0';
+              window.location.href = BASE_URL + '/director/crediting/1';
             }else{
               $('#signatureModal').modal('show');
               return false;

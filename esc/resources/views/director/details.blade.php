@@ -128,14 +128,14 @@
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_abbr }}"></td>
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_title }}"></td>
               <td>
-                @if($subject->status == 0)
+                @if($subject->status == 1)
                   <button class="btn btn-primary approveSubject" data-id="{{ $subject->id }}">
                     Approve
                   </button>
                   <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
                     Decline
                   </button>
-                @elseif($subject->status == 1)
+                @elseif($subject->status == 2)
                   <span class="label label-success">Approved</span>
                 @else
                   <span class="label label-danger">Rejected</span><br>
@@ -165,21 +165,19 @@
 
     $(window).on('load', function() {
       $.ajax({
-          url: BASE_URL + '/director/getCreditRequestStatus',
+          url: BASE_URL + '/credit/getSubjectCreditStatus',
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           type: 'POST',
           data: {
-            'slug' : $('#slug').val()
+            'slug' : $('#slug').val(),
+            status : 1
           },
           dataType    :'json',
           success: function (data) {
-            if(data.result == true){
-              $('.completeForm').prop('disabled',true);
-            }else{
-              $('.completeForm').prop('disabled',false);
-            }
+            // $('.completeForm').prop('disabled',false);
+            $('.completeForm').prop('disabled',data.result);
           }
       });
     });
@@ -187,7 +185,7 @@
     $('#formTable').delegate('.approveSubject','click', function (){
       if (confirm('Are you sure you want to approve this subject?')) {
         $.ajax({
-            url: BASE_URL + '/director/updateDetails',
+            url: BASE_URL + '/credit/updateDetails',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -195,7 +193,7 @@
             data: {
                 slug : $('#slug').val(),
                 subject_id : $(this).data('id'),
-                status : 1
+                status : 2
             },
             dataType    :'json',
             success: function (data) {
@@ -211,7 +209,7 @@
       if (confirm('Are you sure you want to reject this subject?')) {
         var remarks = prompt("Please provide details", "");
         $.ajax({
-            url: BASE_URL + '/director/updateDetails',
+            url: BASE_URL + '/credit/updateDetails',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -220,7 +218,7 @@
                 slug : $('#slug').val(),
                 subject_id : $(this).data('id'),
                 remarks: remarks,
-                status : 2
+                status : 5
             },
             dataType    :'json',
             success: function (data) {
@@ -235,19 +233,19 @@
     $('.completeForm').on('click',function(){
       if (confirm('Are you sure you want to complete this request?')) {
         $.ajax({
-            url: BASE_URL + '/director/updateCreditStatus',
+            url: BASE_URL + '/credit/updateCreditStatus',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',
             data: {
                 slug : $('#slug').val(),
-                status : 1
+                status : 2
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/director/crediting/0';
+                window.location.href = BASE_URL + '/director/crediting/1';
               }
             }
         });
