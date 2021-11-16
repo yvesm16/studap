@@ -97,6 +97,8 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
+        //director
+
         DB::table('users')->insert([
             'id' => 3,
             'slug' => md5(3),
@@ -109,6 +111,7 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
+        //secretary
         DB::table('users')->insert([
             'id' => 4,
             'slug' => md5(4),
@@ -121,6 +124,57 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
+        //IT
+        DB::table('users')->insert([
+            'id' => 5,
+            'slug' => md5(4),
+            'fname' => 'IT Dept',
+            'lname' => 'Chair',
+            'email' => 'it.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
+
+        //IS
+        DB::table('users')->insert([
+            'id' => 6,
+            'slug' => md5(4),
+            'fname' => 'IS Dept',
+            'lname' => 'Chair',
+            'email' => 'is.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
+
+        //CS
+        DB::table('users')->insert([
+            'id' => 7,
+            'slug' => md5(4),
+            'fname' => 'CS Dept',
+            'lname' => 'Chair',
+            'email' => 'cs.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
+
+        //registrar
+        DB::table('users')->insert([
+            'id' => 8,
+            'slug' => md5(4),
+            'fname' => 'Registrar',
+            'lname' => '',
+            'email' => 'reg.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 4,
+            'verified' => 1,
+            'status' => 1
+        ]);
 
         // DB::table('professor_schedule')->insert([
         //     'id' => 1,
