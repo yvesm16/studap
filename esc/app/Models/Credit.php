@@ -74,4 +74,23 @@ class Credit extends Model
         ->update($data);
     }
 
+    public function getChairpersonSignatureBySlug($slug){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->join('course','course.id','=','users.course_id')
+        ->join('files','files.user_id','=','course.chairperson')
+        ->where('credit_course.slug',$slug)
+        ->where('files.status',1)
+        ->first();
+    }
+
+    public function getDirectorSignatureBySlug($slug){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->join('course','course.id','=','users.course_id')
+        ->join('files','files.user_id','=','course.director')
+        ->where('credit_course.slug',$slug)
+        ->where('files.status',1)
+        ->first();
+    }
 }

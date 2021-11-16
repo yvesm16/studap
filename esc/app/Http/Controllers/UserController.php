@@ -169,7 +169,7 @@ class UserController extends Controller
             }elseif($userDetails->type == 2){
               return Redirect::to('director/home');
             }elseif($userDetails->type == 3){
-              return Redirect::to('director/home');
+              return Redirect::to('secretary/home');
             }elseif($userDetails->type == 4){
               return Redirect::to('director/home');
             }else{
@@ -245,22 +245,41 @@ class UserController extends Controller
       return view('director.index',$data);
     }
 
+    public function secretaryHome(){
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('id',Auth::id());
+      $secretarySignature = $files->getAllActiveFileByUserByParameter('type',0);
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'signature' => $secretarySignature
+      ];
+
+      return view('secretary.index',$data);
+    }
+
     private function getCredit($pending_status,$completed_status){
       $user = new User;
       $files = new Files;
       $credit = new Credit;
       $userDetails = $user->getData('id',Auth::id());
 
-      $signature = $files->getAllActiveFileByUserByParameter('type',0);
-
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'signature' => $signature,
         'pending' => $credit->countByStatus($pending_status),
         'completed' => $credit->countByStatus($completed_status)
       ];
+
+      if ($userDetails->type != 3) {
+        $signature = $files->getAllActiveFileByUserByParameter('type',0);
+        $data['signature'] = $signature;
+      }
 
       return $data;
     }
@@ -274,6 +293,11 @@ class UserController extends Controller
     public function directorCredit(){
       $data = $this->getCredit(1,2);
       return view('director.credit',$data);
+    }
+
+    public function secretaryCredit(){
+      $data = $this->getCredit(2,3);
+      return view('secretary.credit',$data);
     }
 
     public function logout(Request $request){

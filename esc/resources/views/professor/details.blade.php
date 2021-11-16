@@ -142,8 +142,17 @@
                   {{ $subject->remarks }}
                 @endif
               </td>
+              
               <td>
-                &nbsp
+                <div id="signatureDiv">
+                  @if($subject->status == 0)
+                    &nbsp
+                  @else
+                    <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="10%"/>
+                      <br>
+                      {{ $fname }} {{ $lname }}
+                  @endif
+                </div>
               </td>
             </tr>
           @endforeach
@@ -176,11 +185,9 @@
           },
           dataType    :'json',
           success: function (data) {
-            if(data.result == true){
-              $('.completeForm').prop('disabled',true);
-            }else{
-              $('.completeForm').prop('disabled',false);
-            }
+            // $('.completeForm').prop('disabled',true);
+            // $('.completeForm').prop('disabled',false);
+            $('.completeForm').prop('disabled',data.result);
           }
       });
     });

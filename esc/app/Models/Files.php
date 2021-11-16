@@ -25,6 +25,14 @@ class Files extends Model
         ->where('user_id',Auth::id())
         ->get();
     }
+    
+    public function getActiveFileByUserByParameter($column,$data){
+      return DB::table('files')
+        ->where('status',1)
+        ->where($column,$data)
+        ->where('user_id',Auth::id())
+        ->first();
+    }
 
     public function updateFilesByUser($data){
       DB::table('files')

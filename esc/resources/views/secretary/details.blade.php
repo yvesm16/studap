@@ -12,7 +12,7 @@
 </head>
 <body>
 
-@include('director.nav')
+@include('secretary.nav')
 
 <div class="container indexMargin home">
   <input type="hidden" value="{{ $creditDetails->slug }}" name="slug" id="slug">
@@ -128,13 +128,10 @@
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_abbr }}"></td>
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_title }}"></td>
               <td>
-                @if($subject->status == 1)
-                  <button class="btn btn-primary approveSubject" data-id="{{ $subject->id }}">
-                    Approve
-                  </button>
-                  <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
-                    Decline
-                  </button>
+                @if($subject->status == 0)
+                  <span class="label label-info">Waiting for Chairperson</span>
+                @elseif($subject->status == 1)
+                  <span class="label label-info">Waiting for Director</span>
                 @elseif($subject->status == 2)
                   <span class="label label-success">Approved</span>
                 @else
@@ -157,7 +154,7 @@
             </tr>
           @endforeach
         </tbody>
-      </table>
+        </table>
     </div>   
   </div>
   <div class="row" style="margin-top: 1%;">
@@ -177,9 +174,9 @@
         @if($subject->status < 2)
           &nbsp
         @else
-          <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="10%"/>
+          <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="10%"/>
           <br>
-          {{ $fname }} {{ $lname }}
+          {{ $director_fname }} {{ $director_lname }}
         @endif
       </div>
     </div>
@@ -188,9 +185,9 @@
         @if($subject->status < 2)
           &nbsp
         @else
-          <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="10%"/>
+          <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="10%"/>
           <br>
-          {{ $fname }} {{ $lname }}
+          {{ $director_fname }} {{ $director_lname }}
         @endif
       </div>
     </div>
@@ -240,54 +237,6 @@
       });
     });
 
-    $('#formTable').delegate('.approveSubject','click', function (){
-      if (confirm('Are you sure you want to approve this subject?')) {
-        $.ajax({
-            url: BASE_URL + '/credit/updateDetails',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            data: {
-                slug : $('#slug').val(),
-                subject_id : $(this).data('id'),
-                status : 2
-            },
-            dataType    :'json',
-            success: function (data) {
-              if(data.result == true){
-                window.location.href = BASE_URL + '/director/crediting/details/' + $('#slug').val();
-              }
-            }
-        });
-      }
-    });
-
-    $('#formTable').delegate('.rejectSubject','click', function (){
-      if (confirm('Are you sure you want to reject this subject?')) {
-        var remarks = prompt("Please provide details", "");
-        $.ajax({
-            url: BASE_URL + '/credit/updateDetails',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            data: {
-                slug : $('#slug').val(),
-                subject_id : $(this).data('id'),
-                remarks: remarks,
-                status : 5
-            },
-            dataType    :'json',
-            success: function (data) {
-              if(data.result == true){
-                window.location.href = BASE_URL + '/director/crediting/details/' + $('#slug').val();
-              }
-            }
-        });
-      }
-    });
-
     $('.completeForm').on('click',function(){
       if (confirm('Are you sure you want to complete this request?')) {
         $.ajax({
@@ -298,12 +247,12 @@
             type: 'POST',
             data: {
                 slug : $('#slug').val(),
-                status : 2
+                status : 3
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/director/crediting/1';
+                window.location.href = BASE_URL + '/secretary/crediting/2';
               }
             }
         });

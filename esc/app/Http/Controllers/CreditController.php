@@ -150,11 +150,10 @@ class CreditController extends Controller
       $course = new Course;
       $subject = new SubjectCrediting;
       $userDetails = $user->getData('id',Auth::id());
-      $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
       $creditDetails = $credit->getDataByParameter('slug',$slug);
       $studentDetails = $user->getData('id',$creditDetails->student_id);
 
-      // dd($_SERVER['REQUEST_URI']);
+      // dd($signature);
 
       $a = $_SERVER['REQUEST_URI'];
 
@@ -168,13 +167,18 @@ class CreditController extends Controller
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'signature' => $directorSignature,
         'studentDetails' => $studentDetails,
         'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
         'currentCourse' => $course->getCourseByID($studentDetails->course_id),
         'creditDetails' => $creditDetails,
         'allSubjects' => $allSubjects
       ];
+
+      if ($userDetails->type != 3) {
+        $signature = $files->getActiveFileByUserByParameter('type',0);
+        $data['signature'] = $signature;
+      }
+
       // dd($data);
       return $data;
     }
@@ -187,14 +191,61 @@ class CreditController extends Controller
       return view('professor.details',$data);
     }
 
+    private function getChairpersonDataForCreditDetailsPage($slug) {
+      $user = new User;
+      $credit = new Credit;
+      $creditDetails = $credit->getChairpersonSignatureBySlug($slug);
+
+      $userDetails = $user->getData('id',$creditDetails->chairperson);
+      // dd($creditDetails);
+      return [
+        'path' => $creditDetails->path,
+        'chairperson_fname' => $userDetails->fname,
+        'chairperson_lname' => $userDetails->lname
+      ];
+    }
+
+    private function getDirectorDataForCreditDetailsPage($slug) {
+      $user = new User;
+      $credit = new Credit;
+      $creditDetails = $credit->getDirectorSignatureBySlug($slug);
+
+      $userDetails = $user->getData('id',$creditDetails->director);
+      // dd($creditDetails);
+      return [
+        'path' => $creditDetails->path,
+        'director_fname' => $userDetails->fname,
+        'director_lname' => $userDetails->lname
+      ];
+    }
+
     public function directorCreditDetailsPage($slug){
       $data = $this->detailsPage($slug);
+
+      $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
+      $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
+      $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
       return view('director.details',$data);
+    }
+
+    public function secretaryCreditDetailsPage($slug){
+      $data = $this->detailsPage($slug);
+
+      $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
+      $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
+      $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
+
+      $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
+      $data['director_signature_path'] = $director_data['path'];
+      $data['director_fname'] = $director_data['director_fname'];
+      $data['director_lname'] = $director_data['director_lname'];
+      return view('secretary.details',$data);
     }
 
     public function updateDetails(Request $request){
       $credit = new Credit;
-      $user = new User;
       $files = new Files;
       $course = new Course;
       $subject = new SubjectCrediting;
@@ -217,11 +268,19 @@ class CreditController extends Controller
 
     public function getSubjectCreditStatus(Request $request){
       $credit = new Credit;
+      $user = new User;
       $subject = new SubjectCrediting;
+      $request->status = 1;
       // $request->status = 0-Pending|1-EvaluatedByProfessor|2-EvaluatedByDirector|3-CheckedBySecretary|4-EvaluatedByRegistrar|5-Done
       $all_approved_subject = $subject->getAllDataByCreditSlugAndSubjectStatus($request->slug,$request->status);
       $credit_details = $credit->getDataByParameter('slug',$request->slug);
 
+      $current_user = $user->getData('id',Auth::id());
+      if ($current_user->type == '3') {
+        $request->status += 1;
+      }
+
+      // dd($request->status+1);
       if(count($all_approved_subject) == 0 && $credit_details->status < $request->status+1){
         return Response::json(array(
             'result' => false
@@ -317,7 +376,7 @@ class CreditController extends Controller
       $course = new Course;
       $subject = new SubjectCrediting;
       $userDetails = $user->getData('id',Auth::id());
-      $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
+      $directorSignature = $files->getActiveFileByUserByParameter('type',0);
       $creditDetails = $credit->getDataByParameter('slug',$slug);
       $studentDetails = $user->getData('id',$creditDetails->student_id);
       $a = $_SERVER['REQUEST_URI'];
