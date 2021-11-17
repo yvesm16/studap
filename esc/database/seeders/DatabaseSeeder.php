@@ -134,7 +134,6 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
-        //registrar
         DB::table('users')->insert([
             'id' => 5,
             'slug' => md5(5),
@@ -147,7 +146,6 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
-        //
         DB::table('users')->insert([
             'id' => 6,
             'slug' => md5(6),
@@ -176,9 +174,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 8,
             'slug' => md5(7),
-            'fname' => 'Sean',
-            'lname' => 'Doe',
-            'email' => 'sean.doe@ust.edu.ph',
+            'fname' => 'IS Dept',
+            'lname' => 'Chair',
+            'email' => 'is.doe@ust.edu.ph',
             'password' => Hash::make('123'),
             'type' => 1,
             'verified' => 1,
@@ -188,9 +186,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 9,
             'slug' => md5(7),
-            'fname' => 'Sean',
-            'lname' => 'Doe',
-            'email' => 'sean.doe@ust.edu.ph',
+            'fname' => 'IT Dept',
+            'lname' => 'Chair',
+            'email' => 'it.doe@ust.edu.ph',
             'password' => Hash::make('123'),
             'type' => 1,
             'verified' => 1,
@@ -200,9 +198,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'id' => 10,
             'slug' => md5(7),
-            'fname' => 'Sean',
-            'lname' => 'Doe',
-            'email' => 'sean.doe@ust.edu.ph',
+            'fname' => 'CS',
+            'lname' => 'Dept Chair',
+            'email' => 'cs.doe@ust.edu.ph',
             'password' => Hash::make('123'),
             'type' => 1,
             'verified' => 1,
