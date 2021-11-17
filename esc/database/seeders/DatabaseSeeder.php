@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'slug' => md5(1),
             'text' => 'Bachelor of Science in Information Technology',
+            'chairperson' => 2,
+            'director' => 3,
+            'secretary' => 4,
             'status' => 1
         ]);
 
@@ -28,6 +31,9 @@ class DatabaseSeeder extends Seeder
             'id' => 2,
             'slug' => md5(2),
             'text' => 'Bachelor of Science in Computer Science',
+            'chairperson' => 6,
+            'director' => 3,
+            'secretary' => 4,
             'status' => 1
         ]);
 
@@ -35,6 +41,9 @@ class DatabaseSeeder extends Seeder
             'id' => 3,
             'slug' => md5(3),
             'text' => 'Bachelor of Science in Information System',
+            'chairperson' => 7,
+            'director' => 3,
+            'secretary' => 4,
             'status' => 1
         ]);
 
@@ -72,7 +81,7 @@ class DatabaseSeeder extends Seeder
             'text' => 'Others',
             'status' => 1
         ]);
-
+        //student
         DB::table('users')->insert([
             'id' => 1,
             'slug' => md5(1),
@@ -85,6 +94,7 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
+        //professor
         DB::table('users')->insert([
             'id' => 2,
             'slug' => md5(2),
@@ -124,58 +134,80 @@ class DatabaseSeeder extends Seeder
             'status' => 1
         ]);
 
-        //IT
-        DB::table('users')->insert([
-            'id' => 5,
-            'slug' => md5(4),
-            'fname' => 'IT Dept',
-            'lname' => 'Chair',
-            'email' => 'it.doe@ust.edu.ph',
-            'password' => Hash::make('123'),
-            'type' => 1,
-            'verified' => 1,
-            'status' => 1
-        ]);
-
-        //IS
-        DB::table('users')->insert([
-            'id' => 6,
-            'slug' => md5(4),
-            'fname' => 'IS Dept',
-            'lname' => 'Chair',
-            'email' => 'is.doe@ust.edu.ph',
-            'password' => Hash::make('123'),
-            'type' => 1,
-            'verified' => 1,
-            'status' => 1
-        ]);
-
-        //CS
-        DB::table('users')->insert([
-            'id' => 7,
-            'slug' => md5(4),
-            'fname' => 'CS Dept',
-            'lname' => 'Chair',
-            'email' => 'cs.doe@ust.edu.ph',
-            'password' => Hash::make('123'),
-            'type' => 1,
-            'verified' => 1,
-            'status' => 1
-        ]);
-
         //registrar
         DB::table('users')->insert([
-            'id' => 8,
-            'slug' => md5(4),
-            'fname' => 'Registrar',
-            'lname' => '',
-            'email' => 'reg.doe@ust.edu.ph',
+            'id' => 5,
+            'slug' => md5(5),
+            'fname' => 'Paul',
+            'lname' => 'Doe',
+            'email' => 'paul.doe@ust.edu.ph',
             'password' => Hash::make('123'),
             'type' => 4,
             'verified' => 1,
             'status' => 1
         ]);
 
+        //
+        DB::table('users')->insert([
+            'id' => 6,
+            'slug' => md5(6),
+            'fname' => 'Perl',
+            'lname' => 'Doe',
+            'email' => 'perl.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 2,
+            'verified' => 1,
+            'status' => 1
+        ]);
+
+        DB::table('users')->insert([
+            'id' => 7,
+            'slug' => md5(7),
+            'fname' => 'Sean',
+            'lname' => 'Doe',
+            'email' => 'sean.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 2,
+            'verified' => 1,
+            'status' => 1
+        ]);
+
+        //IS
+        DB::table('users')->insert([
+            'id' => 8,
+            'slug' => md5(7),
+            'fname' => 'Sean',
+            'lname' => 'Doe',
+            'email' => 'sean.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
+        //IT
+        DB::table('users')->insert([
+            'id' => 9,
+            'slug' => md5(7),
+            'fname' => 'Sean',
+            'lname' => 'Doe',
+            'email' => 'sean.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
+        //CS
+        DB::table('users')->insert([
+            'id' => 10,
+            'slug' => md5(7),
+            'fname' => 'Sean',
+            'lname' => 'Doe',
+            'email' => 'sean.doe@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'status' => 1
+        ]);
         // DB::table('professor_schedule')->insert([
         //     'id' => 1,
         //     'slug' => md5(1),
