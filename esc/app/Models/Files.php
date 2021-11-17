@@ -50,4 +50,10 @@ class Files extends Model
         ->insert($data);
     }
 
+    public function getActiveFilesByParameter($column,$data){
+      return DB::table('files')
+        ->where('status',1)
+        ->where($column,$data)
+        ->first();
+    }
 }

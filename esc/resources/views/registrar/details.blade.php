@@ -208,8 +208,9 @@
   </div>
   <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-        <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
-      </div>
+      <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
+      <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
+    </div>
   </div>
 </div>
 

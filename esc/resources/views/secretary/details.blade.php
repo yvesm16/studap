@@ -182,12 +182,12 @@
     </div>
     <div class="col-md-4">
       <div id="registrarSignatureDiv">
-        @if($subject->status < 2)
+        @if($subject->status < 3)
           &nbsp
         @else
-          <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
+          <img src="{{ url(str_replace('public','storage',$registrar_signature_path)) }}" width="25%"/>
           <br>
-          {{ $director_fname }} {{ $director_lname }}
+          {{ $registrar_fname }} {{ $registrar_lname }}
         @endif
       </div>
     </div>
@@ -205,8 +205,9 @@
   </div>
   <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-        <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
-      </div>
+      <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
+      <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
+    </div>
   </div>
 </div>
 

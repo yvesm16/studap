@@ -302,23 +302,23 @@ class UserController extends Controller
     }
 
     public function chairpersonCredit(){
-      $data = $this->getCredit(0,1);
+      $data = $this->getCredit(0,0);
       $data['isProfessorChairperson'] = $this->isProfessorChairperson(Auth::id());
       return view('professor.credit',$data);
     }
 
     public function directorCredit(){
-      $data = $this->getCredit(1,2);
+      $data = $this->getCredit(1,1);
       return view('director.credit',$data);
     }
 
     public function secretaryCredit(){
-      $data = $this->getCredit(2,3);
+      $data = $this->getCredit(2,2);
       return view('secretary.credit',$data);
     }
 
     public function registrarCredit(){
-      $data = $this->getCredit(3,4);
+      $data = $this->getCredit(3,3);
       return view('registrar.credit',$data);
     }
 

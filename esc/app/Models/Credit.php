@@ -65,6 +65,13 @@ class Credit extends Model
         '));
     }
 
+    public function getNotYetCompletedDataTableByStudentID(){
+      return DB::table('credit_course')
+        ->where('student_id',Auth::id())
+        ->where('status','<',4)
+        ->get();
+    }
+
     public function getStudentDataTable($student_id){
       return DB::table('credit_course')
         ->join('users','users.id','=','credit_course.student_id')

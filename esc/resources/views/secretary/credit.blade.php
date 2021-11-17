@@ -111,7 +111,7 @@
   $(document).ready(function(){
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
-    if(pathname.split('/')[3] == 2){
+    if(pathname.split('/')[3] == 'completed'){
       $('.downloadReportDiv').css('display','block');
     }else{
       $('.downloadReportDiv').css('display','none');
@@ -124,7 +124,7 @@
             "bServerSide": true,
             "pagingType": "full_numbers",
             "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=3",
+            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=2",
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": [1,2,3,4,5]

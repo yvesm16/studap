@@ -197,7 +197,7 @@ class AjaxController extends Controller
 
                       if($aRow->status == 0){
                         $status = "<span class='label label-default'>Pending</span>";
-                      }else if($aRow->status == 5){
+                      }else if($aRow->status == 4){
                         $status = "<span class='label label-success'>Completed</span>";
                       }else{
                         $status = "<span class='label label-primary'>Ongoing</span>";

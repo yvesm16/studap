@@ -152,6 +152,7 @@ class CreditController extends Controller
       $userDetails = $user->getData('id',Auth::id());
       $creditDetails = $credit->getDataByParameter('slug',$slug);
       $studentDetails = $user->getData('id',$creditDetails->student_id);
+      $attached_file = $files->getActiveFilesByParameter('credit_course_id',$creditDetails->id);
 
       // dd($signature);
 
@@ -171,7 +172,8 @@ class CreditController extends Controller
         'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
         'currentCourse' => $course->getCourseByID($studentDetails->course_id),
         'creditDetails' => $creditDetails,
-        'allSubjects' => $allSubjects
+        'allSubjects' => $allSubjects,
+        'attached_file_path' => $attached_file->path
       ];
 
       if ($userDetails->type != 3) {
@@ -198,11 +200,19 @@ class CreditController extends Controller
 
       $userDetails = $user->getData('id',$creditDetails->chairperson);
       // dd($creditDetails);
-      return [
-        'path' => $creditDetails->path,
-        'chairperson_fname' => $userDetails->fname,
-        'chairperson_lname' => $userDetails->lname
-      ];
+      if ($creditDetails) {
+        return [
+          'path' => $creditDetails->path,
+          'chairperson_fname' => $userDetails->fname,
+          'chairperson_lname' => $userDetails->lname
+        ];
+      } else {
+        return [
+          'path' => 'none',
+          'chairperson_fname' => $userDetails->fname,
+          'chairperson_lname' => $userDetails->lname
+        ];
+      }
     }
 
     private function getDirectorDataForCreditDetailsPage($slug) {
@@ -212,11 +222,42 @@ class CreditController extends Controller
 
       $userDetails = $user->getData('id',$creditDetails->director);
       // dd($creditDetails);
-      return [
-        'path' => $creditDetails->path,
-        'director_fname' => $userDetails->fname,
-        'director_lname' => $userDetails->lname
-      ];
+      if ($creditDetails) {
+        return [
+          'path' => $creditDetails->path,
+          'director_fname' => $userDetails->fname,
+          'director_lname' => $userDetails->lname
+        ];
+      } else {
+        return [
+          'path' => 'none',
+          'director_fname' => $userDetails->fname,
+          'director_lname' => $userDetails->lname
+        ];
+      }
+    }
+
+    private function getRegistrarDataForCreditDetailsPage() {
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('type',4);
+      $signature = $files->getActiveFilesByParameter('user_id',$userDetails->id);
+      // dd($signature);
+      if ($signature) {
+        return [
+          'path' => $signature->path,
+          'registrar_fname' => $userDetails->fname,
+          'registrar_lname' => $userDetails->lname
+        ];
+      } else {
+        return [
+          'path' => 'none',
+          'registrar_fname' => $userDetails->fname,
+          'registrar_lname' => $userDetails->lname
+        ];
+      }
+      
     }
 
     public function directorCreditDetailsPage($slug){
@@ -226,6 +267,11 @@ class CreditController extends Controller
       $data['chairperson_signature_path'] = $chairperson_data['path'];
       $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
       $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
+
+      $registrar_data = $this->getRegistrarDataForCreditDetailsPage();
+      $data['registrar_signature_path'] = $registrar_data['path'];
+      $data['registrar_fname'] = $registrar_data['registrar_fname'];
+      $data['registrar_lname'] = $registrar_data['registrar_lname'];
       return view('director.details',$data);
     }
 
@@ -241,6 +287,11 @@ class CreditController extends Controller
       $data['director_signature_path'] = $director_data['path'];
       $data['director_fname'] = $director_data['director_fname'];
       $data['director_lname'] = $director_data['director_lname'];
+
+      $registrar_data = $this->getRegistrarDataForCreditDetailsPage();
+      $data['registrar_signature_path'] = $registrar_data['path'];
+      $data['registrar_fname'] = $registrar_data['registrar_fname'];
+      $data['registrar_lname'] = $registrar_data['registrar_lname'];
       return view('secretary.details',$data);
     }
 
@@ -428,10 +479,11 @@ class CreditController extends Controller
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'pending' => $credit->countByStatus(0),
-        'completed' => $credit->countByStatus(1)
+        'pending' => $credit->getNotYetCompletedDataTableByStudentID(),
+        'completed' => $credit->countByStatus(4)
       ];
 
+      // dd($data);
       return view('student.creditTracker',$data);
     }
 
@@ -447,11 +499,12 @@ class CreditController extends Controller
       $remarks = $this->getSubjectCreditingDisapprovedWithRemarks($request->input('credit_course_id'));
 
       $auditDetails = $audit->getAllDataByParameter('row_id',$request->input('credit_course_id'), 'table_name', 'credit_course');
-      // dd($creditDetails);
+      // dd($studentDetails);
       return Response::json(array(
           'result' => true,
           'credit_course_id' => $request->input('credit_course_id'),
           'student_name' => $studentDetails->fname . ' ' . $studentDetails->lname,
+          'student_id' => $studentDetails->student_id,
           'institute' => $creditDetails->institute,          
           'new_program' => $course->getCourseByID($creditDetails->new_course_id),
           'original_program' => $course->getCourseByID($studentDetails->course_id),
@@ -463,7 +516,7 @@ class CreditController extends Controller
 
     private function getSubjectCreditingDisapprovedWithRemarks($credit_course_id) {
       $subject = new SubjectCrediting;
-      $subject_details = $subject->getAllDataCreditIDAndByStatus($credit_course_id,0);
+      $subject_details = $subject->getAllDataCreditIDAndByStatus($credit_course_id,5);
       $remarks = [];
 
       foreach($subject_details as $key => $subject_detail) {
