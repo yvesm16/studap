@@ -33,7 +33,7 @@ $(document).ready(function() {
                   success: function (data) {
                     if(data.result == true){
                       if(data.type == 2){
-                        if(data.status == 1){
+                        if(data.status == 4){
                           text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " has completed your credit course request.</div>";
                         }
                       }else{

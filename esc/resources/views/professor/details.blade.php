@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-md-12" style="text-align: center">
       <h4>
-        UNIVERSITY OF SANTO THOMAS
+        UNIVERSITY OF SANTO TOMAS
       </h4>
     </div>
   </div>
@@ -148,7 +148,7 @@
                   @if($subject->status == 0)
                     &nbsp
                   @else
-                    <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="10%"/>
+                    <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="15%"/>
                       <br>
                       {{ $fname }} {{ $lname }}
                   @endif

@@ -244,6 +244,21 @@ class CreditController extends Controller
       return view('secretary.details',$data);
     }
 
+    public function registrarCreditDetailsPage($slug){
+      $data = $this->detailsPage($slug);
+
+      $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
+      $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
+      $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
+
+      $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
+      $data['director_signature_path'] = $director_data['path'];
+      $data['director_fname'] = $director_data['director_fname'];
+      $data['director_lname'] = $director_data['director_lname'];
+      return view('registrar.details',$data);
+    }
+
     public function updateDetails(Request $request){
       $credit = new Credit;
       $files = new Files;
@@ -270,17 +285,16 @@ class CreditController extends Controller
       $credit = new Credit;
       $user = new User;
       $subject = new SubjectCrediting;
-      $request->status = 1;
       // $request->status = 0-Pending|1-EvaluatedByProfessor|2-EvaluatedByDirector|3-CheckedBySecretary|4-EvaluatedByRegistrar|5-Done
       $all_approved_subject = $subject->getAllDataByCreditSlugAndSubjectStatus($request->slug,$request->status);
       $credit_details = $credit->getDataByParameter('slug',$request->slug);
 
       $current_user = $user->getData('id',Auth::id());
-      if ($current_user->type == '3') {
+      if ($current_user->type > 2) {
         $request->status += 1;
       }
 
-      // dd($request->status+1);
+      // dd($current_user,count($all_approved_subject),$credit_details->status,$request->status+1);
       if(count($all_approved_subject) == 0 && $credit_details->status < $request->status+1){
         return Response::json(array(
             'result' => false
@@ -351,18 +365,18 @@ class CreditController extends Controller
       $this->updateCreditStatusInsertAudit($credit_details);
       $userDetails = $user->getData('id',$credit_details->student_id);
 
-      try {
-        session()->put('slug', $credit_details->slug);
-        session()->put('fname', $userDetails->fname);
-        session()->put('lname', $userDetails->lname);
+      // try {
+      //   session()->put('slug', $credit_details->slug);
+      //   session()->put('fname', $userDetails->fname);
+      //   session()->put('lname', $userDetails->lname);
 
-        \Mail::to($userDetails->email)->send(new \App\Mail\CreditCourse());
+      //   \Mail::to($userDetails->email)->send(new \App\Mail\CreditCourse());
         // \Mail::to('joseph.fidelino@gmail.com')->send(new \App\Mail\CreditCourse());
-      } catch(Exception $e) {
-        return Response::json(array(
-            'success' => true
-        ));
-      }
+      // } catch(Exception $e) {
+      //   return Response::json(array(
+      //       'success' => true
+      //   ));
+      // }
 
       return Response::json(array(
           'result' => true

@@ -18,7 +18,7 @@ $(document).ready(function() {
             $('.notificationBell').css('color','red');
             for(var i=0; i < notif.length; i++){
               var text = "";
-              text = "<div class='alert alert-info'><strong>New!</strong> " + notif[i]['fname'] + " " + notif[i]['lname'] + " signed a course credit request.</div>";
+              text = "<div class='alert alert-info'><strong>New!</strong> " + notif[i]['fname'] + " " + notif[i]['lname'] + " sent a course credit request.</div>";
               message = message + text;
             }
           }else{

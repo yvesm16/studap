@@ -27,10 +27,32 @@ class Credit extends Model
         ->get();
     }
 
+    public function countByGreaterThanStatus($status){
+      return DB::table('credit_course')
+        ->where('status','>',$status)
+        ->get();
+    }
+
     public function getDataTable($status){
       return DB::table('credit_course')
         ->join('users','users.id','=','credit_course.student_id')
         ->where('credit_course.status',$status)
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
+        '));
+    }
+
+    public function getCompletedDataTable($minimum_status){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->where('credit_course.status','>',$minimum_status)
         ->select(DB::raw('
             credit_course.id as id,
             credit_course.slug as slug,

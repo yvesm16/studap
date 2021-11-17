@@ -171,7 +171,7 @@ class UserController extends Controller
             }elseif($userDetails->type == 3){
               return Redirect::to('secretary/home');
             }elseif($userDetails->type == 4){
-              return Redirect::to('director/home');
+              return Redirect::to('registrar/home');
             }else{
               return Redirect::to('professor/home');
             }
@@ -262,6 +262,23 @@ class UserController extends Controller
       return view('secretary.index',$data);
     }
 
+    public function registrarHome(){
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('id',Auth::id());
+      $registrarSignature = $files->getAllActiveFileByUserByParameter('type',0);
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'signature' => $registrarSignature
+      ];
+
+      return view('registrar.index',$data);
+    }
+
     private function getCredit($pending_status,$completed_status){
       $user = new User;
       $files = new Files;
@@ -273,7 +290,7 @@ class UserController extends Controller
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'pending' => $credit->countByStatus($pending_status),
-        'completed' => $credit->countByStatus($completed_status)
+        'completed' => $credit->countByGreaterThanStatus($completed_status)
       ];
 
       if ($userDetails->type != 3) {
@@ -298,6 +315,11 @@ class UserController extends Controller
     public function secretaryCredit(){
       $data = $this->getCredit(2,3);
       return view('secretary.credit',$data);
+    }
+
+    public function registrarCredit(){
+      $data = $this->getCredit(3,4);
+      return view('registrar.credit',$data);
     }
 
     public function logout(Request $request){
@@ -346,6 +368,8 @@ class UserController extends Controller
         $user_home = 'professor/home';
       }elseif($userDetails->type == 2){
         $user_home = 'director/home';
+      }elseif($userDetails->type == 4){
+        $user_home = 'registrar/home';
       }else{
         $user_home = 'professor/home';
       }
