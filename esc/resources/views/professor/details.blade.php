@@ -135,7 +135,7 @@
                   <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
                     Decline
                   </button>
-                @elseif($subject->status == 1)
+                @elseif($subject->status == 3)
                   <span class="label label-success">Approved</span>
                 @else
                   <span class="label label-danger">Rejected</span><br>
@@ -160,7 +160,8 @@
       </table>
     </div>
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-      <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
+      <!-- <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}"></a> -->
+      <button type="button" class="btn btn-success viewDocument">View Document</button>
       <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
     </div>
   </div>
@@ -191,6 +192,12 @@
             $('.completeForm').prop('disabled',data.result);
           }
       });
+    });
+
+    $('.viewDocument').on('click',function(){
+      $('#viewDocumentModal').modal('toggle');
+      // $("#viewDocument").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
+      // console.log('{{ url(str_replace('public','storage',$attached_file_path)) }}');
     });
 
     $('#formTable').delegate('.approveSubject','click', function (){
@@ -263,3 +270,5 @@
     });
   });
 </script>
+
+@include('global.viewDocumentModal')
