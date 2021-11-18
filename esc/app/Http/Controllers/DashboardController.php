@@ -27,9 +27,9 @@ class DashboardController extends Controller
         $getAve = ratings::avg('rating');
         $ave = round($getAve,2);
         
-        $ar = new Schedule();
-        $accptReq = $ar->getAllApprovedScheduleByParameter();
-        //$accptReq = $total/7;
+        $ar = new Schedule;
+        $total = $ar->getAllApprovedScheduleByParameter('title','Appointment');
+        $accptReq = count($total);
 
         return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq'));
     }
