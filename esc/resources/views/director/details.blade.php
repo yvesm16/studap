@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-md-12" style="text-align: center">
       <h4>
-        UNIVERSITY OF SANTO THOMAS
+        UNIVERSITY OF SANTO TOMAS
       </h4>
     </div>
   </div>
@@ -142,17 +142,75 @@
                   {{ $subject->remarks }}
                 @endif
               </td>
+              
               <td>
-                &nbsp
+                <div id="chairpersonSignatureDiv">
+                  @if($subject->status == 0)
+                    &nbsp
+                  @else
+										<img src="{{ url(str_replace('public','storage',$chairperson_signature_path)) }}" width="15%"/>
+                    <br>
+										{{ $chairperson_fname }} {{ $chairperson_lname }}
+                  @endif
+                </div>
               </td>
             </tr>
           @endforeach
         </tbody>
       </table>
+    </div>   
+  </div>
+  <div class="row" style="margin-top: 1%;">
+    <div class="col-md-6" style="text-align: left;margin-left:5%;">
+      <label>Endorsed by:</label>
     </div>
+    <div class="col-md-5" style="text-align: left">
+      <label>Noted by:</label>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 1%;">
+    <div class="col-md-2" style="text-align: left">
+    </div>
+    <div class="col-md-4">
+      <div id="directorSignatureDiv">
+        @if($subject->status < 2)
+          &nbsp
+        @else
+          <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="25%"/>
+          <br>
+          {{ $fname }} {{ $lname }}
+        @endif
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div id="registrarSignatureDiv">
+        @if($subject->status < 3)
+          &nbsp
+        @else
+          <img src="{{ url(str_replace('public','storage',$registrar_signature_path)) }}" width="25%"/>
+          <br>
+          {{ $registrar_fname }} {{ $registrar_lname }}
+        @endif
+      </div>
+    </div>
+  </div>
+   
+  <div class="row" style="margin-top: -1%;">
+    <div class="col-md-6" style="text-align: left;margin-left:5%;">
+      <hr>
+      <label>Dean</label>
+    </div>
+    <div class="col-md-5" style="text-align: left">
+      <hr>
+      <label>Registrar</label>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-      <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
-    </div>
+      <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
+        <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
+      </div>
   </div>
 </div>
 
@@ -176,6 +234,7 @@
           },
           dataType    :'json',
           success: function (data) {
+            // $('.completeForm').prop('disabled',true);
             // $('.completeForm').prop('disabled',false);
             $('.completeForm').prop('disabled',data.result);
           }

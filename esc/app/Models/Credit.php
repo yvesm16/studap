@@ -27,6 +27,12 @@ class Credit extends Model
         ->get();
     }
 
+    public function countByGreaterThanStatus($status){
+      return DB::table('credit_course')
+        ->where('status','>',$status)
+        ->get();
+    }
+
     public function getDataTable($status){
       return DB::table('credit_course')
         ->join('users','users.id','=','credit_course.student_id')
@@ -41,6 +47,29 @@ class Credit extends Model
             users.student_id as student_id,
             users.email as email
         '));
+    }
+
+    public function getCompletedDataTable($minimum_status){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->where('credit_course.status','>',$minimum_status)
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
+        '));
+    }
+
+    public function getNotYetCompletedDataTableByStudentID(){
+      return DB::table('credit_course')
+        ->where('student_id',Auth::id())
+        ->where('status','<',4)
+        ->get();
     }
 
     public function getStudentDataTable($student_id){
@@ -74,4 +103,23 @@ class Credit extends Model
         ->update($data);
     }
 
+    public function getChairpersonSignatureBySlug($slug){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->join('course','course.id','=','users.course_id')
+        ->join('files','files.user_id','=','course.chairperson')
+        ->where('credit_course.slug',$slug)
+        ->where('files.status',1)
+        ->first();
+    }
+
+    public function getDirectorSignatureBySlug($slug){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->join('course','course.id','=','users.course_id')
+        ->join('files','files.user_id','=','course.director')
+        ->where('credit_course.slug',$slug)
+        ->where('files.status',1)
+        ->first();
+    }
 }

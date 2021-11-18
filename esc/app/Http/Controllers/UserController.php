@@ -169,9 +169,9 @@ class UserController extends Controller
             }elseif($userDetails->type == 2){
               return Redirect::to('director/home');
             }elseif($userDetails->type == 3){
-              return Redirect::to('director/home');
+              return Redirect::to('secretary/home');
             }elseif($userDetails->type == 4){
-              return Redirect::to('director/home');
+              return Redirect::to('registrar/home');
             }else{
               return Redirect::to('professor/home');
             }
@@ -245,35 +245,81 @@ class UserController extends Controller
       return view('director.index',$data);
     }
 
+    public function secretaryHome(){
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('id',Auth::id());
+      $secretarySignature = $files->getAllActiveFileByUserByParameter('type',0);
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'signature' => $secretarySignature
+      ];
+
+      return view('secretary.index',$data);
+    }
+
+    public function registrarHome(){
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('id',Auth::id());
+      $registrarSignature = $files->getAllActiveFileByUserByParameter('type',0);
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'signature' => $registrarSignature
+      ];
+
+      return view('registrar.index',$data);
+    }
+
     private function getCredit($pending_status,$completed_status){
       $user = new User;
       $files = new Files;
       $credit = new Credit;
       $userDetails = $user->getData('id',Auth::id());
 
-      $signature = $files->getAllActiveFileByUserByParameter('type',0);
-
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        'signature' => $signature,
         'pending' => $credit->countByStatus($pending_status),
-        'completed' => $credit->countByStatus($completed_status)
+        'completed' => $credit->countByGreaterThanStatus($completed_status)
       ];
+
+      if ($userDetails->type != 3) {
+        $signature = $files->getAllActiveFileByUserByParameter('type',0);
+        $data['signature'] = $signature;
+      }
 
       return $data;
     }
 
     public function chairpersonCredit(){
-      $data = $this->getCredit(0,1);
+      $data = $this->getCredit(0,0);
       $data['isProfessorChairperson'] = $this->isProfessorChairperson(Auth::id());
       return view('professor.credit',$data);
     }
 
     public function directorCredit(){
-      $data = $this->getCredit(1,2);
+      $data = $this->getCredit(1,1);
       return view('director.credit',$data);
+    }
+
+    public function secretaryCredit(){
+      $data = $this->getCredit(2,2);
+      return view('secretary.credit',$data);
+    }
+
+    public function registrarCredit(){
+      $data = $this->getCredit(3,3);
+      return view('registrar.credit',$data);
     }
 
     public function logout(Request $request){
@@ -322,6 +368,8 @@ class UserController extends Controller
         $user_home = 'professor/home';
       }elseif($userDetails->type == 2){
         $user_home = 'director/home';
+      }elseif($userDetails->type == 4){
+        $user_home = 'registrar/home';
       }else{
         $user_home = 'professor/home';
       }

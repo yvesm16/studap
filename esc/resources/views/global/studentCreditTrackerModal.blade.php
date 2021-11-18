@@ -6,7 +6,12 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Appointment Details</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"><div class="row">
+          <div class="col-md-6">
+              <label>Student ID:</label>
+              <span id="current_student_id"></span>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-6">
               <label>Student Name:</label>
@@ -19,7 +24,7 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label>Institute/College</label><br>coming from:
+              <label>Institute/College<br>coming from:</label>
               <span id="institute"></span>
             </div>
             <div class="col-md-6">

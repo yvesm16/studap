@@ -19,7 +19,7 @@ class NotificationController extends Controller
 
       $userDetails = $user->getData('id',Auth::id());
 
-      if($userDetails->type == 2){
+      if($userDetails->type > 0){
         $unreadNotification = $audit->getAllLoginAdminDataByStatus(0);
       }elseif($userDetails->type == 0){
         $unreadNotification = $audit->getAllLoginStudentDataByStatus(0);

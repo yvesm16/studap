@@ -62,7 +62,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('professor/crediting/1') }}" style="color: #3c763d">
+                  <a href="{{ URL::to('professor/crediting/completed') }}" style="color: #3c763d">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -111,7 +111,7 @@
   $(document).ready(function(){
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
-    if(pathname.split('/')[3] == 1){
+    if(pathname.split('/')[3] == 'completed'){
       $('.downloadReportDiv').css('display','block');
     }else{
       $('.downloadReportDiv').css('display','none');
@@ -124,7 +124,7 @@
             "bServerSide": true,
             "pagingType": "full_numbers",
             "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3],
+            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=0",
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": [1,2,3,4,5]

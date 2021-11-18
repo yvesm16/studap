@@ -54,16 +54,11 @@ $(document).ready(function() {
             success: function (data) {
               if(data.result == true){
                 document.getElementById("student_name").textContent = data.student_name;
+                document.getElementById("current_student_id").textContent = data.student_id;
                 document.getElementById("institute").textContent = data.institute;
                 document.getElementById("new_program").textContent = data.new_program['text'];
                 document.getElementById("original_program").textContent = data.original_program['text'];
-                
-                if (data.remarks) {
-                  var remarksDetail = document.getElementById("remarksDetail");
-                  remarksDetail.value = data.remarks.join("\n");
-                } else {
-                  document.getElementById("remarksDetail").value = '';
-                }
+                document.getElementById("remarksDetail").value = data.remarks ? data.remarks.join("\n") : "";
                 
                 if(data.status == 0){
                   $('#firstStep').css('background-color','green');
@@ -86,19 +81,6 @@ $(document).ready(function() {
                   document.getElementById("secondStepText").textContent = 'Completed';
                   document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
                   document.getElementById("thirdStepText").textContent = 'Completed';
-                }else if (data.status == 4){
-                  $('#firstStep').css('background-color','green');
-                  $('#secondStep').css('background-color','green');
-                  $('#thirdStep').css('background-color','green');
-                  $('#fourthStep').css('background-color','green');
-                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                  document.getElementById("firstStepText").textContent = 'Completed';
-                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                  document.getElementById("secondStepText").textContent = 'Completed';
-                  document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
-                  document.getElementById("thirdStepText").textContent = 'Completed';
-                  document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
-                  document.getElementById("fourthStepText").textContent = 'Completed';
                 }else{
                   $('#firstStep').css('background-color','green');
                   $('#secondStep').css('background-color','green');

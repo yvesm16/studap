@@ -48,8 +48,6 @@
 <script>
   $(document).ready(function(){
     $('#nextPage').on('click',function(){
-
-
       if($('#section').val() == ''){
         alert('Please fill out all fields!');
         return false;

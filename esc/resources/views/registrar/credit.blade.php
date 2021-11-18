@@ -15,7 +15,7 @@
 </head>
 <body>
 
-@include('director.nav')
+@include('registrar.nav')
 
 <div class="container indexMargin home">
   <div id="page-wrapper">
@@ -38,7 +38,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/crediting/1') }}" style="color: #8a6d3b">
+                  <a href="{{ URL::to('registrar/crediting/3') }}" style="color: #8a6d3b">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -62,7 +62,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/crediting/completed') }}" style="color: #3c763d">
+                  <a href="{{ URL::to('registrar/crediting/completed') }}" style="color: #3c763d">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -124,7 +124,7 @@
             "bServerSide": true,
             "pagingType": "full_numbers",
             "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=1",
+            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=3",
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": [1,2,3,4,5]
@@ -141,7 +141,7 @@
     });
 
     $('#courseCreditTable').delegate('.viewDetails','click', function (){
-      window.location.href = BASE_URL + '/director/crediting/details/' + $(this).data('id');
+      window.location.href = BASE_URL + '/registrar/crediting/details/' + $(this).data('id');
     });
 
   });

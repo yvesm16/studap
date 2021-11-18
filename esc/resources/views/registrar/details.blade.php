@@ -12,7 +12,7 @@
 </head>
 <body>
 
-@include('professor.nav')
+@include('registrar.nav')
 
 <div class="container indexMargin home">
   <input type="hidden" value="{{ $creditDetails->slug }}" name="slug" id="slug">
@@ -128,14 +128,14 @@
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_abbr }}"></td>
               <td><input class="form-control" type="text" disabled value="{{ $subject->equivalent_course_title }}"></td>
               <td>
-                @if($subject->status == 0)
+                @if($subject->status == 2)
                   <button class="btn btn-primary approveSubject" data-id="{{ $subject->id }}">
                     Approve
                   </button>
                   <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
                     Decline
                   </button>
-                @elseif($subject->status == 1)
+                @elseif($subject->status == 3)
                   <span class="label label-success">Approved</span>
                 @else
                   <span class="label label-danger">Rejected</span><br>
@@ -144,21 +144,69 @@
               </td>
               
               <td>
-                <div id="signatureDiv">
+                <div id="chairpersonSignatureDiv">
                   @if($subject->status == 0)
                     &nbsp
                   @else
-                    <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="15%"/>
-                      <br>
-                      {{ $fname }} {{ $lname }}
+										<img src="{{ url(str_replace('public','storage',$chairperson_signature_path)) }}" width="15%"/>
+                    <br>
+										{{ $chairperson_fname }} {{ $chairperson_lname }}
                   @endif
                 </div>
               </td>
             </tr>
           @endforeach
         </tbody>
-      </table>
+        </table>
+    </div>   
+  </div>
+  <div class="row" style="margin-top: 1%;">
+    <div class="col-md-6" style="text-align: left;margin-left:5%;">
+      <label>Endorsed by:</label>
     </div>
+    <div class="col-md-5" style="text-align: left">
+      <label>Noted by:</label>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 4%;">
+    <div class="col-md-2" style="text-align: left">
+    </div>
+    <div class="col-md-4">
+      <div id="directorSignatureDiv">
+        @if($subject->status < 2)
+          &nbsp
+        @else
+          <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
+          <br>
+          {{ $director_fname }} {{ $director_lname }}
+        @endif
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div id="registrarSignatureDiv">
+        @if($subject->status < 3)
+          &nbsp
+        @else
+          <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="25%"/>
+          <br>
+          {{ $fname }} {{ $lname }}
+        @endif
+      </div>
+    </div>
+  </div>
+   
+  <div class="row" style="margin-top: -1%;">
+    <div class="col-md-6" style="text-align: left;margin-left:5%;">
+      <hr>
+      <label>Dean</label>
+    </div>
+    <div class="col-md-5" style="text-align: left">
+      <hr>
+      <label>Registrar</label>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
       <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
       <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
@@ -181,8 +229,8 @@
           },
           type: 'POST',
           data: {
-            slug : $('#slug').val(),
-            status : 0
+            'slug' : $('#slug').val(),
+            status : 2
           },
           dataType    :'json',
           success: function (data) {
@@ -204,12 +252,12 @@
             data: {
                 slug : $('#slug').val(),
                 subject_id : $(this).data('id'),
-                status : 1
+                status : 3
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/professor/crediting/details/' + $('#slug').val();
+                window.location.href = BASE_URL + '/registrar/crediting/details/' + $('#slug').val();
               }
             }
         });
@@ -226,6 +274,7 @@
             },
             type: 'POST',
             data: {
+                slug : $('#slug').val(),
                 subject_id : $(this).data('id'),
                 remarks: remarks,
                 status : 5
@@ -233,7 +282,7 @@
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/professor/crediting/details/' + $('#slug').val();
+                window.location.href = BASE_URL + '/registrar/crediting/details/' + $('#slug').val();
               }
             }
         });
@@ -250,16 +299,17 @@
             type: 'POST',
             data: {
                 slug : $('#slug').val(),
-                status : 1
+                status : 4
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/professor/crediting/0';
+                window.location.href = BASE_URL + '/registrar/crediting/3';
               }
             }
         });
       }
     });
+
   });
 </script>
