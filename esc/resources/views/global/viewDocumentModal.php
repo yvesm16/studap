@@ -7,7 +7,9 @@
         <h4 class="modal-title">View Document</h4>
       </div>
       <div class="modal-body">
-        <!-- <object data="http://localhost:8000/storage/documents/4f232bWpNRafbZCL8HUVhPssjVS20Ewqc8UpdNrl.pdf" id="viewDocument" type="application/pdf" width="100%" height="1000px"></object> -->
+        <object id="objectViewDocumentPDF" type="application/pdf" width="100%" height="1000px">
+          <embed id="embedViewDocumentPDF" type="application/pdf" width="100%" height="1000px">
+        </object>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

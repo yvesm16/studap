@@ -364,7 +364,7 @@ class CreditController extends Controller
       $current_user = $user->getData('id',Auth::id());
 
       if ($current_user->type == 0) {
-        $next_target = $course->getCourseByID($current_user->course_id);
+        $next_target = $course->getCourseByID($credit_details->new_course_id);
         $next_target_id = $next_target->chairperson;
       } else if ($current_user->type == 1) {
         $next_target = $course->getChairperson(Auth::id());
@@ -468,6 +468,44 @@ class CreditController extends Controller
       $pdf = PDF::loadView('director.pdf', $data);
       // return $pdf->stream();
       return $pdf->download($creditDetails->slug . '.pdf');
+    }
+
+    public function completedCourseCreditingListPDF(){
+      $credit = new Credit;
+      $user = new User;
+      $files = new Files;
+      $course = new Course;
+      $subject = new SubjectCrediting;
+
+      $userDetails = $user->getData('id',Auth::id());
+      // $directorSignature = $files->getActiveFileByUserByParameter('type',0);
+      // $creditDetails = $credit->getDataByParameter('slug',$slug);
+      // $studentDetails = $user->getData('id',$creditDetails->student_id);
+      // $a = $_SERVER['REQUEST_URI'];
+      // if (strpos($a, 'pdf') !== false) {
+      //   $allSubjects = $subject->getAllDataByCreditIDPDF($creditDetails->id);
+      // }else{
+      //   $allSubjects = $subject->getAllDataByCreditID($creditDetails->id);
+      // }
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'generated_on' => $date = date("M d, Y"),
+        // 'signature' => $directorSignature,
+        // 'studentDetails' => $studentDetails,
+        // 'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
+        // 'currentCourse' => $course->getCourseByID($studentDetails->course_id),
+        // 'creditDetails' => $creditDetails,
+        // 'allSubjects' => $allSubjects
+      ];
+
+      // dd($data);
+
+      $pdf = PDF::loadView('global.completedCourseCreditPDF', $data);
+      return $pdf->stream();
+      // return $pdf->download(1 . '.pdf');
     }
 
     public function getTrackerCrediting() {

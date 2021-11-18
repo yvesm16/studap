@@ -288,10 +288,16 @@ class UserController extends Controller
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
-        'lname' => $userDetails->lname,
-        'pending' => $credit->countByStatus($pending_status),
-        'completed' => $credit->countByGreaterThanStatus($completed_status)
+        'lname' => $userDetails->lname
       ];
+
+      if ($userDetails->type != 1) {
+        $data['pending'] = $credit->countByStatus($pending_status);
+        $data['completed'] = $credit->countByGreaterThanStatus($completed_status);
+      } else {
+        $data['pending'] = $credit->countByStatusForChairperson($pending_status);
+        $data['completed'] = $credit->countByGreaterThanStatusForChairperson($completed_status);
+      }
 
       if ($userDetails->type != 3) {
         $signature = $files->getAllActiveFileByUserByParameter('type',0);

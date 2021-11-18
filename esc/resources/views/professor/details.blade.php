@@ -135,11 +135,11 @@
                   <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
                     Decline
                   </button>
-                @elseif($subject->status == 3)
-                  <span class="label label-success">Approved</span>
-                @else
+                @elseif($subject->status == 5)
                   <span class="label label-danger">Rejected</span><br>
                   {{ $subject->remarks }}
+                @else
+                  <span class="label label-success">Approved</span>
                 @endif
               </td>
               
@@ -196,8 +196,9 @@
 
     $('.viewDocument').on('click',function(){
       $('#viewDocumentModal').modal('toggle');
-      // $("#viewDocument").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
-      // console.log('{{ url(str_replace('public','storage',$attached_file_path)) }}');
+      $("#objectViewDocumentPDF").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
+      $("#embedViewDocumentPDF").attr("src", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
+      // $("#viewDocumentPDF").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
     });
 
     $('#formTable').delegate('.approveSubject','click', function (){

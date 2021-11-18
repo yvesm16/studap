@@ -62,7 +62,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('professor/crediting/completed') }}" style="color: #3c763d">
+                  <a href="{{ URL::to('professor/crediting/chairperson_completed') }}" style="color: #3c763d">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -74,7 +74,7 @@
               </div>
           </div>
       </div>
-      <div class="row downloadReportDiv" style="margin-bottom: 1%; text-align: right">
+      <div class="row downloadCompletedListReportDiv" style="margin-bottom: 1%; text-align: right">
         <div class="col-lg-12" style="margin-bottom: 1%;">
           <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
         </div>
@@ -111,7 +111,7 @@
   $(document).ready(function(){
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
-    if(pathname.split('/')[3] == 'completed'){
+    if(pathname.split('/')[3] == 'chairperson_completed'){
       $('.downloadReportDiv').css('display','block');
     }else{
       $('.downloadReportDiv').css('display','none');
@@ -144,5 +144,8 @@
       window.location.href = BASE_URL + '/professor/crediting/details/' + $(this).data('id');
     });
 
+    $('.downloadCompletedListReportDiv').click(function(){
+      window.location.href = BASE_URL + '/crediting/details/completed_pdf';
+    });
   });
 </script>

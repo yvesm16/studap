@@ -166,6 +166,10 @@ class AjaxController extends Controller
               case "courseCreditList":
                   if ($request->input('status') == 'completed') {
                     $dtResult = Helpers::setDatatable($credit->getCompletedDataTable($request->input('minimum_status')),array('users.fname','users.lname','users.email'));
+                  } else if ($request->input('status') == 'chairperson_completed') {
+                    $dtResult = Helpers::setDatatable($credit->getChairpersonCompletedDataTable($request->input('minimum_status')),array('users.fname','users.lname','users.email'));
+                  } else if ($request->input('status') == 0) {
+                    $dtResult = Helpers::setDatatable($credit->getChairpersonDataTable($request->input('status')),array('users.fname','users.lname','users.email'));
                   } else {
                     $dtResult = Helpers::setDatatable($credit->getDataTable($request->input('status')),array('users.fname','users.lname','users.email'));
                   }
