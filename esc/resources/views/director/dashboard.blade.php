@@ -31,7 +31,7 @@
                 <td id="td-dashboard">12</td>
                 <td id="td-dashboard">12</td>
                 <td id="td-dashboard">12</td>
-                <td id="td-dashboard">12</td>
+                <td id="td-dashboard">{{$accptReq}}</td>
             </tr>
         </table>
             <hr id="hr-dashboard">
