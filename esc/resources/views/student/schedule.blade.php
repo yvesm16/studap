@@ -38,7 +38,7 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group" style="text-align: right">
-            <button class="btn btn-primary reserveSlot" data-toggle="modal" data-target="#consultationDialog">Reserve Slot</button>
+            <button class="btn btn-primary reserveSlot" data-toggle="modal" data-target="#consultationDialog" onclick="startIt()">Reserve Slot</button>
           </div>
         </div>
         <div class="col-md-2">
@@ -89,8 +89,8 @@
           </div>
           <div class="form-group">
             <label>Appointment Start</label>
-            <div class='input-group date' id='datetimepicker2'>
-               <input type='text' class="form-control" id="appointment_start" name="appointment_start"/>
+            <div class='input-group date' id='datetimepicker2' onclick="validateAppointmentTime('start')">
+               <input type='text' class="form-control" id="appointment_start" name="appointment_start"  />
                <span class="input-group-addon">
                <span class="glyphicon glyphicon-calendar"></span>
                </span>
@@ -98,7 +98,7 @@
           </div>
           <div class="form-group">
             <label>Appointment End</label>
-            <div class='input-group date' id='datetimepicker3'>
+            <div class='input-group date' id='datetimepicker3' onclick="validateAppointmentTime('end')">
                <input type='text' class="form-control" id="appointment_end" name="appointment_end"/>
                <span class="input-group-addon">
                <span class="glyphicon glyphicon-calendar"></span>
@@ -128,6 +128,9 @@
           <div class="alert alert-danger" style="display: none" id="failedNotification">
               <span id="failedText"></span>
           </div>
+           <div class="alert alert-danger" style="display: none" id="failedNotificationTime">
+              <span id="failedTextTime"></span>
+          </div>
         <!-- </form> -->
       </div>
       <div class="modal-footer">
@@ -138,3 +141,108 @@
 
   </div>
 </div>
+<script type="text/javascript">
+
+
+  function startIt(){
+
+   validateAppointmentTime("start");
+  }
+  function validateAppointmentTime(param){
+    //  7am  - 8pm
+
+    var hourArray = ["7","8","9","10","11","12","13","14","15","16","17","18","19","20"];
+
+    var start = $("#appointment_start").val();
+    start = convertTo24Hour(start.toLowerCase());
+
+    var sHr = start.split(":");
+    sHr     = sHr[0];
+
+    var end = $("#appointment_end").val();
+     end = convertTo24Hour(end.toLowerCase());
+    var eHr = end.split(":");
+    eHr     = eHr[0];
+     
+   
+    if(hourArray.indexOf(sHr) !== -1){
+   
+          $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+           SumHours(start,end);
+           
+      }else{
+       $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+        $("#submitConsultationForm").attr('disabled',true);
+       $("#failedNotificationTime").show();
+      }
+
+     if(hourArray.indexOf(eHr) !== -1){
+          $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+           SumHours(start,end);
+      } else{
+          $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+          $("#submitConsultationForm").attr('disabled',true);
+          $("#failedNotificationTime").show();
+      }
+
+     setTimeout(function(){ validateAppointmentTime("start"); }, 3000);
+   
+  }
+  function convertTo24Hour(time) {
+    var hours = parseInt(time.substr(0, 2));
+    if(time.indexOf('am') != -1 && hours == 12) {
+        time = time.replace('12', '0');
+    }
+    if(time.indexOf('pm')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+    return time.replace(/(am|pm)/, '');
+}
+
+
+  function SumHours(smon,fmon) {
+  // console.log(smon+"smon");
+  //  console.log(fmon+"fmon");
+  var diff = 0 ;
+  if (smon && fmon) 
+  {
+    smon = ConvertToSeconds(smon);
+    fmon = ConvertToSeconds(fmon);
+    diff = Math.abs( fmon - smon ) ;
+    if(diff < 1800){
+        // $("#failedText").text("");
+        $("#failedTextTime").text("Appointment Minimum Time : 30 Mins");
+        $("#failedNotificationTime").show();
+        $("#submitConsultationForm").attr('disabled',true);
+
+    }else if(diff >3600){
+       $("#failedTextTime").text("Appointment Maximum Time : 1 Hour");
+        $("#failedNotificationTime").show();
+        $("#submitConsultationForm").attr('disabled',true);
+
+    }else{
+         $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+      }
+
+    }
+  }
+
+  function ConvertToSeconds(time) {
+    var splitTime = time.split(":");
+    return splitTime[0] * 3600 + splitTime[1] * 60;
+  }
+
+  function secondsTohhmmss(secs) {
+    var hours = parseInt(secs / 3600);
+    var seconds = parseInt(secs % 3600);
+    var minutes = parseInt(seconds / 60) ;
+    return hours + "hours : " + minutes + "minutes ";
+  }
+
+</script>
