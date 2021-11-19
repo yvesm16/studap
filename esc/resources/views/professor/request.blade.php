@@ -139,7 +139,7 @@
         <div class="col-lg-2" style="margin-bottom: 1%">
           <button class='btn btn-success'><span class='glyphicon glyphicon-minus-sign'></span></button> - End
         </div>
-        <div class="col-lg-2 downloadReportDiv" style="margin-bottom: 1%;">
+        <div class="col-lg-2 downloadCompletedListReportDiv" style="margin-bottom: 1%;">
           <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
         </div>
       </div>

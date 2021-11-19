@@ -122,6 +122,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::match(array('GET', 'POST'), 'getNotificationDetails',[NotificationController::class, 'getNotificationDetails']);
     Route::match(array('GET', 'POST'), 'updateNotificationStatus',[NotificationController::class, 'updateNotificationStatus']);
 
+    Route::match(array('GET', 'POST'), 'schedule/details/completed_pdf',[ScheduleController::class, 'completedConsultationListPDF']);
+
     Route::match(array('GET', 'POST'), 'crediting/details/pdf/{slug}',[CreditController::class, 'detailsPagePDF']);
     Route::match(array('GET', 'POST'), 'crediting/details/completed_pdf',[CreditController::class, 'completedCourseCreditingListPDF']);
 

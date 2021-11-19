@@ -18,7 +18,7 @@
       </label>
       <br><br>
       <h4>
-        Request Fulfilled List for Course Crediting
+        Request Fulfilled List for Consultation
       </h4>
     </div>
   </center>
@@ -26,32 +26,36 @@
   <table style="font-size: 12px; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;" border="1">
     <tr>
       <th style="text-align: center">
-        Trans. No.
+        ID
       </th>
       <th style="text-align: center">
-        Student No.
-      </th>
-      <th style="text-align: center">
-        Name
-      </th>
-      <th style="text-align: center">
-        Date
+        Student Name
       </th>
       <th style="text-align: center">
         Email
       </th>
       <th style="text-align: center">
-        Section
+        Date
+      </th>
+      <th style="text-align: center">
+        Start
+      </th>
+      <th style="text-align: center">
+        End
+      </th>
+      <th style="text-align: center">
+        Concern
       </th>
     </tr>
-    @foreach($creditDetails as $credit_detail)
+    @foreach($scheduleDetails as $schedule_detail)
       <tr style="text-align: center">
-        <td>{{ $credit_detail->id }}</td>
-        <td>{{ $credit_detail->student_id }}</td>
-        <td>{{ $credit_detail->fname }} {{ $credit_detail->lname }}</td>
-        <td>{{ date("M d, Y", strtotime('$credit_detail->created_at')) }}</td>
-        <td>{{ $credit_detail->email }}</td>
-        <td>{{ $credit_detail->section }}</td>
+        <td>{{ $schedule_detail->id }}</td>
+        <td>{{ $schedule_detail->fname }} {{ $schedule_detail->lname }}</td>
+        <td>{{ $schedule_detail->email }}</td>
+        <td>{{ date("M d, Y", strtotime('$schedule_detail->created_at')) }}</td>
+        <td>{{ date('h:i a', strtotime($schedule_detail->start_time)) }}</td>
+        <td>{{ date('h:i a', strtotime($schedule_detail->end_time)) }}</td>
+        <td>{{ $schedule_detail->concern_details }}</td>
       </tr>
     @endforeach
   </table>
