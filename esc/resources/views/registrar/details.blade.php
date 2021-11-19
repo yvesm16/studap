@@ -306,12 +306,12 @@
             type: 'POST',
             data: {
                 slug : $('#slug').val(),
-                status : 4
+                status : 3
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/registrar/crediting/3';
+                window.location.href = BASE_URL + '/registrar/crediting/2';
               }
             }
         });

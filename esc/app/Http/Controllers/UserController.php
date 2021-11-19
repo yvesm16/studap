@@ -324,7 +324,7 @@ class UserController extends Controller
     }
 
     public function registrarCredit(){
-      $data = $this->getCredit(3,3);
+      $data = $this->getCredit(2,2);
       return view('registrar.credit',$data);
     }
 

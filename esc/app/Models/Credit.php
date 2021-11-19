@@ -54,7 +54,7 @@ class Credit extends Model
     //         users.email as email
     //     '));
     // }
-
+    
     public function countByGreaterThanStatus($status){
       return DB::table('credit_course')
         ->where('status','>',$status)
@@ -181,7 +181,7 @@ class Credit extends Model
     public function getNotYetCompletedDataTableByStudentID(){
       return DB::table('credit_course')
         ->where('student_id',Auth::id())
-        ->where('status','<',4)
+        ->where('status','<',3)
         ->get();
     }
 

@@ -370,8 +370,10 @@ class CreditController extends Controller
         $next_target = $course->getChairperson(Auth::id());
         $next_target_id = $next_target->director;
       } else if ($current_user->type == 2) {
-        $next_target = $course->getDirector(Auth::id());
-        $next_target_id = $next_target->secretary;
+        // $next_target = $course->getDirector(Auth::id());
+        // $next_target_id = $next_target->secretary;
+        $next_target = $user->getData('type',4);
+        $next_target_id = $next_target->id;
       } else if ($current_user->type == 3) {
         $next_target = $user->getData('type',4);
         $next_target_id = $next_target->id;
@@ -510,7 +512,7 @@ class CreditController extends Controller
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'pending' => $credit->getNotYetCompletedDataTableByStudentID(),
-        'completed' => $credit->countByStatus(4)
+        'completed' => $credit->countByGreaterThanStatus(2)
       ];
 
       // dd($data);
