@@ -74,7 +74,7 @@
               </div>
           </div>
       </div>
-      <div class="row downloadReportDiv" style="margin-bottom: 1%; text-align: right">
+      <div class="row downloadCompletedListReportDiv" style="margin-bottom: 1%; text-align: right">
         <div class="col-lg-12" style="margin-bottom: 1%;">
           <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
         </div>
@@ -112,9 +112,9 @@
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
     if(pathname.split('/')[3] == 'completed'){
-      $('.downloadReportDiv').css('display','block');
+      $('.downloadCompletedListReportDiv').css('display','block');
     }else{
-      $('.downloadReportDiv').css('display','none');
+      $('.downloadCompletedListReportDiv').css('display','none');
     }
 
     $(function() {
@@ -144,5 +144,8 @@
       window.location.href = BASE_URL + '/secretary/crediting/details/' + $(this).data('id');
     });
 
+    $('.downloadCompletedListReportDiv').click(function(){
+      window.location.href = BASE_URL + '/crediting/details/completed_pdf';
+    });
   });
 </script>

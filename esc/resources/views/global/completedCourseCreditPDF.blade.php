@@ -23,7 +23,7 @@
     </div>
   </center>
   <br>
-  <table style="font-size: 12px; border-collapse: collapse" border="1">
+  <table style="font-size: 12px; border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;" border="1">
     <tr>
       <th style="text-align: center">
         Trans. No.
@@ -44,6 +44,16 @@
         Section
       </th>
     </tr>
+    @foreach($creditDetails as $credit_detail)
+      <tr style="text-align: center">
+        <td>{{ $credit_detail->id }}</td>
+        <td>{{ $credit_detail->student_id }}</td>
+        <td>{{ $credit_detail->fname }} {{ $credit_detail->lname }}</td>
+        <td>{{ $credit_detail->created_at }}</td>
+        <td>{{ $credit_detail->email }}</td>
+        <td>{{ $credit_detail->section }}</td>
+      </tr>
+    @endforeach
   </table>
 </body>
 </html>

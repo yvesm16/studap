@@ -79,6 +79,7 @@ class Credit extends Model
             credit_course.slug as slug,
             credit_course.section as section,
             credit_course.status as status,
+            credit_course.created_at as created_at,
             users.fname as fname,
             users.lname as lname,
             users.student_id as student_id,
@@ -94,10 +95,10 @@ class Credit extends Model
         ->where('course.chairperson',Auth::id())
         ->select(DB::raw('
             credit_course.id as id,
-            credit_course.student_id as student_id,
             credit_course.slug as slug,
             credit_course.section as section,
             credit_course.status as status,
+            credit_course.created_at as created_at,
             users.fname as fname,
             users.lname as lname,
             users.student_id as student_id,
@@ -129,7 +130,6 @@ class Credit extends Model
         ->where('course.chairperson',Auth::id())
         ->select(DB::raw('
             credit_course.id as id,
-            credit_course.student_id as student_id,
             credit_course.slug as slug,
             credit_course.section as section,
             credit_course.status as status,
@@ -138,6 +138,44 @@ class Credit extends Model
             users.student_id as student_id,
             users.email as email
         '));
+    }
+
+    public function getDataTableForPDF($status){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->where('credit_course.status',$status)
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
+            credit_course.created_at as created_at,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
+        '))
+        ->get();
+    }
+
+    public function getChairpersonDataTableForPDF($status){
+      return DB::table('credit_course')
+        ->join('users','users.id','=','credit_course.student_id')
+        ->join('course','course.id','=','credit_course.new_course_id')
+        ->where('credit_course.status',$status)
+        ->where('course.chairperson',Auth::id())
+        ->select(DB::raw('
+            credit_course.id as id,
+            credit_course.slug as slug,
+            credit_course.section as section,
+            credit_course.status as status,
+            credit_course.created_at as created_at,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
+        '))
+        ->get();
     }
 
     public function getNotYetCompletedDataTableByStudentID(){

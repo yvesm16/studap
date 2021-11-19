@@ -112,9 +112,9 @@
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
     if(pathname.split('/')[3] == 'chairperson_completed'){
-      $('.downloadReportDiv').css('display','block');
+      $('.downloadCompletedListReportDiv').css('display','block');
     }else{
-      $('.downloadReportDiv').css('display','none');
+      $('.downloadCompletedListReportDiv').css('display','none');
     }
 
     $(function() {

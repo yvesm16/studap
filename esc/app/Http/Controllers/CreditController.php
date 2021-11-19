@@ -478,34 +478,26 @@ class CreditController extends Controller
       $subject = new SubjectCrediting;
 
       $userDetails = $user->getData('id',Auth::id());
-      // $directorSignature = $files->getActiveFileByUserByParameter('type',0);
-      // $creditDetails = $credit->getDataByParameter('slug',$slug);
-      // $studentDetails = $user->getData('id',$creditDetails->student_id);
-      // $a = $_SERVER['REQUEST_URI'];
-      // if (strpos($a, 'pdf') !== false) {
-      //   $allSubjects = $subject->getAllDataByCreditIDPDF($creditDetails->id);
-      // }else{
-      //   $allSubjects = $subject->getAllDataByCreditID($creditDetails->id);
-      // }
+
+      if ($userDetails->type != 1) {
+        $creditDetails = $credit->getDataTableForPDF(4);
+      } else {
+        $creditDetails = $credit->getChairpersonDataTableForPDF(4);
+      }
 
       $data = [
-        'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'generated_on' => $date = date("M d, Y"),
-        // 'signature' => $directorSignature,
-        // 'studentDetails' => $studentDetails,
-        // 'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
-        // 'currentCourse' => $course->getCourseByID($studentDetails->course_id),
-        // 'creditDetails' => $creditDetails,
-        // 'allSubjects' => $allSubjects
+        'creditDetails' => $creditDetails
       ];
 
-      // dd($data);
+      // dd($creditDetails);
 
       $pdf = PDF::loadView('global.completedCourseCreditPDF', $data);
-      return $pdf->stream();
-      // return $pdf->download(1 . '.pdf');
+      // return $pdf->stream();
+      return $pdf->download($userDetails->slug . '.pdf');
+      // return view('global.completedCourseCreditPDF',$data);
     }
 
     public function getTrackerCrediting() {
