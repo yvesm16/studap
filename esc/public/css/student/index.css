@@ -5,8 +5,34 @@ body{
 
 .indexMargin{
   background-color: white;
+  width: 70%;
+  height: 50%;
+  margin-left: 15%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 .home{
   text-align: center;
 }
+
+#dashboard-table2{
+  margin-left: 14%;
+  border-spacing: 50px;
+
+}
+
+#dashboard-table3{
+  margin-left: 28%;
+  border-spacing: 50px;
+}
+
+/*#dashboard-table,#th-dashboard,#td-dashboard7{
+  border: 2px solid black;
+}*/
+
+#td-dashboard7{
+  margin: 5px;
+
+}
+

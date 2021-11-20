@@ -7,13 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,800&display=swap"
     rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
-
+<body>
+    @include('director.nav')
 
 <div class="container indexMargin home">
     <div id="outer-box-dashboard">
@@ -27,11 +31,11 @@
             </tr>
      
             <tr id="tr-dashboard">
-                <td id="td-dashboard">{{$ave}}</td>
-                <td id="td-dashboard">12</td>
-                <td id="td-dashboard">12</td>
-                <td id="td-dashboard">12</td>
-                <td id="td-dashboard">{{$accptReq}}</td>
+                <td id="td-dashboard7">{{$ave}}</td>
+                <td id="td-dashboard7">12</td>
+                <td id="td-dashboard7">12</td>
+                <td id="td-dashboard7">12</td>
+                <td id="td-dashboard7">{{$accptReq}}</td>
             </tr>
         </table>
             <hr id="hr-dashboard">
@@ -47,23 +51,25 @@
                 <tr id="tr-dashboard2">
                     <td id="td-dashboard2"><canvas id="rate" class="imgdash" style="width: 350px; height: 150px;"></canvas>
                     </td>
-                    <td id="td-dashboard2"><img class="imgdash" src="../images/Screenshot 2021-07-20 171828.png" style="width: 350px; height: 150px;"></td>
+                    <td id="td-dashboard2"><canvas id="backlog" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
                 </tr>
             </table>
 
             <table id="dashboard-table2">
+                
                 <tr id="tr-dashboard2">
-                    <th id="th-dashboard2">Average of Elapsed Timet</th>
-                    <th id="th-dashboard2">The Average Time the Request is Completed</th>
+                <th id="th-dashboard2">Average of Elapsed Time</th>  
+                <th id="th-dashboard2">The Average Time the Request is Completed</th> 
                 </tr>
-         
+            
                 <tr id="tr-dashboard2">
                     <td id="td-dashboard2"><img class="imgdash" src="../images/Screenshot 2021-07-20 171828.png" style="width: 350px; height: 150px;"></td>
+                    
                     <td id="td-dashboard2"><img class="imgdash" src="../images/Screenshot 2021-07-20 171828.png" style="width: 350px; height: 150px;"></td>
                 </tr>
             </table>
 
-            <table id="dashboard-table2">
+            <table id="dashboard-table3">
                 <tr id="tr-dashboard2">
                     <th id="th-dashboard2">Number of Accepted Consultation Appointment</th>
                 </tr>
@@ -157,6 +163,45 @@
                         datasets: [{
                             label: '',
                             data: [{{$accptReq}}],
+                            backgroundColor: [
+                                'rgba(186, 166, 175, 0.2)',
+                                'rgba(160, 89, 97, 0.2)',
+                                'rgba(171, 49, 60, 0.2)',
+                                'rgba(180, 50, 60, 0.2)',
+                                'rgba(167, 6, 11, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(186, 166, 175, 1)',
+                                'rgba(160, 89, 97, 1)',
+                                'rgba(171, 49, 60, 1)',
+                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            responsive: true,
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true,
+                                    precision:0
+
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                var ctx = document.getElementById("backlog").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Average Backlogs of Request in a week"],
+                        datasets: [{
+                            label: '',
+                            data: 2,
                             backgroundColor: [
                                 'rgba(186, 166, 175, 0.2)',
                                 'rgba(160, 89, 97, 0.2)',

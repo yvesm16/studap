@@ -6,6 +6,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CreditController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ManageController;
 
 
 /*
@@ -89,6 +90,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'directorCredit']);
       Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'directorCreditDetailsPage']);
       Route::match(array('GET', 'POST'), 'dashboard', [DashboardController::class, 'rate']);
+      Route::match(array('GET', 'POST'), 'manage', [ManageController::class, 'manage']);
     });
 
     Route::group(['prefix' => 'secretary'], function(){
