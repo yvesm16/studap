@@ -364,14 +364,16 @@ class CreditController extends Controller
       $current_user = $user->getData('id',Auth::id());
 
       if ($current_user->type == 0) {
-        $next_target = $course->getCourseByID($current_user->course_id);
+        $next_target = $course->getCourseByID($credit_details->new_course_id);
         $next_target_id = $next_target->chairperson;
       } else if ($current_user->type == 1) {
         $next_target = $course->getChairperson(Auth::id());
         $next_target_id = $next_target->director;
       } else if ($current_user->type == 2) {
-        $next_target = $course->getDirector(Auth::id());
-        $next_target_id = $next_target->secretary;
+        // $next_target = $course->getDirector(Auth::id());
+        // $next_target_id = $next_target->secretary;
+        $next_target = $user->getData('type',4);
+        $next_target_id = $next_target->id;
       } else if ($current_user->type == 3) {
         $next_target = $user->getData('type',4);
         $next_target_id = $next_target->id;
@@ -470,6 +472,36 @@ class CreditController extends Controller
       return $pdf->download($creditDetails->slug . '.pdf');
     }
 
+    public function completedCourseCreditingListPDF(){
+      $credit = new Credit;
+      $user = new User;
+      $files = new Files;
+      $course = new Course;
+      $subject = new SubjectCrediting;
+
+      $userDetails = $user->getData('id',Auth::id());
+
+      if ($userDetails->type != 1) {
+        $creditDetails = $credit->getDataTableForPDF(4);
+      } else {
+        $creditDetails = $credit->getChairpersonDataTableForPDF(4);
+      }
+
+      $data = [
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'generated_on' => $date = date("M d, Y"),
+        'creditDetails' => $creditDetails
+      ];
+
+      // dd($creditDetails);
+
+      $pdf = PDF::loadView('global.completedCourseCreditPDF', $data);
+      // return $pdf->stream();
+      return $pdf->download($userDetails->slug . '.pdf');
+      // return view('global.completedCourseCreditPDF',$data);
+    }
+
     public function getTrackerCrediting() {
       $user = new User;
       $credit = new Credit;
@@ -480,7 +512,7 @@ class CreditController extends Controller
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'pending' => $credit->getNotYetCompletedDataTableByStudentID(),
-        'completed' => $credit->countByStatus(4)
+        'completed' => $credit->countByGreaterThanStatus(2)
       ];
 
       // dd($data);

@@ -166,6 +166,10 @@ class AjaxController extends Controller
               case "courseCreditList":
                   if ($request->input('status') == 'completed') {
                     $dtResult = Helpers::setDatatable($credit->getCompletedDataTable($request->input('minimum_status')),array('users.fname','users.lname','users.email'));
+                  } else if ($request->input('status') == 'chairperson_completed') {
+                    $dtResult = Helpers::setDatatable($credit->getChairpersonCompletedDataTable($request->input('minimum_status')),array('users.fname','users.lname','users.email'));
+                  } else if ($request->input('status') == 0) {
+                    $dtResult = Helpers::setDatatable($credit->getChairpersonDataTable($request->input('status')),array('users.fname','users.lname','users.email'));
                   } else {
                     $dtResult = Helpers::setDatatable($credit->getDataTable($request->input('status')),array('users.fname','users.lname','users.email'));
                   }
@@ -197,7 +201,7 @@ class AjaxController extends Controller
 
                       if($aRow->status == 0){
                         $status = "<span class='label label-default'>Pending</span>";
-                      }else if($aRow->status == 4){
+                      }else if($aRow->status > 2){
                         $status = "<span class='label label-success'>Completed</span>";
                       }else{
                         $status = "<span class='label label-primary'>Ongoing</span>";

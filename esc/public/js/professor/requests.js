@@ -8,17 +8,21 @@ $(document).ready(function() {
 
   if(url.split('/')[5] == 0){
     document.getElementById("titlePage").textContent = 'Pending Consultations';
-    $('.downloadReportDiv').css('display','none');
+    $('.downloadCompletedListReportDiv').css('display','none');
   }else if (url.split('/')[5] == 1) {
     document.getElementById("titlePage").textContent = 'Approved Consultations';
-    $('.downloadReportDiv').css('display','none');
+    $('.downloadCompletedListReportDiv').css('display','none');
   }else if(url.split('/')[5] == 4){
     document.getElementById("titlePage").textContent = 'Complete Consultations';
-    $('.downloadReportDiv').css('display','block');
+    $('.downloadCompletedListReportDiv').css('display','block');
   }else{
     document.getElementById("titlePage").textContent = 'Rejected Consultations';
-    $('.downloadReportDiv').css('display','none');
+    $('.downloadCompletedListReportDiv').css('display','none');
   }
+
+  $('.downloadCompletedListReportDiv').click(function(){
+    window.location.href = BASE_URL + '/schedule/details/completed_pdf';
+  });
 
   $(function() {
       $('#consultationTable').dataTable({

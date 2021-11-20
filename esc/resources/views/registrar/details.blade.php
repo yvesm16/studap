@@ -135,11 +135,11 @@
                   <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
                     Decline
                   </button>
-                @elseif($subject->status == 3)
-                  <span class="label label-success">Approved</span>
-                @else
+                @elseif($subject->status == 5)
                   <span class="label label-danger">Rejected</span><br>
                   {{ $subject->remarks }}
+                @else
+                  <span class="label label-success">Approved</span>
                 @endif
               </td>
               
@@ -208,7 +208,7 @@
   </div>
   <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-      <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}" download><button type="button" class="btn btn-success">Download File</button></a>
+      <button type="button" class="btn btn-success viewDocument">View Document</button>
       <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
     </div>
   </div>
@@ -239,6 +239,13 @@
             $('.completeForm').prop('disabled',data.result);
           }
       });
+    });
+
+    $('.viewDocument').on('click',function(){
+      $('#viewDocumentModal').modal('toggle');
+      $("#objectViewDocumentPDF").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
+      $("#embedViewDocumentPDF").attr("src", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
+      // $("#viewDocumentPDF").attr("data", "{{ url(str_replace('public','storage',$attached_file_path)) }}");
     });
 
     $('#formTable').delegate('.approveSubject','click', function (){
@@ -299,12 +306,12 @@
             type: 'POST',
             data: {
                 slug : $('#slug').val(),
-                status : 4
+                status : 3
             },
             dataType    :'json',
             success: function (data) {
               if(data.result == true){
-                window.location.href = BASE_URL + '/registrar/crediting/3';
+                window.location.href = BASE_URL + '/registrar/crediting/2';
               }
             }
         });
@@ -313,3 +320,5 @@
 
   });
 </script>
+
+@include('global.viewDocumentModal')

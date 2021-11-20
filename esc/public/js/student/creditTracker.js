@@ -71,7 +71,8 @@ $(document).ready(function() {
                   document.getElementById("firstStepText").textContent = 'Completed';
                   document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
                   document.getElementById("secondStepText").textContent = 'Completed';
-                }else if (data.status == 2 || data.status == 3) {
+                // }else if (data.status == 2 || data.status == 3) {
+                }else if (data.status == 2) {
                   $('#firstStep').css('background-color','green');
                   $('#secondStep').css('background-color','green');
                   $('#thirdStep').css('background-color','green');
@@ -95,7 +96,7 @@ $(document).ready(function() {
                   document.getElementById("thirdStepText").textContent = 'Completed';
                   document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
                   document.getElementById("fourthStepText").textContent = 'Completed';
-                  document.getElementById("fifthStepDate").textContent = data.auditDetails[4]['created_at'];
+                  document.getElementById("fifthStepDate").textContent = data.auditDetails[3]['created_at'];
                   document.getElementById("fifthStepText").textContent = 'Completed';
                 }
                 $('#studentCreditTrackerModal').modal('toggle');

@@ -15,6 +15,7 @@ use DB;
 use Session;
 use Response;
 use Auth;
+use PDF;
 
 class ScheduleController extends Controller
 {
@@ -569,4 +570,53 @@ class ScheduleController extends Controller
     }
   }
 
+  public function completedConsultationListPDF(){
+    $user = new User;
+    $schedule = new Schedule;
+    $concerns = new Concerns;
+    $userDetails = $user->getData('id',Auth::id());
+    $scheduleDetails = $schedule->getAppointmentRequestForPDF(4);
+
+    foreach ($scheduleDetails as $schedule_detail) {
+      $concernDetails = '';
+      $concernOthers = '';
+      if(count(explode(';',$schedule_detail->concerns)) == 1){
+        if($concerns->getDataByID($schedule_detail->concerns)->text == 'Others'){
+          $concernOthers = ': ' . $schedule_detail->concerns_others;
+        }
+        $concernDetails = $concerns->getDataByID($schedule_detail->concerns)->text . '' . $concernOthers;
+      }else{
+        $i = 1;
+        foreach(explode(';',$schedule_detail->concerns) as $c){
+          if($i <> count(explode(';',$schedule_detail->concerns))){
+            if($concerns->getDataByID($c)->text == 'Others'){
+              $concernOthers = ': ' . $schedule_detail->concerns_others;
+            }
+            $concernDetails = $concernDetails . '' . $concerns->getDataByID($c)->text . '' . $concernOthers . ', ';
+          }else{
+            if($concerns->getDataByID($c)->text == 'Others'){
+              $concernOthers = ': ' . $schedule_detail->concerns_others;
+            }
+            $concernDetails = $concernDetails . '' . $concerns->getDataByID($c)->text . '' . $concernOthers;
+          }
+          $i++;
+        }
+      }
+      $schedule_detail->concern_details = $concernDetails;
+    }
+
+    $data = [
+      'fname' => $userDetails->fname,
+      'lname' => $userDetails->lname,
+      'generated_on' => date("M d, Y"),
+      'scheduleDetails' => $scheduleDetails
+    ];
+
+    // dd($data);
+
+    $pdf = PDF::loadView('global.completedConsultationPDF', $data);
+    // return $pdf->stream();
+    return $pdf->download($userDetails->slug . '.pdf');
+    // return view('global.completedConsultationPDF',$data);
+  }
 }

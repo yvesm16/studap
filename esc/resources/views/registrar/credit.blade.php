@@ -38,7 +38,7 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('registrar/crediting/3') }}" style="color: #8a6d3b">
+                  <a href="{{ URL::to('registrar/crediting/2') }}" style="color: #8a6d3b">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
                             View Details
@@ -74,7 +74,7 @@
               </div>
           </div>
       </div>
-      <div class="row downloadReportDiv" style="margin-bottom: 1%; text-align: right">
+      <div class="row downloadCompletedListReportDiv" style="margin-bottom: 1%; text-align: right">
         <div class="col-lg-12" style="margin-bottom: 1%;">
           <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
         </div>
@@ -112,9 +112,9 @@
     var BASE_URL = $("#hdnBaseUrl").val();
     var pathname = window.location.pathname;
     if(pathname.split('/')[3] == 'completed'){
-      $('.downloadReportDiv').css('display','block');
+      $('.downloadCompletedListReportDiv').css('display','block');
     }else{
-      $('.downloadReportDiv').css('display','none');
+      $('.downloadCompletedListReportDiv').css('display','none');
     }
 
     $(function() {
@@ -124,7 +124,7 @@
             "bServerSide": true,
             "pagingType": "full_numbers",
             "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=3",
+            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=2",
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": [1,2,3,4,5]
@@ -144,5 +144,8 @@
       window.location.href = BASE_URL + '/registrar/crediting/details/' + $(this).data('id');
     });
 
+    $('.downloadCompletedListReportDiv').click(function(){
+      window.location.href = BASE_URL + '/crediting/details/completed_pdf';
+    });
   });
 </script>
