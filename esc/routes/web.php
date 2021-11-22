@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'crediting',[CreditController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postCredit',[CreditController::class, 'postCredit']);
       Route::match(array('GET', 'POST'), 'appeal',[AppealController::class, 'studentForm']);
-      Route::match(array('GET', 'POST'), 'postAppeal',[CreditController::class, 'postAppeal']);
+      Route::match(array('GET', 'POST'), 'postAppeal',[AppealController::class, 'postAppeal']);
     });
 
     Route::group(['prefix' => 'professor'], function(){
