@@ -10,6 +10,8 @@ use Auth;
 class Credit extends Model
 {
     use HasFactory;
+    public $table = 'credit_course';
+
 
     public function getLastID(){
       return DB::table('credit_course')
