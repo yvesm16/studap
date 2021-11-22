@@ -7,8 +7,8 @@
     <title>IICS E-Services</title>
     <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     
 </head>
 <body>
@@ -29,7 +29,6 @@
                           
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/crediting/1') }}" style="color: #8a6d3b">
                       <div class="panel-footer" style="background-color: white !important">
                           
                       </div>
@@ -41,7 +40,6 @@
                   <div class="panel-heading">
                       <div class="row">
                           <div class="col-xs-3">
-                              <span class="glyphicon glyphicon-ok-circle" style="font-size: 25px"></span>
                           </div>
                           <div class="col-xs-9 text-right">
                               
@@ -67,11 +65,11 @@
                         
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Full Name</th> 
-                            <th>Email</th>
-                            <th>Position</th>
-                            <th>Status</th>
+                            <th style="text-align:center">ID</th>
+                            <th style="text-align:center">Full Name</th> 
+                            <th style="text-align:center">Email</th>
+                            <th style="text-align:center">Position</th>
+                            <th style="text-align:center">Status</th>
                         </tr>
                         </thead>
                         @foreach($user as $user)

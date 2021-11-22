@@ -10,6 +10,7 @@ use Auth;
 class Schedule extends Model
 {
     use HasFactory;
+    public $table = 'professor_schedule';
 
     public function getAllApprovedScheduleByParameter($column,$param){
       return DB::table('professor_schedule')
@@ -142,27 +143,6 @@ class Schedule extends Model
               professor_schedule.status as status
           '));
       }
-    }
-
-    public function getAppointmentRequestForPDF($status){
-      return DB::table('professor_schedule')
-        ->join('users','users.id','=','professor_schedule.student_id')
-        ->where('professor_schedule.professor_id',Auth::id())
-        ->where('professor_schedule.status',$status)
-        ->select(DB::raw('
-          professor_schedule.id as id,
-          professor_schedule.slug as slug,
-          users.fname as fname,
-          users.lname as lname,
-          users.email as email,
-          professor_schedule.created_at as created_at,
-          professor_schedule.start_time as start_time,
-          professor_schedule.end_time as end_time,
-          professor_schedule.concerns as concerns,
-          professor_schedule.concerns_others as concerns_others,
-          professor_schedule.status as status
-        '))
-        ->get();
     }
 
 }

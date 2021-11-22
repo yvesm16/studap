@@ -23,6 +23,7 @@
         $(window).on('load', function() {
             $('#signatureModal').modal('show');
         });
+        
       </script>
     @endif
     @if(session('success'))

@@ -10,6 +10,7 @@ use Auth;
 class AuditTrail extends Model
 {
     use HasFactory;
+    
 
     public function getLastID(){
       return DB::table('audit_trail')
@@ -88,5 +89,7 @@ class AuditTrail extends Model
         ->where('id',$id)
         ->first();
     }
+
+    
 
 }

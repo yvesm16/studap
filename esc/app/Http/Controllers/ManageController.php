@@ -21,19 +21,19 @@ class ManageController extends Controller
 
         $ids = [1,2,3,4];
         $user2 = User::whereIn('type', $ids)->get();
-        $role='';
+        $role= '';
 
-        // if( $user->type==1){
-        //     $role= "Professor";   
-        // }elseif(User::where('type',2)){
-        //     $role = "Director";
-        // }elseif(User::where('type',3)){
-        //     $role = "Secretary/Clerks";
-        // }elseif(User::where('type',4)){
-        //     $role = "Registrar";
-        // }else {
-        //     $role = "Unidentified";
-        // }
+        if( User::where('type',2)){
+            $role= "Professor";   
+        }elseif(User::where('type',2)){
+            $role = "Director";
+        }elseif(User::where('type',3)){
+            $role = "Secretary/Clerks";
+        }elseif(User::where('type',4)){
+            $role = "Registrar";
+        }else {
+            $role = "Unidentified";
+        }
 
         return view('director/manage', ['user' => $user2, 'role'=>$role], compact('fname','lname'));
     }

@@ -29,12 +29,12 @@
                 <th id="th-dashboard">Weekly - Average Completed Request</th>
                 <th id="th-dashboard">Weekly - Number of Accepted Consultation</th>
             </tr>
-     
+            
             <tr id="tr-dashboard">
                 <td id="td-dashboard7">{{$ave}}</td>
-                <td id="td-dashboard7">12</td>
-                <td id="td-dashboard7">12</td>
-                <td id="td-dashboard7">12</td>
+                <td id="td-dashboard7">{{$backlog}}</td>
+                <td id="td-dashboard7">{{$ETime}}</td>
+                <td id="td-dashboard7">{{$numReq}}</td>
                 <td id="td-dashboard7">{{$accptReq}}</td>
             </tr>
         </table>
@@ -63,9 +63,9 @@
                 </tr>
             
                 <tr id="tr-dashboard2">
-                    <td id="td-dashboard2"><img class="imgdash" src="../images/Screenshot 2021-07-20 171828.png" style="width: 350px; height: 150px;"></td>
+                    <td id="td-dashboard2"><canvas id="ETime" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
                     
-                    <td id="td-dashboard2"><img class="imgdash" src="../images/Screenshot 2021-07-20 171828.png" style="width: 350px; height: 150px;"></td>
+                    <td id="td-dashboard2"><canvas id="completed" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
                 </tr>
             </table>
 
@@ -164,10 +164,10 @@
                             label: '',
                             data: [{{$accptReq}}],
                             backgroundColor: [
-                                'rgba(186, 166, 175, 0.2)',
-                                'rgba(160, 89, 97, 0.2)',
-                                'rgba(171, 49, 60, 0.2)',
-                                'rgba(180, 50, 60, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)'
                             ],
                             borderColor: [
@@ -194,19 +194,98 @@
                     }
                 });
 
+                var ctx = document.getElementById("completed").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Completed Time"],
+                        datasets: [{
+                            label: '',
+                            data: [{{$time}}],
+                            backgroundColor: [
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(186, 166, 175, 1)',
+                                'rgba(160, 89, 97, 1)',
+                                'rgba(171, 49, 60, 1)',
+                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            responsive: true,
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true,
+                                    precision:0
+
+                                }
+                            }]
+                        }
+                    }
+                });
+
+
                 var ctx = document.getElementById("backlog").getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Average Backlogs of Request in a week"],
+                        labels: ["Number of Backlogs"],
                         datasets: [{
                             label: '',
-                            data: 2,
+                            data: [{{$backlog}}],
                             backgroundColor: [
-                                'rgba(186, 166, 175, 0.2)',
-                                'rgba(160, 89, 97, 0.2)',
-                                'rgba(171, 49, 60, 0.2)',
-                                'rgba(180, 50, 60, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(186, 166, 175, 1)',
+                                'rgba(160, 89, 97, 1)',
+                                'rgba(171, 49, 60, 1)',
+                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            responsive: true,
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true,
+                                    precision:0
+
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                var ctx = document.getElementById("ETime").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Average Elapased Time"],
+                        datasets: [{
+                            label: '',
+                            data: [{{$ETime}}],
+                            backgroundColor: [
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)'
                             ],
                             borderColor: [
