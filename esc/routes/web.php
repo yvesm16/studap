@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'crediting',[CreditController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postCredit',[CreditController::class, 'postCredit']);
       Route::match(array('GET', 'POST'), 'appeal',[AppealController::class, 'studentForm']);
-      Route::match(array('GET', 'POST'), 'postAppeal',[CreditController::class, 'postAppeal']);
+      Route::match(array('GET', 'POST'), 'postAppeal',[AppealController::class, 'postAppeal']);
     });
 
     Route::group(['prefix' => 'professor'], function(){
@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'home',[UserController::class, 'directorHome']);
       Route::match(array('GET', 'POST'), 'uploadSignature',[UserController::class, 'uploadSignature']);
       Route::match(array('GET', 'POST'), 'getSignature',[UserController::class, 'getSignature']);
+      Route::match(array('GET', 'POST'), 'student_appeal/{id}',[UserController::class, 'directorAppeal']);
+      Route::match(array('GET', 'POST'), 'student_appeal/details/{slug}',[AppealController::class, 'directorAppealDetailsPage']);
       Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'directorCredit']);
       Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'directorCreditDetailsPage']);
       Route::match(array('GET', 'POST'), 'dashboard', [DashboardController::class, 'rate']);

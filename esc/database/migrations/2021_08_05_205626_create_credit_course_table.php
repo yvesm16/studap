@@ -20,6 +20,8 @@ class CreateCreditCourseTable extends Migration
           $table->foreign('user_id')->references('id')->on('users');
           $table->integer('credit_course_id')->unsigned()->comment('Credit Course ID')->nullable();
           $table->foreign('credit_course_id')->references('id')->on('credit_course');
+          $table->integer('appeal_id')->unsigned()->comment('Student Appeal ID')->nullable();
+          $table->foreign('appeal_id')->references('id')->on('appeal');
           $table->string('path',225);
           $table->integer('type')->comment('0-Signature|1-Document');
           $table->integer('status')->comment('0-Inactive|1-Active');

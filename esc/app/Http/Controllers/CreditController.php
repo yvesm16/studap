@@ -133,7 +133,6 @@ class CreditController extends Controller
 
       return Redirect::to('student/crediting')
         ->with('success','Credit Request was successfully submitted!');
-
     }
 
     private function isProfessorChairperson($id){

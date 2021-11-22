@@ -8,6 +8,7 @@ use App\Models\SubjectCrediting;
 use App\Models\Schedule;
 use App\Models\Concerns;
 use App\Models\Credit;
+use App\Models\Appeal;
 use Auth;
 
 class AjaxController extends Controller
@@ -18,6 +19,7 @@ class AjaxController extends Controller
         $schedule = new Schedule;
         $concerns = new Concerns;
         $credit = new Credit;
+        $appeal = new Appeal;
         $type = $request->input('type');
         switch($type){
             case "studentConsultationList":
@@ -184,6 +186,32 @@ class AjaxController extends Controller
                           $aRow->fname . ' ' . $aRow->lname,
                           $aRow->email,
                           $aRow->section,
+                          $button
+                      );
+                      $dtResult['aaData'][] = $data;
+                  }
+                  unset($dtResult['objResult']);
+                  echo json_encode($dtResult);
+                  break;
+
+              case "studentAppealList":
+                  if ($request->input('status') == 'completed') {
+                    $dtResult = Helpers::setDatatable($appeal->getCompletedDataTable(),array('users.fname','users.lname','users.email'));
+                  } else {
+                    $dtResult = Helpers::setDatatable($appeal->getDataTable(),array('users.fname','users.lname','users.email'));
+                  }
+
+                  foreach($dtResult['objResult'] as $aRow) {
+
+                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+
+                      $data = array(
+                          $aRow->id,
+                          $aRow->student_id,
+                          $aRow->fname . ' ' . $aRow->lname,
+                          $aRow->email,
+                          $aRow->section,
+                          $aRow->program,
                           $button
                       );
                       $dtResult['aaData'][] = $data;
