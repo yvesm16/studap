@@ -22,7 +22,6 @@
         <li <?php echo (str_contains($actual_link,'student_appeal')) ? 'class="active"' : ''; ?>><a href="#" class="student_appeal">Student Appeal</a></li>
         <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
         <li <?php echo (str_contains($actual_link,'dashboard')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/dashboard'); }}">Dashboard</a></li>
-        <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/manage'); }}">Manage Users</a></li>
 
         <!-- <li <?php echo (str_contains($actual_link,'users')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/requests/0'); }} ">Users</a></li> -->
         <!-- <li><a href="#">Crediting</a></li>
