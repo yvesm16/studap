@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Files;
 use App\Models\Course;
+use App\Models\Appeal;
 use App\Models\Credit;
 use Mailgun\Mailgun;
 use Redirect;
@@ -326,6 +327,34 @@ class UserController extends Controller
     public function registrarCredit(){
       $data = $this->getCredit(2,2);
       return view('registrar.credit',$data);
+    }
+
+    private function getAppeal($status){
+      $user = new User;
+      $files = new Files;
+      $appeal = new Appeal;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname
+      ];
+
+      $data['pending'] = $appeal->countByStatusPending($status);
+      $data['completed'] = $appeal->countByStatus($status);
+
+      if ($userDetails->type != 3) {
+        $signature = $files->getAllActiveFileByUserByParameter('type',0);
+        $data['signature'] = $signature;
+      }
+
+      return $data;
+    }
+
+    public function directorAppeal(){
+      $data = $this->getAppeal(2);
+      return view('director.appeal',$data);
     }
 
     public function logout(Request $request){

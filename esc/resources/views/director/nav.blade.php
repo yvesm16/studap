@@ -19,6 +19,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/home'); }} ">Home</a></li>
+        <li <?php echo (str_contains($actual_link,'student_appeal')) ? 'class="active"' : ''; ?>><a href="#" class="student_appeal">Student Appeal</a></li>
         <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
         <li <?php echo (str_contains($actual_link,'dashboard')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/dashboard'); }}">Dashboard</a></li>
         <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/manage'); }}">Manage Users</a></li>
@@ -161,6 +162,26 @@
           success: function (data) {
             if(data.result == true){
               window.location.href = BASE_URL + '/director/crediting/1';
+            }else{
+              $('#signatureModal').modal('show');
+              return false;
+            }
+          }
+      });
+    });
+
+    $('.student_appeal').on('click',function(){
+      $.ajax({
+          url: BASE_URL + '/director/getSignature',
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          data: {},
+          dataType    :'json',
+          success: function (data) {
+            if(data.result == true){
+              window.location.href = BASE_URL + '/director/student_appeal/pending';
             }else{
               $('#signatureModal').modal('show');
               return false;

@@ -27,7 +27,7 @@ class CreateAppealTable extends Migration
           $table->string('attached1');
           $table->string('attached2');
           $table->string('attached3')->nullable();
-          $table->integer('status')->comment('0-Pending|1-EvaluatedByProfessor|2-EvaluatedByDirector|3-EvaluatedByRegistrar/Done');
+          $table->integer('status')->comment('0-Pending|1-EvaluatedByDirector|2-OnlineConference/Done');
           $table->timestamp('created_at')->useCurrent();
           $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
