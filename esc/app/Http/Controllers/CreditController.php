@@ -482,9 +482,9 @@ class CreditController extends Controller
       $userDetails = $user->getData('id',Auth::id());
 
       if ($userDetails->type != 1) {
-        $creditDetails = $credit->getDataTableForPDF(4);
+        $creditDetails = $credit->getDataTableForPDF(3);
       } else {
-        $creditDetails = $credit->getChairpersonDataTableForPDF(4);
+        $creditDetails = $credit->getChairpersonDataTableForPDF(3);
       }
 
       $data = [

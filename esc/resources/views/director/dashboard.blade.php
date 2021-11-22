@@ -19,7 +19,7 @@
 <body>
     @include('director.nav')
 
-<div class="container indexMargin home">
+<div class="container indexMargiN home">
     <div id="outer-box-dashboard">
         <table id="dashboard-table">
             <tr id="tr-dashboard">

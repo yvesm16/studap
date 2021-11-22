@@ -12,27 +12,44 @@ body{
   margin-bottom: 2%;
 }
 
+.indexMargiN{
+  background-color: white;
+  width: 30%;
+  height: 20%;
+  margin-left: 15%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+
 .home{
   text-align: center;
 }
 
 #dashboard-table2{
-  margin-left: 14%;
+  margin-left: 11%;
   border-spacing: 50px;
 
 }
 
 #dashboard-table3{
   margin-left: 28%;
-  border-spacing: 50px;
+  border-spacing: 150px;
 }
 
-/*#dashboard-table,#th-dashboard,#td-dashboard7{
-  border: 2px solid black;
-}*/
+#dashboard-table,#th-dashboard,#td-dashboard7{
+  text-align: center;
+}
+
+#dashboard-table2,#th-dashboard2,#td-dashboard2{
+  border: 2px solid white;
+  text-align: center;
+  border-width: 30px;
+}
 
 #td-dashboard7{
   margin: 5px;
-
 }
+
+
 

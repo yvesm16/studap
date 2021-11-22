@@ -19,7 +19,7 @@
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('student/home'); }} ">Home</a></li>
         <li <?php echo (str_contains($actual_link,'schedule')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('student/schedule'); }}">Schedule</a></li>
-        <li><a href="#">Appeal</a></li>
+        <li <?php echo (str_contains($actual_link,'student/appeal')) ? 'class="active"' : ''; ?>><a href="#" class="appeal">Appeal</a></li>
         <li <?php echo (str_contains($actual_link,'student/crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
         <li <?php echo (str_contains($actual_link,'tracker')) ? 'class="active"' : ''; ?> class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
@@ -163,6 +163,42 @@ $(document).ready(function(){
               return false;
             }
           }
+      });
+    });
+
+    $('.appeal').on('click',function(){
+      $.ajax({
+        url: BASE_URL + '/student/getCourses',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {},
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            for(let i = 0; i < data['data'].length; i++){
+              $("#course_id").append(new Option(data['data'][i]['text'], data['data'][i]['id']));
+            }
+          }
+        }
+      });
+      $.ajax({
+        url: BASE_URL + '/student/getStudentID',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {},
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            window.location.href = BASE_URL + '/student/appeal';
+          }else{
+            $('#studentIDModal').modal('show');
+            return false;
+          }
+        }
       });
     });
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CreditController;
+use App\Http\Controllers\AppealController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManageController;
 
@@ -63,6 +64,8 @@ Route::group(['middleware' => 'auth'], function(){
       // Route::match(array('GET', 'POST'), 'tracker/crediting/details/{slug}',[CreditController::class, 'trackerCreditingDetailsPage']);
       Route::match(array('GET', 'POST'), 'crediting',[CreditController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postCredit',[CreditController::class, 'postCredit']);
+      Route::match(array('GET', 'POST'), 'appeal',[AppealController::class, 'studentForm']);
+      Route::match(array('GET', 'POST'), 'postAppeal',[CreditController::class, 'postAppeal']);
     });
 
     Route::group(['prefix' => 'professor'], function(){
