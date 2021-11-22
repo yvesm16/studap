@@ -141,7 +141,7 @@ class DashboardController extends Controller
             $ETimecc = '';
         }
 
-        $ETime = round($ETimear + $ETimear / 3);
+        $ETime = round($ETimear + $ETimecc / 3);
 
         //navbar
         $user = new User;
