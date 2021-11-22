@@ -93,13 +93,17 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'directorCredit']);
       Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'directorCreditDetailsPage']);
       Route::match(array('GET', 'POST'), 'dashboard', [DashboardController::class, 'rate']);
-      Route::match(array('GET', 'POST'), 'manage', [ManageController::class, 'manage']);
+      
     });
 
     Route::group(['prefix' => 'secretary'], function(){
       Route::match(array('GET', 'POST'), 'home',[UserController::class, 'secretaryHome']);
       Route::match(array('GET', 'POST'), 'crediting/{id}',[UserController::class, 'secretaryCredit']);
       Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'secretaryCreditDetailsPage']);
+      Route::match(array('GET', 'POST'), 'manage', [ManageController::class, 'manage']);
+      Route::match(array('GET', 'POST'), 'userChangeStatus', [ManageController::class, 'userChangeStatus']);
+      Route::match(array('GET', 'POST'), 'addUser', [UserController::class, 'addUser']);
+
     });
 
     Route::group(['prefix' => 'registrar'], function(){

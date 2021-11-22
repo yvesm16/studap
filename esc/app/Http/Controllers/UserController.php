@@ -42,7 +42,7 @@ class UserController extends Controller
           'verified' => 0,
           'status' => 0
         ];
-
+      
         if (str_contains($request->email, '@ust.edu.ph')) {
             $userDetails = $user->getData('email',$request->email);
             if($userDetails == null){
@@ -364,6 +364,32 @@ class UserController extends Controller
         ));
       }
 
+    }
+
+    public function addUser(Request $request) {
+      $user = new User;
+      $slug = md5($user->getLastID());
+        if(str_contains($request->email, 'ust.edu.ph')) {
+          $data = [
+            'fname' => $request->input('fname'),
+            'lname' => $request->input('lname'),
+            'email' => $request->input('email'),
+            'slug' => $slug,
+            'password' => Hash::make($request->input('tempPassword')),
+            'type' => $request->input('type'),
+            'verified' => 1,
+            'status' => 0
+          ];
+          $user->insertData($data);
+
+          return back()->with('success','New User has been successfully added');
+
+        }else {
+          return back()->with('warning','Input UST Email only. Try Again');
+        }
+
+    
+      return back();
     }
 
     public function uploadSignature(Request $request){

@@ -51,5 +51,21 @@ body{
   margin: 5px;
 }
 
+table{
+  margin-top:   2%;
+
+  
+}
+
+#add {
+  margin-left:69%;
+}
+
+#fname, #lname, #email, #type, #tempPassword {
+  text-align: left;
+}
+
+
+
 
 

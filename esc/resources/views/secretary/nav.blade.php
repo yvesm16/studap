@@ -20,6 +20,8 @@
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/home'); }} ">Home</a></li>
         <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/crediting/2'); }} " class="crediting">Crediting</a></li>
+        <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/manage'); }}">Manage Users</a></li>
+
         <!-- <li <?php echo (str_contains($actual_link,'users')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/requests/0'); }} ">Users</a></li> -->
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
