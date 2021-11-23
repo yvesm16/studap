@@ -22,7 +22,7 @@ class UserController extends Controller
     public function login(){
       return view('index');
     }
-
+  
     public function insertData(Request $request){
       $user = new User;
 
@@ -32,7 +32,7 @@ class UserController extends Controller
         $slug = md5($user->getLastID());
       }
   
-    if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{8,}$/", $request->input('pwd'))==1) {
+    if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
       if($request->input('pwd') == $request->input('rpwd')){
         $data = [
           'fname' => $request->input('fname'),
@@ -374,7 +374,7 @@ class UserController extends Controller
     public function changePassword(Request $request){
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-      if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{7,}$/", $request->newPassword) ==1) {
+      if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){

@@ -42,14 +42,14 @@ class DashboardController extends Controller
         
         //accepted consul
         $ar = new Schedule;
-        $total = $ar->getAllApprovedScheduleByParameter('title','Appointment');
-        $finalar = count($total);
+        $total = $ar->getAllApprovedScheduleByParameter('title','Appointment')->count();
+        $finalar = $total;
 
         $cc = new Credit;
         $ccTotal = $cc
         ->where('status', 1)
-        ->get();
-        $finalcc = count($ccTotal);
+        ->count();
+        $finalcc = $ccTotal;
 
         $sa = 0;
         $finalsa=0;
@@ -62,24 +62,24 @@ class DashboardController extends Controller
         if(count($cb) > 0){
             $FCB = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
             ->where('status', '!=', 4)
-            ->get();
+            ->count();
         }else {
             $FCB = 0;
         }
-        $finalar = count($FCB);
+        $finalar = $FCB;
     
         //studap
 
         //cc
         $cc2 = $cc->where('status','!=', 3)->get();
         if(count($cb) > 0){
-            $FCB = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+            $FCC = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
             ->where('status', '!=', 3)
-            ->get();
+            ->count();
         }else {
             $FCB = 0;
         }
-        $finalcc = count($FCB);
+        $finalcc = $FCC;
 
         $backlog = round($finalar + $finalcc /3);
 
@@ -92,8 +92,8 @@ class DashboardController extends Controller
 
         $req = $ar
         ->where('status',4)
-        ->get();
-        $numReqar = count($req);
+        ->count();
+        $numReqar = $req;
         $timear = round((int)$aveTime[0]->timediff/3600) ; //final formula
         
         //studap
@@ -107,8 +107,8 @@ class DashboardController extends Controller
 
         $reqcc = $ar
         ->where('status',3)
-        ->get();
-        $numReqcc = count($reqcc);
+        ->count();
+        $numReqcc = $reqcc;
         $timecc = round((int)$aveTimecc[0]->timediffcc/3600) ;
 
         $numReq = round($numReqar + $numReqcc /3);
@@ -158,22 +158,7 @@ class DashboardController extends Controller
         'backlog', 'ETime'));
     }
 
-    // public function directorDash(){
-    //     $user = new User;
-    //     $files = new Files;
-  
-    //     $userDetails = $user->getData('id',Auth::id());
-    //     $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
-  
-    //     $data = [
-    //       'id' => Auth::id(),
-    //       'fname' => $userDetails->fname,
-    //       'lname' => $userDetails->lname,
-    //       'signature' => $directorSignature
-    //     ];
-  
-    //     return view('director.dashboard',$data);
-    //   }
+    
 
    
 }
