@@ -88,6 +88,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" type='submit' class="btn btn-primary" id="submitChangePassword">Submit</button>
       </div>
+    </form>
     </div>
 
   </div>
