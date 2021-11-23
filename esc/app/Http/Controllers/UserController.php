@@ -374,38 +374,39 @@ class UserController extends Controller
     public function changePassword(Request $request){
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-    if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{1,}$/", $request->newPassword)==1) {
-      if(Hash::check($request->currentPassword,$userDetails->password)){
-        if($request->newPassword == $request->confirmPassword){
-          $data = [
-            'password' => Hash::make($request->newPassword)
-          ];
+      if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{7,}$/", $request->newPassword) ==1) {
+        if(Hash::check($request->currentPassword,$userDetails->password)){
+        
+          if($request->newPassword == $request->confirmPassword){
+            $data = [
+              'password' => Hash::make($request->newPassword)
+            ];
 
-          $user->updateData('id',Auth::id(),$data);
-          return Response::json(array(
-              'result' => true,
-              'text' => 'Password was successfully updated!'
-          ));
-
+            $user->updateData('id',Auth::id(),$data);
+            return Response::json(array(
+                'result' => true,
+                'text' => 'Password was successfully updated!'
+            ));
+          }else{
+            return Response::json(array(
+                'result' => false,
+                'text' => 'New and confirm password mismatch!'
+            ));
+          }
         }else{
           return Response::json(array(
-              'result' => false,
-              'text' => 'New and confirm password mismatch!'
-          ));
-        }
-      }else{
-        return Response::json(array(
             'result' => false,
             'text' => 'Invalid current password!'
         ));
-      }
-    }else {
+        }
+      }else  {
       return Response::json(array(
         'result' => false,
-        'text' => 'Must contain capital letters, numbers, and special characters'
+        'text' => 'Must contain 8 characters, capital letters, numbers, and special characters'
       ));
     }
-    }
+    } 
+    
 
     public function addUser(Request $request) {
       $user = new User;
