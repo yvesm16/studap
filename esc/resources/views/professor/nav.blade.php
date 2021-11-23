@@ -70,6 +70,7 @@
           <li class="active"><a data-toggle="tab" href="#home">Change Password</a></li>
           <li><a data-toggle="tab" href="#menu1">Signature</a></li>
         </ul>
+        <form action="{{ URL::to('/changePassword') }}" method="post">
 
         <div class="tab-content">
           <div id="home" class="tab-pane fade in active">
@@ -92,8 +93,9 @@
                 <span id="failedContent"></span>
             </div>
             <div class="form-group">
-              <button type="button" class="btn btn-primary" id="submitChangePassword">Submit</button>
+              <button type="submit" class="btn btn-primary" id="submitChangePassword">Submit</button>
             </div>
+          </form>
           </div>
           <div id="menu1" class="tab-pane fade" style="padding-top: 1%">
             <form action="{{ URL::to('professor/uploadSignature') }}" method="post" enctype="multipart/form-data">

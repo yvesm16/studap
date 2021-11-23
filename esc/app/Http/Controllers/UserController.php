@@ -144,6 +144,7 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
+    if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
       if($request->input('pwd') == $request->input('cpwd')){
 
         $data = [
@@ -160,6 +161,10 @@ class UserController extends Controller
         return Redirect::to('reset-password/' . $request->input('slug'))
           ->with('error','Password mistmatch!');
       }
+    }else {
+      return Redirect::to('reset-password/' . $request->input('slug'))
+          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+    }
     }
 
     public function checkLogin(Request $request){
@@ -576,5 +581,17 @@ class UserController extends Controller
 
     }
 
+    public function studstatis(Request $request) {
+      $rate = $request->stars;
+      $rating = new ratings;
+
+      if($_SERVER["REQUEST_METHOD"] == "POST") {
+          $rating->rating = $rate;
+          $rating->save();
+      }else {
+          //return redirect()->back()->with('message', 'Please select the necessary star based on your experience from the recent transaction');
+      }
+      return view('student/statisfaction');
+  }
 
 }

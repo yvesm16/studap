@@ -60,7 +60,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Change Password</h4>
       </div>
-      <form action="{{ URL::to('student/changePassword') }}" method="post">
+      <form action="{{ URL::to('/changePassword') }}" method="post">
       <div class="modal-body">
           <div class="form-group">
             <label for="pwd">Current Password:</label>
