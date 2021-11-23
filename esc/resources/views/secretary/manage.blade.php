@@ -45,8 +45,9 @@
                       
                     @endif
                     <center>
-
+                    <div class='container'>
                     <button data-toggle="modal" data-target="#myDetails" id="add"type="button" class="btn btn-light">Add New User</button><br>
+                    <div>
                     <div class="modal fade" id="myDetails" role="dialog">
   <div class="modal-dialog">
 

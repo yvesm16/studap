@@ -51,8 +51,8 @@ class DashboardController extends Controller
         ->get();
         $finalcc = count($ccTotal);
 
-        $sa = '';
-        $finalsa='';
+        $sa = 0;
+        $finalsa=0;
         $accptReq = round($finalar + $finalcc /3);
 
         //backlogs
@@ -64,7 +64,7 @@ class DashboardController extends Controller
             ->where('status', '!=', 4)
             ->get();
         }else {
-            $FCB = '';
+            $FCB = 0;
         }
         $finalar = count($FCB);
     
@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ->where('status', '!=', 3)
             ->get();
         }else {
-            $FCB = '';
+            $FCB = 0;
         }
         $finalcc = count($FCB);
 
@@ -97,7 +97,7 @@ class DashboardController extends Controller
         $timear = round((int)$aveTime[0]->timediff/3600) ; //final formula
         
         //studap
-        $sa = '';
+        $sa = 0;
 
         //cc
         $aveTimecc = $cc
@@ -124,7 +124,7 @@ class DashboardController extends Controller
             $etimear = $ar->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffar"))->get();
             $ETimear = round((int)$etimear[0]->timediffar/3600) ;
         }else {
-            $ETimear = '';
+            $ETimear = 0;
         }
 
         //sa
@@ -138,7 +138,7 @@ class DashboardController extends Controller
             $etimecc = $cc->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffcc"))->get();
             $ETimecc = round((int)$etimecc[0]->timediffcc/3600) ;
         }else {
-            $ETimecc = '';
+            $ETimecc = 0;
         }
 
         $ETime = round($ETimear + $ETimecc / 3);
