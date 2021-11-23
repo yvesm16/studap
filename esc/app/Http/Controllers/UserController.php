@@ -31,7 +31,8 @@ class UserController extends Controller
       }else{
         $slug = md5($user->getLastID());
       }
-
+  
+    if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{8,}$/", $request->input('pwd'))==1) {
       if($request->input('pwd') == $request->input('rpwd')){
         $data = [
           'fname' => $request->input('fname'),
@@ -80,6 +81,12 @@ class UserController extends Controller
           ->withInput()
           ->with('error','Password does not match!');
       }
+    }else {
+      return Redirect::to('register')
+          ->withInput()
+          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+    }
+  
     }
 
     public function verifyUser($slug){
@@ -367,7 +374,7 @@ class UserController extends Controller
     public function changePassword(Request $request){
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-
+    if(preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[0-9A-Za-z!-\/]{1,}$/", $request->newPassword)==1) {
       if(Hash::check($request->currentPassword,$userDetails->password)){
         if($request->newPassword == $request->confirmPassword){
           $data = [
@@ -392,7 +399,12 @@ class UserController extends Controller
             'text' => 'Invalid current password!'
         ));
       }
-
+    }else {
+      return Response::json(array(
+        'result' => false,
+        'text' => 'Must contain capital letters, numbers, and special characters'
+      ));
+    }
     }
 
     public function addUser(Request $request) {
