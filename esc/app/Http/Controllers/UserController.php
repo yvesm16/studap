@@ -8,6 +8,7 @@ use App\Models\Files;
 use App\Models\Course;
 use App\Models\Appeal;
 use App\Models\Credit;
+use App\Models\ratings;
 use Mailgun\Mailgun;
 use Redirect;
 use Hash;
@@ -32,7 +33,8 @@ class UserController extends Controller
         $slug = md5($user->getLastID());
       }
   
-    if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
+      if(strlen($request->input('pwd'))<8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('rpwd')){
         $data = [
           'fname' => $request->input('fname'),
@@ -376,10 +378,11 @@ class UserController extends Controller
       return redirect('/');
     }
 
-    public function changePassword(Request $request){
+    public function changePassword(Request $request){ 
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-      if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
+      if(strlen($request->input('pwd'))<8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){
@@ -581,17 +584,17 @@ class UserController extends Controller
 
     }
 
-    public function studstatis(Request $request) {
-      $rate = $request->stars;
-      $rating = new ratings;
+    public function statisfaction(Request $request) {
+      // $rate = $request->stars;
+      // $rating = new ratings;
 
-      if($_SERVER["REQUEST_METHOD"] == "POST") {
-          $rating->rating = $rate;
-          $rating->save();
-      }else {
-          //return redirect()->back()->with('message', 'Please select the necessary star based on your experience from the recent transaction');
-      }
-      return view('student/statisfaction');
-  }
+      // if($_SERVER["REQUEST_METHOD"] == "POST") {
+      //     $rating->rating = $rate;
+      //     $rating->save();
+      // }else {
+      //     //return redirect()->back()->with('message', 'Please select the necessary star based on your experience from the recent transaction');
+      // }
+      return view('statisfaction');
+    }
 
 }

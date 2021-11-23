@@ -46,3 +46,32 @@ body{
   }
 
 }
+
+.stars {
+  position: relative;
+}
+.stars input {
+  display: none;
+  
+}
+.stars input:checked ~ label:not(.reset) {
+  -webkit-animation: wobble 0.8s ease-out;
+          animation: wobble 0.8s ease-out;
+  color: #fbc416;
+}
+.stars input:checked:not(#star-reset) ~ label.reset {
+  display: block;
+}
+.stars label{
+  /* display: block; */
+  /* position: relative; */
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  /* margin-right:50%; */
+  cursor: pointer;
+  color: #3d3d3d;
+  transition: color 0.1s ease-out;
+  /* z-index: 10; */
+  float: right;
+}
