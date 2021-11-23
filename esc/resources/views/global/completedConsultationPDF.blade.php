@@ -52,7 +52,7 @@
         <td>{{ $schedule_detail->id }}</td>
         <td>{{ $schedule_detail->fname }} {{ $schedule_detail->lname }}</td>
         <td>{{ $schedule_detail->email }}</td>
-        <td>{{ date("M d, Y", strtotime('$schedule_detail->created_at')) }}</td>
+        <td>{{ date("M d, Y", strtotime($schedule_detail->created_at)) }}</td>
         <td>{{ date('h:i a', strtotime($schedule_detail->start_time)) }}</td>
         <td>{{ date('h:i a', strtotime($schedule_detail->end_time)) }}</td>
         <td>{{ $schedule_detail->concern_details }}</td>
