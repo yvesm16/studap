@@ -219,8 +219,8 @@
         $("#failedNotificationTime").show();
         $("#submitConsultationForm").attr('disabled',true);
 
-    }else if(diff >3600){
-       $("#failedTextTime").text("Appointment Maximum Time : 1 Hour");
+    }else if(diff >10800){
+       $("#failedTextTime").text("Appointment Maximum Time : 3 Hours");
         $("#failedNotificationTime").show();
         $("#submitConsultationForm").attr('disabled',true);
 
