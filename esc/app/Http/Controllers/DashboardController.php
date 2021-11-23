@@ -77,7 +77,7 @@ class DashboardController extends Controller
             ->where('status', '!=', 3)
             ->count();
         }else {
-            $FCB = 0;
+            $FCC = 0;
         }
         $finalcc = $FCC;
 
