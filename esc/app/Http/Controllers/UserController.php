@@ -585,15 +585,22 @@ class UserController extends Controller
     }
 
     public function statisfaction(Request $request) {
-      // $rate = $request->stars;
-      // $rating = new ratings;
+      $rate = $request->stars;
+      $rating = new ratings;
 
-      // if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // if($rate) {
       //     $rating->rating = $rate;
       //     $rating->save();
+
+      //     Session::flash('success', "Your rating has been submitted. Thank you for using ESC E-Services");
+      //     return view('statisfaction');
+
+
       // }else {
-      //     //return redirect()->back()->with('message', 'Please select the necessary star based on your experience from the recent transaction');
+      //   Session::flash('warning', "An error has occured. Please refresh the page and Try Again");
+      //   return view('statisfaction');
       // }
+
       return view('statisfaction');
     }
 

@@ -63,15 +63,21 @@ body{
   display: block;
 }
 .stars label{
-  /* display: block; */
+  display: block;
   /* position: relative; */
   width: 40px;
   height: 40px;
   font-size: 40px;
   /* margin-right:50%; */
+  /* left-padding; */
+  /* align-content: center; */
   cursor: pointer;
   color: #3d3d3d;
   transition: color 0.1s ease-out;
   /* z-index: 10; */
   float: right;
+}
+
+fieldset{
+
 }

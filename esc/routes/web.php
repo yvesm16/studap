@@ -67,6 +67,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'appeal',[AppealController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postAppeal',[AppealController::class, 'postAppeal']);
       // Route::match(array('GET', 'POST'), 'changePassword',[UserController::class, 'changePassword']);
+      // Route::match(array('GET', 'POST'), 'statisfaction',[UserController::class, 'statisfaction']);
+
 
     });
 
