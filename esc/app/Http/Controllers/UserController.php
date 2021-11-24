@@ -588,18 +588,18 @@ class UserController extends Controller
       $rate = $request->stars;
       $rating = new ratings;
 
-      // if($rate) {
-      //     $rating->rating = $rate;
-      //     $rating->save();
+      if($rate) {
+          $rating->rating = $rate;
+          $rating->save();
 
-      //     Session::flash('success', "Your rating has been submitted. Thank you for using ESC E-Services");
-      //     return view('statisfaction');
+          Session::flash('success', "Your rating has been submitted. Thank you for using ESC E-Services");
+          return view('statisfaction');
 
 
-      // }else {
-      //   Session::flash('warning', "An error has occured. Please refresh the page and Try Again");
-      //   return view('statisfaction');
-      // }
+      }else {
+        Session::flash('warning', "An error has occured. Please refresh the page and Try Again");
+        return view('statisfaction');
+      }
 
       return view('statisfaction');
     }
