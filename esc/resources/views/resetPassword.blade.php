@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -28,7 +28,7 @@
           <img src="{{ URL::asset('img/iicslogo.png')}}" width="100px">
         </div>
         <div class="col-sm-12">
-          <h1>IICS E-SERVICES</h1>
+          <h1>CICS E-SERVICES</h1>
         </div>
         <div class="col-sm-12">
           <h3>Consultation, Student Appeal and Course Crediting</h3>

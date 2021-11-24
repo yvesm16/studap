@@ -244,7 +244,7 @@ $(document).ready(function(){
         <div class="modal-body">
           <div class="form-group">
             <label>Student ID</label>
-            <input type="number" class="form-control" id="student_id" name="student_id">
+            <input type="number" class="form-control" id="student_id" name="student_id" maxlength="10" minlength="10">
           </div>
           <div class="form-group">
             <label>Course</label>

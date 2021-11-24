@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12" style="text-align: center">
     <h4>
-      UNIVERSITY OF SANTO TOMAS
+      UNIVERSITY OF SANTO THOMAS
     </h4>
   </div>
 </div>

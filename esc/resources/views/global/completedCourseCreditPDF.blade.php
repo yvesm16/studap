@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
 </head>
 <body>
   <center>
     <div>  
       <h4>
-        UNIVERSITY OF SANTO TOMAS<br>Institute of Information Computing Sciences
+        UNIVERSITY OF SANTO TOMAS<br>College of Information Computing Sciences
       </h4>
       <label>
         Generated On: {{ $generated_on }}

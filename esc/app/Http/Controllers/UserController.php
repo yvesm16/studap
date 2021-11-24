@@ -146,7 +146,8 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
-    if(preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $request->input('pwd'))==1) {
+      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('cpwd')){
 
         $data = [
@@ -340,6 +341,7 @@ class UserController extends Controller
 
     public function registrarCredit(){
       $data = $this->getCredit(2,2);
+
       return view('registrar.credit',$data);
     }
 
