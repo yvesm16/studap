@@ -60,6 +60,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Change Password</h4>
       </div>
+      <form action="{{ URL::to('/changePassword') }}" method="post">
       <div class="modal-body">
           <div class="form-group">
             <label for="pwd">Current Password:</label>
@@ -80,11 +81,13 @@
               <span id="failedContent"></span>
           </div>
       </div>
+    
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="submitChangePassword">Submit</button>
+        <button type="button" type='submit' class="btn btn-primary" id="submitChangePassword">Submit</button>
       </div>
     </div>
+  </form>
 
   </div>
 </div>
@@ -241,7 +244,7 @@ $(document).ready(function(){
         <div class="modal-body">
           <div class="form-group">
             <label>Student ID</label>
-            <input type="number" class="form-control" id="student_id" name="student_id">
+            <input type="number" class="form-control" id="student_id" name="student_id" maxlength="10" minlength="10">
           </div>
           <div class="form-group">
             <label>Course</label>

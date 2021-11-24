@@ -6,7 +6,7 @@
 <body>
   <center>
     <h4>
-      UNIVERSITY OF SANTO TOMAS
+      UNIVERSITY OF SANTO THOMAS
     </h4>
     <label>
       España Boulevard, Sampaloc, Manila<br>

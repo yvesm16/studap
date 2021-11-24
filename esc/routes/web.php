@@ -67,6 +67,10 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'tracker/appeal',[AppealController::class, 'getTrackerAppeal']);
       Route::match(array('GET', 'POST'), 'appeal',[AppealController::class, 'studentForm']);
       Route::match(array('GET', 'POST'), 'postAppeal',[AppealController::class, 'postAppeal']);
+      // Route::match(array('GET', 'POST'), 'changePassword',[UserController::class, 'changePassword']);
+      // Route::match(array('GET', 'POST'), 'statisfaction',[UserController::class, 'statisfaction']);
+
+
     });
 
     Route::group(['prefix' => 'professor'], function(){
@@ -135,6 +139,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::match(array('GET', 'POST'), 'getNotification',[NotificationController::class, 'getNotification']);
     Route::match(array('GET', 'POST'), 'getNotificationDetails',[NotificationController::class, 'getNotificationDetails']);
     Route::match(array('GET', 'POST'), 'updateNotificationStatus',[NotificationController::class, 'updateNotificationStatus']);
+    Route::match(array('GET', 'POST'), 'statisfaction',[UserController::class, 'statisfaction']);
 
     Route::match(array('GET', 'POST'), 'schedule/details/completed_pdf',[ScheduleController::class, 'completedConsultationListPDF']);
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -140,7 +140,7 @@
           </div>
 
           <div class="col-md-6" style="text-align: left">
-              <input type="text" class="form-control" name="contact_number" id="contact_number" required>
+              <input type="text" class="form-control" name="contact_number" id="contact_number" maxlength="11" minlength='11' required>
           </div>
         </div>
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">

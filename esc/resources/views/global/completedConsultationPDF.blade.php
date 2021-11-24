@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
 </head>
 <body>
   <center>
     <div>  
       <h4>
-        UNIVERSITY OF SANTO TOMAS<br>Institute of Information Computing Sciences
+        UNIVERSITY OF SANTO THOMAS<br>College of Information Computing Sciences
       </h4>
       <label>
         Generated On: {{ $generated_on }}
@@ -52,7 +52,7 @@
         <td>{{ $schedule_detail->id }}</td>
         <td>{{ $schedule_detail->fname }} {{ $schedule_detail->lname }}</td>
         <td>{{ $schedule_detail->email }}</td>
-        <td>{{ date("M d, Y", strtotime('$schedule_detail->created_at')) }}</td>
+        <td>{{ date("M d, Y", strtotime($schedule_detail->created_at)) }}</td>
         <td>{{ date('h:i a', strtotime($schedule_detail->start_time)) }}</td>
         <td>{{ date('h:i a', strtotime($schedule_detail->end_time)) }}</td>
         <td>{{ $schedule_detail->concern_details }}</td>

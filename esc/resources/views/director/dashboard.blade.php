@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IICS E - Services</title>   
+    <title>CICS E - Services</title>   
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,800&display=swap"
     rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
@@ -20,66 +20,64 @@
     @include('director.nav')
 
 <div class="container indexMargiN home">
-    <div id="outer-box-dashboard">
-        <table id="dashboard-table">
-            <tr id="tr-dashboard">
-                <th id="th-dashboard">Average level of satisfaction from the request</th>
-                <th id="th-dashboard">Weekly - Number of backlog of service request</th>
-                <th id="th-dashboard">Weekly - Average of Elapsed Time</th>
-                <th id="th-dashboard">Weekly - Average Completed Request</th>
-                <th id="th-dashboard">Weekly - Number of Accepted Consultation</th>
-            </tr>
-            
-            <tr id="tr-dashboard">
-                <td id="td-dashboard7">{{$ave}}</td>
-                <td id="td-dashboard7">{{$backlog}}</td>
-                <td id="td-dashboard7">{{$ETime}}</td>
-                <td id="td-dashboard7">{{$numReq}}</td>
-                <td id="td-dashboard7">{{$accptReq}}</td>
-            </tr>
-        </table>
+    <div id="outer-box-dashboard" class='row'>
+        {{-- <table id="dashboard-table"> --}}
+            {{-- <tr id="tr-dashboard"> --}}
+        <div class='container'>
+            <div classs='row'>
+                <div class='col-sm-12 col-md-6 col-lg-3'style='text-align:center'>
+                    <p>Average level of satisfaction from the request</p>
+                    <p>{{$ave}}</p>
+                </div>
+                <div class='col-sm-12 col-md-6 col-lg-3' style='text-align:center'>
+                    <p>Weekly - Number of backlog of service request</p>
+                    <p>{{$backlog}}</p>
+                </div>
+                <div class='col-sm-12 col-md-6 col-lg-2' style='text-align:center'>
+                    <p>Weekly - Average of Elapsed Time</p>
+                    <p>{{$ETime}}</p>
+                </div>
+                <div class='col-sm-12 col-md-6 col-lg-2' style='text-align:center'>
+                    <p>Weekly - Average Completed Request</p>
+                    <p >{{$numReq}}</p>
+                </div>
+                <div class='col-sm-12 col-md-12 col-lg-2' style='text-align:center'>
+                    <p>Weekly - Number of Accepted Consultation</p>
+                    <p>{{$accptReq}}</p>
+                </div>
+            </div>
+        </div>
+          
             <hr id="hr-dashboard">
 
 
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-            <table id="dashboard-table2">
-                <tr id="tr-dashboard2">
-                    <th id="th-dashboard2">The Average level of satisfaction from the request</th>
-                    <th id="th-dashboard2"> The Number of backlog of service request</th>
-                </tr>
-         
-                <tr id="tr-dashboard2">
-                    <td id="td-dashboard2"><canvas id="rate" class="imgdash" style="width: 350px; height: 150px;"></canvas>
-                    </td>
-                    <td id="td-dashboard2"><canvas id="backlog" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
-                </tr>
-            </table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                <p>The Average level of satisfaction from the request</p>
+                <canvas id="rate" class="imgdash" >
+            </div>
+            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                <p> The Number of backlog of service request</p>
+                <canvas id="backlog" class="imgdash" >
 
-            <table id="dashboard-table2">
-                
-                <tr id="tr-dashboard2">
-                <th id="th-dashboard2">Average of Elapsed Time</th>  
-                <th id="th-dashboard2">The Average Time the Request is Completed</th> 
-                </tr>
-            
-                <tr id="tr-dashboard2">
-                    <td id="td-dashboard2"><canvas id="ETime" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
-                    
-                    <td id="td-dashboard2"><canvas id="completed" class="imgdash" style="width: 350px; height: 150px;"></canvas></td>
-                </tr>
-            </table>
+            </div>
+            <div  class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                <p id="th-dashboard2">Average of Elapsed Time</p>  
+                <canvas id="ETime" class="imgdash" >
+            </div>
+            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                <p id="th-dashboard2">The Average Time the Request is Completed</p> 
+                <canvas id="completed" class="imgdash" >
+            </div>
+            <div class='col-sm-12 col-md-12 col-lg-12' style='align-content:center'>
+                <p id="th-dashboard2">Number of Accepted Consultation Appointment</p>
+                <canvas id="acceptReq" class="imgdash" >
+            </div>
 
-            <table id="dashboard-table3">
-                <tr id="tr-dashboard2">
-                    <th id="th-dashboard2">Number of Accepted Consultation Appointment</th>
-                </tr>
-         
-                <tr id="tr-dashboard2">
-                    <td id="td-dashboard2"><canvas id="acceptReq" class="imgdash" style="width: 350px; height: 150px;"></canvas>
-                </tr>
-            </table>
-            
-
+        </div>
+    </div>
 </div>          
 <!-- The Modal -->
 <div id="dashmodal" class="modaldash">

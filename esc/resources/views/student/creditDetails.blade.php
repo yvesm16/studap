@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col-md-12" style="text-align: center">
       <h4>
-        UNIVERSITY OF SANTO TOMAS
+        UNIVERSITY OF SANTO THOMAS
       </h4>
     </div>
   </div>

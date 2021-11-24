@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>IICS E-Services</title>
+    <title>cICS E-Services</title>
     <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,8 +45,9 @@
                       
                     @endif
                     <center>
-
+                    <div class='container'>
                     <button data-toggle="modal" data-target="#myDetails" id="add"type="button" class="btn btn-light">Add New User</button><br>
+                    <div>
                     <div class="modal fade" id="myDetails" role="dialog">
   <div class="modal-dialog">
 

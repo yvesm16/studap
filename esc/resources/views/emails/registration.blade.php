@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IICS E-Services - Email Account Verification</title>
+    <title>CICS E-Services - Email Account Verification</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -21,11 +21,11 @@
           Please click this [<b><a href="{{ URL::to('verifyEmail'); }}/{{ $slug }}">link</a></b>] to confirm your email address
         </p>
         <p style="margin-top: 5%">
-          Once confirmed, you will be redirected to the login page of IICS E-Services.
+          Once confirmed, you will be redirected to the login page of CICS E-Services.
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>
-          IICS E-Services Support Team
+          CICS E-Services Support Team
         </p>
       </div>
     </div>

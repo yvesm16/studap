@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>CICS E - Services</title>
 </head>
 <body>
   <center>
     <div>  
       <h4>
-        UNIVERSITY OF SANTO TOMAS<br>Institute of Information Computing Sciences
+        UNIVERSITY OF SANTO TOMAS<br>College of Information Computing Sciences
       </h4>
       <label>
         Generated On: {{ $generated_on }}
@@ -49,7 +49,7 @@
         <td>{{ $credit_detail->id }}</td>
         <td>{{ $credit_detail->student_id }}</td>
         <td>{{ $credit_detail->fname }} {{ $credit_detail->lname }}</td>
-        <td>{{ date("M d, Y", strtotime('$credit_detail->created_at')) }}</td>
+        <td>{{ date("M d, Y", strtotime($credit_detail->created_at)) }}</td>
         <td>{{ $credit_detail->email }}</td>
         <td>{{ $credit_detail->section }}</td>
       </tr>

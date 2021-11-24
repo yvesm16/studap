@@ -8,6 +8,7 @@ use App\Models\Files;
 use App\Models\Course;
 use App\Models\Appeal;
 use App\Models\Credit;
+use App\Models\ratings;
 use Mailgun\Mailgun;
 use Redirect;
 use Hash;
@@ -22,7 +23,7 @@ class UserController extends Controller
     public function login(){
       return view('index');
     }
-
+  
     public function insertData(Request $request){
       $user = new User;
 
@@ -31,7 +32,9 @@ class UserController extends Controller
       }else{
         $slug = md5($user->getLastID());
       }
-
+  
+      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('rpwd')){
         $data = [
           'fname' => $request->input('fname'),
@@ -80,6 +83,12 @@ class UserController extends Controller
           ->withInput()
           ->with('error','Password does not match!');
       }
+    }else {
+      return Redirect::to('register')
+          ->withInput()
+          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+    }
+  
     }
 
     public function verifyUser($slug){
@@ -137,6 +146,8 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
+      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('cpwd')){
 
         $data = [
@@ -153,6 +164,10 @@ class UserController extends Controller
         return Redirect::to('reset-password/' . $request->input('slug'))
           ->with('error','Password mistmatch!');
       }
+    }else {
+      return Redirect::to('reset-password/' . $request->input('slug'))
+          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+    }
     }
 
     public function checkLogin(Request $request){
@@ -326,6 +341,7 @@ class UserController extends Controller
 
     public function registrarCredit(){
       $data = $this->getCredit(2,2);
+
       return view('registrar.credit',$data);
     }
 
@@ -366,36 +382,43 @@ class UserController extends Controller
       return redirect('/');
     }
 
-    public function changePassword(Request $request){
+    public function changePassword(Request $request){ 
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
+      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
+      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
+        if(Hash::check($request->currentPassword,$userDetails->password)){
+        
+          if($request->newPassword == $request->confirmPassword){
+            $data = [
+              'password' => Hash::make($request->newPassword)
+            ];
 
-      if(Hash::check($request->currentPassword,$userDetails->password)){
-        if($request->newPassword == $request->confirmPassword){
-          $data = [
-            'password' => Hash::make($request->newPassword)
-          ];
-
-          $user->updateData('id',Auth::id(),$data);
-          return Response::json(array(
-              'result' => true,
-              'text' => 'Password was successfully updated!'
-          ));
-
+            $user->updateData('id',Auth::id(),$data);
+            return Response::json(array(
+                'result' => true,
+                'text' => 'Password was successfully updated!'
+            ));
+          }else{
+            return Response::json(array(
+                'result' => false,
+                'text' => 'New and confirm password mismatch!'
+            ));
+          }
         }else{
           return Response::json(array(
-              'result' => false,
-              'text' => 'New and confirm password mismatch!'
-          ));
-        }
-      }else{
-        return Response::json(array(
             'result' => false,
             'text' => 'Invalid current password!'
         ));
-      }
-
+        }
+      }else  {
+      return Response::json(array(
+        'result' => false,
+        'text' => 'Must contain 8 characters, capital letters, numbers, and special characters'
+      ));
     }
+    } 
+    
 
     public function addUser(Request $request) {
       $user = new User;
@@ -565,5 +588,24 @@ class UserController extends Controller
 
     }
 
+    public function statisfaction(Request $request) {
+      $rate = $request->stars;
+      $rating = new ratings;
+
+      if($rate) {
+          $rating->rating = $rate;
+          $rating->save();
+
+          Session::flash('success', "Your rating has been submitted. Thank you for using ESC E-Services");
+          return view('statisfaction');
+
+
+      }else {
+        Session::flash('warning', "An error has occured. Please refresh the page and Try Again");
+        return view('statisfaction');
+      }
+
+      return view('statisfaction');
+    }
 
 }

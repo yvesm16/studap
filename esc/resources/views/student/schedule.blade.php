@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>IICS E - Services</title>
+  <title>cICS E - Services</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -219,8 +219,8 @@
         $("#failedNotificationTime").show();
         $("#submitConsultationForm").attr('disabled',true);
 
-    }else if(diff >3600){
-       $("#failedTextTime").text("Appointment Maximum Time : 1 Hour");
+    }else if(diff >10800){
+       $("#failedTextTime").text("Appointment Maximum Time : 3 Hours");
         $("#failedNotificationTime").show();
         $("#submitConsultationForm").attr('disabled',true);
 
