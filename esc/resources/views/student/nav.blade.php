@@ -25,7 +25,7 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="{{ URL::to('student/tracker/consultation') }}">Consultation</a></li>
-            <li><a href="#">Appeal</a></li>
+            <li><a href="{{ URL::to('student/tracker/appeal') }}">Appeal</a></li>
             <li><a href="{{ URL::to('student/tracker/crediting') }}">Crediting</a></li>
           </ul>
         </li>

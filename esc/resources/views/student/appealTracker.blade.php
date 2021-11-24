@@ -8,7 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="{{ URL::asset('css/student/index.css'); }}">
-  <script src="{{ URL::asset('js/director/appeal.js'); }}"></script>
+  <script src="{{ URL::asset('js/student/appeal.js'); }}"></script>
   <link href="{{ URL::asset('datatables/css/jquery.dataTables.min.css'); }}" rel="stylesheet">
   <link href="{{ URL::asset('datatables/css/jquery.dataTables.css'); }}" rel="stylesheet">
   <script src="{{ URL::asset('datatables/js/jquery.dataTables.js'); }}"></script>
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-@include('director.nav')
+@include('student.nav')
 
 <div class="container indexMargin home">
   <div id="page-wrapper">
@@ -39,15 +39,6 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/student_appeal/pending') }}" style="color: #8a6d3b">
-                      <div class="panel-footer" style="background-color: white !important">
-                          <span class="pull-right">
-                            View Details
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                          </span>
-                          <div class="clearfix"></div>
-                      </div>
-                  </a>
               </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -63,15 +54,6 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/student_appeal/scheduled') }}" style="color: #31708f">
-                      <div class="panel-footer" style="background-color: white !important">
-                          <span class="pull-right">
-                            View Details
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                          </span>
-                          <div class="clearfix"></div>
-                      </div>
-                  </a>
               </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -87,15 +69,6 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/student_appeal/declined') }}" style="color: #a94442">
-                      <div class="panel-footer" style="background-color: white !important">
-                          <span class="pull-right">
-                            View Details
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                          </span>
-                          <div class="clearfix"></div>
-                      </div>
-                  </a>
               </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -111,49 +84,21 @@
                           </div>
                       </div>
                   </div>
-                  <a href="{{ URL::to('director/student_appeal/completed') }}" style="color: #3c763d">
-                      <div class="panel-footer" style="background-color: white !important">
-                          <span class="pull-right">
-                            View Details
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                          </span>
-                          <div class="clearfix"></div>
-                      </div>
-                  </a>
               </div>
           </div>
       </div>      
-      <div class="row" style="margin-bottom: 1%; text-align: left">
-        <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button> - View
-        </div>
-        <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-primary'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate
-        </div>
-        <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-success'><span class='glyphicon glyphicon-ok-sign'></span></button> - Accept
-        </div>
-        <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></button> - Decline
-        </div>
-        <div class="col-lg-3 downloadCompletedListReportDiv" style="margin-bottom: 1%;">
-          <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
-        </div>
-      </div>
       <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="panel-body" style="overflow-x: scroll">
-                    <table width="100%" class="table table-striped table-bordered table-hover" id="studentAppealTable">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="studentAppealListTable">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Student Number</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th>Specific Concern</th>
                             <th>Section</th>
                             <th>Program</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -169,5 +114,4 @@
 </body>
 </html>
 
-@include('global.studApEvaluationModal')
 @include('global.studApDetailsModal')

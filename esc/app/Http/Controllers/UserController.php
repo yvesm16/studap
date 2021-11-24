@@ -341,8 +341,10 @@ class UserController extends Controller
         'lname' => $userDetails->lname
       ];
 
-      $data['pending'] = $appeal->countByStatusPending($status);
+      $data['pending'] = $appeal->countByStatus(0);
+      $data['scheduled'] = $appeal->countByStatus(1);
       $data['completed'] = $appeal->countByStatus($status);
+      $data['declined'] = $appeal->countByStatus(3);
 
       if ($userDetails->type != 3) {
         $signature = $files->getAllActiveFileByUserByParameter('type',0);
