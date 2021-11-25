@@ -29,6 +29,12 @@ class Credit extends Model
         ->get();
     }
 
+    public function getDataByID($id){
+      return DB::table('credit_course')
+        ->where('id',$id)
+        ->first();
+    }
+
     public function countByStatusForChairperson($status) {
       return DB::table('credit_course')
         ->join('users','users.id','=','credit_course.student_id')

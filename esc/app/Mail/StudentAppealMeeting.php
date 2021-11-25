@@ -3,7 +3,8 @@
 namespace App\Mail;
 
 use App\Models\User;
-use App\Models\Schedule;
+use App\Models\Appeal;
+use App\Models\Course;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -41,7 +42,7 @@ class StudentAppealMeeting extends Mailable
 
       return $this->view('emails.studentAppealMeeting')
         ->with([
-          'message' => $appointmentDetails->message,
+          'messages' => $appointmentDetails->message,
           'start_time' => $appointmentDetails->start_time,
           'end_time' => $appointmentDetails->end_time,
           'director_fname' => $user->getData('id',$director_id->director)->fname,

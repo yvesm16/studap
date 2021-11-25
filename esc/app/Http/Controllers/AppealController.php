@@ -235,22 +235,21 @@ class AppealController extends Controller
         ];
         $audit->insertData($data);
 
+        Session::put('appeal_id', $request->appeal_id);
+  
+        $appealDetails = $appeal->getDataByID($request->appeal_id);
+        $studentDetails = $user->getData('id',$appealDetails->student_id);
+  
+        try {
+          \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
       }else{
         return back()->with('result',false)->with('text', 'Invalid start and end time!');
       }
-
-      Session::put('appeal_id', $request->appointment_id);
-
-      $appealDetails = $appeal->getDataByID($request->appeal_id);
-      $studentDetails = $user->getData('id',$appealDetails->student_id);
-
-      // try {
-      //   \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
-      // } catch(Exception $e) {
-      //   return Response::json(array(
-      //       'success' => true
-      //   ));
-      // }
 
       return back()->with('result',true);
     }
@@ -260,30 +259,39 @@ class AppealController extends Controller
       $audit = new AuditTrail;
       $user = new User;
 
+      $appointmentDetails = $appeal->getDataBySlug($request->input('appeal_slug'));
+      $studentDetails = $user->getData('id',$appointmentDetails->student_id);
+
       if($request->input('status') == 3){
         $data = [
           'remarks' => $request->input('reasonDetails'),
           'status' => $request->input('status')
         ];
 
-        $appointmentDetails = $appeal->getDataBySlug($request->input('appeal_slug'));
-        $studentDetails = $user->getData('id',$appointmentDetails->student_id);
-
         Session::put('appeal_id', $appointmentDetails->id);
         Session::put('remarks', $request->input('reasonDetails'));
 
         try {
-          // \Mail::to($studentDetails->email)->send(new \App\Mail\RejectStudentAppeal());
+          \Mail::to($studentDetails->email)->send(new \App\Mail\RejectStudentAppeal());
         } catch(Exception $e) {
           return Response::json(array(
               'success' => true
           ));
         }
-
       }else{
         $data = [
           'status' => $request->input('status')
         ];
+
+        Session::put('appeal_id', $appointmentDetails->id);
+
+        try {
+          \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateStudentAppeal());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
       }
 
       $appeal->updateDataByID($data,$appointmentDetails->id);
@@ -327,5 +335,27 @@ class AppealController extends Controller
       ];
 
       return view('student.appealTracker',$data);
+    }
+
+    public function completedStudentAppealListPDF(){
+      $appeal = new Appeal;
+      $user = new User;
+
+      $userDetails = $user->getData('id',Auth::id());
+      $appealDetails = $appeal->getDataTableForPDF(2);
+
+      $data = [
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        'generated_on' => $date = date("M d, Y"),
+        'appealDetails' => $appealDetails
+      ];
+
+      // dd($appealDetails);
+
+      $pdf = PDF::loadView('global.completedStudentAppealPDF', $data);
+      // return $pdf->stream();
+      return $pdf->download($userDetails->slug . '.pdf');
+      // return view('global.completedStudentAppealPDF',$data);
     }
 }

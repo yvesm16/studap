@@ -3,7 +3,8 @@
 namespace App\Mail;
 
 use App\Models\User;
-use App\Models\Schedule;
+use App\Models\Appeal;
+use App\Models\Course;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;

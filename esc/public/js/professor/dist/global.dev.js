@@ -34,27 +34,13 @@ $(document).ready(function () {
               async: false,
               success: function success(data) {
                 if (data.result == true) {
-                  if (data.type == 3) {
-                    if (data.status == 2) {
-                      text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " has completed your student appeal request.</div>";
-                    } else if (data.status == 1) {
-                      text = "<div class='alert alert-info'><strong>Hey!</strong> " + data.fname + " " + data.lname + " has scheduled you for your request.</div>";
-                    } else {
-                      text = "<div class='alert alert-danger'><strong>Hey!</strong> " + data.fname + " " + data.lname + " declines your request.</div>";
-                    }
-                  } else if (data.type == 2) {
-                    if (data.status > 2) {
-                      text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " has completed your credit course request.</div>";
+                  if (data.type == 2) {
+                    if (data.status == 0) {
+                      text = "<div class='alert alert-info'><strong>New!</strong> " + data.fname + " " + data.lname + " is asking for course crediting approval.</div>";
                     }
                   } else {
-                    if (data.status == 1) {
-                      text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " approves appointment.</div>";
-                    } else if (data.status == 2) {
-                      text = "<div class='alert alert-danger'><strong>Sorry!</strong> " + data.fname + " " + data.lname + " declines appointment.</div>";
-                    } else if (data.status == 3) {
-                      text = "<div class='alert alert-info'><strong>Hey!</strong> " + data.fname + " " + data.lname + " started your appointment.</div>";
-                    } else {
-                      text = "<div class='alert alert-warning'><strong>Hello!</strong> " + data.fname + " " + data.lname + " has completed your appointment.</div>";
+                    if (data.status == 0) {
+                      text = "<div class='alert alert-info'><strong>New!</strong> " + notif[i]['fname'] + " " + notif[i]['lname'] + " is asking for an appointment.</div>";
                     }
                   }
 

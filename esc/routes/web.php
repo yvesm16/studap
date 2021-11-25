@@ -142,6 +142,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::match(array('GET', 'POST'), 'statisfaction',[UserController::class, 'statisfaction']);
 
     Route::match(array('GET', 'POST'), 'schedule/details/completed_pdf',[ScheduleController::class, 'completedConsultationListPDF']);
+    Route::match(array('GET', 'POST'), 'student_appeal/details/completed_pdf',[AppealController::class, 'completedStudentAppealListPDF']);
 
     Route::match(array('GET', 'POST'), 'crediting/details/pdf/{slug}',[CreditController::class, 'detailsPagePDF']);
     Route::match(array('GET', 'POST'), 'crediting/details/completed_pdf',[CreditController::class, 'completedCourseCreditingListPDF']);

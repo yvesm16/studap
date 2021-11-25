@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use Auth;
 use Redirect;
 use Response;
+use Session;
 use App;
 use PDF;
 
@@ -130,6 +131,18 @@ class CreditController extends Controller
         'status' => 0
       ];
       $audit->insertData($data);
+
+      try {
+        Session::put('credit_course_id', $credit->getLastID());
+        $prof_id = $this->getTargetReceiver($credit_details);
+        $profDetails = $user->getData('id',$prof_id);
+
+        \Mail::to($profDetails->email)->send(new \App\Mail\CreditCourseRequest());
+      } catch(Exception $e) {
+        return Response::json(array(
+            'success' => true
+        ));
+      }
 
       return Redirect::to('student/crediting')
         ->with('success','Credit Request was successfully submitted!');
@@ -416,30 +429,33 @@ class CreditController extends Controller
       
       $this->updateCreditStatusInsertAudit($credit_details);
       
-      if($request->status == 4){
-      $userDetails = $user->getData('id',$credit_details->student_id);
-      
-      try {
-        \Mail::to($userDetails->email)->send(new \App\Mail\satisfaction());
-      } catch(Exception $e) {
-        return Response::json(array(
-            'success' => true
-        ));
+      if($request->status > 2){
+        $userDetails = $user->getData('id',$credit_details->student_id);
+        
+        try {
+          \Mail::to($userDetails->email)->send(new \App\Mail\satisfaction());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
+      }else{
+        $nextTargetID = $this->getTargetReceiver($credit_details);
+        
+        $userDetails = $user->getData('id',$nextTargetID);
+        $studentDetails = $user->getData('id',$credit_details->student_id);
+        
+        try {
+          Session::put('credit_course_id', $credit_details->id);
+          Session::put('next_target_id', $nextTargetID);
+          \Mail::to($userDetails->email)->send(new \App\Mail\UpdateCreditCourse());
+          // \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateCreditCourseRequest());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
       }
-    }
-
-      // try {
-      //   session()->put('slug', $credit_details->slug);
-      //   session()->put('fname', $userDetails->fname);
-      //   session()->put('lname', $userDetails->lname);
-
-      //   \Mail::to($userDetails->email)->send(new \App\Mail\CreditCourse());
-        // \Mail::to('joseph.fidelino@gmail.com')->send(new \App\Mail\CreditCourse());
-      // } catch(Exception $e) {
-      //   return Response::json(array(
-      //       'success' => true
-      //   ));
-      // }
 
       return Response::json(array(
           'result' => true

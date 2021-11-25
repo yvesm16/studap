@@ -124,4 +124,23 @@ class Appeal extends Model
         ->where('id',$id)
         ->update($data);
     }
+
+    public function getDataTableForPDF($status){
+      return DB::table('appeal')
+        ->join('users','users.id','=','appeal.student_id')
+        ->where('appeal.status',$status)
+        ->select(DB::raw('
+            appeal.id as id,
+            appeal.slug as slug,
+            appeal.section as section,
+            appeal.contact_number as active_contact_number,
+            appeal.email as active_email,
+            appeal.created_at as created_at,
+            users.fname as fname,
+            users.lname as lname,
+            users.student_id as student_id,
+            users.email as email
+        '))
+        ->get();
+    }
 }

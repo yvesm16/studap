@@ -23,9 +23,7 @@
         <p>
           <ul>
             <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_fname }}</li>
-            <li><b>Start Datetime</b>: {{ $start_time }}</li>
-            <li><b>End Datetime</b>: {{ $end_time }}</li>
-            <li><p><b>Message</b>: {{ $messages }}</p> </li>
+            <li><b>Status</b>: <span style="color: green">{{ $status}}</span></li>
           </ul>
         </p>
         <p style="margin-top: 5%">

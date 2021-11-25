@@ -18,14 +18,12 @@
           Hello {{ $student_fname }} {{ $student_lname }},
         </p>
         <p>
-          <h1>Update on your Student Appeal</h1>
+          <h1>Credit Course Request Update</h1>
         </p>
         <p>
           <ul>
-            <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_fname }}</li>
-            <li><b>Start Datetime</b>: {{ $start_time }}</li>
-            <li><b>End Datetime</b>: {{ $end_time }}</li>
-            <li><p><b>Message</b>: {{ $messages }}</p> </li>
+            <li><b>Processed By</b>: {{ $current_fname }} {{ $current_lname }}</li>
+            <li><b>Status</b>: {{ $status }}</li>
           </ul>
         </p>
         <p style="margin-top: 5%">

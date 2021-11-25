@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Session;
 
-class RejectStudentAppeal extends Mailable
+class UpdateStudentAppeal extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -39,10 +39,12 @@ class RejectStudentAppeal extends Mailable
         
         $appointmentDetails = $appeal->getDataByID(Session::get('appeal_id'));
         $director_id = $course->getCourseByID($appointmentDetails->new_course_id);
+        
+        $status = 'Completed';
 
-        return $this->view('emails.rejectStudentAppeal')
+        return $this->view('emails.updateStudentAppeal')
           ->with([
-            'remarks' => Session::get('remarks'),
+            'status' => $status,
             'director_fname' => $user->getData('id',$director_id->director)->fname,
             'director_lname' => $user->getData('id',$director_id->director)->lname,
             'student_fname' => $user->getData('id',$appointmentDetails->student_id)->fname,

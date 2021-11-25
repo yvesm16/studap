@@ -157,30 +157,30 @@ $(document).ready(function() {
     });
   });
 
-  // $('#consultationTable').delegate('.approvedAppointment','click', function (){
-  //     if (confirm('Are you sure you want to approve this appointment?')) {
-  //       $.ajax({
-  //           url: BASE_URL + '/professor/updateAppointmentStatus',
-  //           headers: {
-  //               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //           },
-  //           type: 'POST',
-  //           data: {
-  //               appointment_id : $(this).data('id'),
-  //               status: 1
-  //           },
-  //           dataType    :'json',
-  //           success: function (data) {
-  //             if(data.result == true){
-  //               $('#consultationTable').dataTable().api().ajax.reload();
-  //               alert('Appointment was successfully updated!');
-  //               window.location.reload();
-  //             }
-  //           }
-  //       });
-  //     }
+  $('#studentAppealTable').delegate('.acceptAppeal','click', function (){
+      if (confirm('Are you sure you want to approve this request?')) {
+        $.ajax({
+            url: BASE_URL + '/director/updateAppealStatus',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            data: {
+              appeal_slug : $(this).data('id'),
+              status: 2
+            },
+            dataType    :'json',
+            success: function (data) {
+              if(data.result == true){
+                $('#studentAppealTable').dataTable().api().ajax.reload();
+                alert('Request was successfully updated!');
+                window.location.reload();
+              }
+            }
+        });
+      }
 
-  // });
+  });
 
   $('#studentAppealTable').delegate('.declineAppeal','click', function (){
       $('#remarks_appeal_slug').val($(this).data('id'));
@@ -188,7 +188,7 @@ $(document).ready(function() {
   });
 
   $('#submitRemarks').on('click',function(){
-    if (confirm('Are you sure you want to reject this appointment?')) {
+    if (confirm('Are you sure you want to reject this request?')) {
       $.ajax({
         url: BASE_URL + '/director/updateAppealStatus',
         headers: {
@@ -204,7 +204,7 @@ $(document).ready(function() {
         success: function (data) {
           if(data.result == true){
             $('#studentAppealTable').dataTable().api().ajax.reload();
-            alert('Appointment was successfully updated!');
+            alert('Request was successfully updated!');
             window.location.reload();
           }
         }

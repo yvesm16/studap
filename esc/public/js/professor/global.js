@@ -34,7 +34,7 @@ $(document).ready(function() {
                   if(data.result == true){
                     if(data.type == 2){
                       if(data.status == 0){
-                        text = "<div class='alert alert-success'><strong>New!</strong> " + data.fname + " " + data.lname + " is asking for course crediting approval.</div>";
+                        text = "<div class='alert alert-info'><strong>New!</strong> " + data.fname + " " + data.lname + " is asking for course crediting approval.</div>";
                       }
                     }else{
                       if (data.status == 0) {

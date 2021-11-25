@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Schedule;
 use App\Models\Credit;
+use App\Models\Appeal;
 use App\Models\Concerns;
 use App\Models\AuditTrail;
 use Auth;
@@ -17,21 +18,12 @@ class NotificationController extends Controller
       $user = new User;
       $audit = new AuditTrail;
 
-      $userDetails = $user->getData('id',Auth::id());
-
-      if($userDetails->type > 0){
-        $unreadNotification = $audit->getAllLoginAdminDataByStatus(0);
-      }elseif($userDetails->type == 0){
-        $unreadNotification = $audit->getAllLoginStudentDataByStatus(0);
-      }else{
-        $unreadNotification = $audit->getAllLoginUserDataByStatus(0);
-      }
+      $unreadNotification = $audit->getAllLoginUserDataByStatus(0);
 
       return Response::json(array(
           'result' => true,
           'notification' => $unreadNotification
       ));
-
     }
 
     public function updateNotificationStatus(Request $request){
@@ -54,11 +46,16 @@ class NotificationController extends Controller
       $audit = new AuditTrail;
       $schedule = new Schedule;
       $credit = new Credit;
+      $appeal = new Appeal;
       $user = new User;
 
       $auditDetails = $audit->getDataByID($request->input('id'));
 
-      if($auditDetails->table_name == 'credit_course'){
+      if($auditDetails->table_name == 'appeal'){
+        $appealDetails = $appeal->getDataByID($auditDetails->row_id);
+        $type = 3;
+        $status = $appealDetails->status;
+      }else if($auditDetails->table_name == 'credit_course'){
         $creditDetails = $credit->getDataByParameter('id',$auditDetails->row_id);
         $type = 2;
         $status = $creditDetails->status;

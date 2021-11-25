@@ -32,7 +32,15 @@ $(document).ready(function() {
                 async : false,
                 success: function (data) {
                   if(data.result == true){
-                    if(data.type == 2){
+                    if(data.type == 3){
+                      if(data.status == 2){
+                        text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " has completed your student appeal request.</div>";
+                      }else if(data.status == 1){
+                        text = "<div class='alert alert-info'><strong>Hey!</strong> " + data.fname + " " + data.lname + " has scheduled you for your request.</div>";
+                      }else{
+                        text = "<div class='alert alert-danger'><strong>Hey!</strong> " + data.fname + " " + data.lname + " declines your request.</div>";
+                      }
+                    }else if(data.type == 2){
                       if(data.status > 2){
                         text = "<div class='alert alert-success'><strong>Good News!</strong> " + data.fname + " " + data.lname + " has completed your credit course request.</div>";
                       }
