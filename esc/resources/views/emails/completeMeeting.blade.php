@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CICS E-Services - Email Account Verification</title>
+    <title>CICS E-Services - Completed Request in Consultation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -27,6 +27,10 @@
             <li><b>End Datetime</b>: {{ $end_time }}</li>
             <li><b>Status</b>: <span style="color: green">Completed</span></li>
           </ul>
+        </p>
+        <p>
+          Thank you for using ESC E-Services in processing your request. Rate your experience while using the website by clicking on the link and help us improve. 
+          <a href="https://esc-cics.com/satisfaction">E-Services Student Satisfaction</a>         
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>

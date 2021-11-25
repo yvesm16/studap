@@ -386,6 +386,8 @@ class ScheduleController extends Controller
         $scheduleDetails = $schedule->getDataByID($request->input('appointment_id'));
         $studentDetails = $user->getData('id',$scheduleDetails->student_id);
 
+        
+
         try {
           \Mail::to($studentDetails->email)->send(new \App\Mail\CompleteAppointment());
         } catch(Exception $e) {
@@ -616,7 +618,7 @@ class ScheduleController extends Controller
     $userDetails = $user->getData('id',Auth::id());
     $scheduleDetails = $schedule->getAppointmentRequestForPDF(4);
 
-    
+
     foreach ($scheduleDetails as $schedule_detail) {
       $concernDetails = '';
       $concernOthers = '';
