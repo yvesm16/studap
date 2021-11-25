@@ -69,10 +69,10 @@ class ScheduleController extends Controller
     }
 
     public function postConsultation(Request $request){
-
       $schedule = new Schedule;
       $concerns = new Concerns;
       $audit = new AuditTrail;
+      $user = new User;
 
       $appointment_start = date('H:i:s',strtotime($request->input('appointment_start')));
       $appointment_end = date('H:i:s',strtotime($request->input('appointment_end')));
@@ -84,7 +84,6 @@ class ScheduleController extends Controller
         ));
       }else{
         if($appointment_start < $appointment_end){
-
           $start = $request->input('appointment_date') . ' ' . $appointment_start;
           $end = $request->input('appointment_date') . ' ' . $appointment_end;
 
@@ -96,7 +95,6 @@ class ScheduleController extends Controller
                 'text' => 'Slot schedule overlap!'
             ));
           }else{
-
             if($schedule->getLastID() == null){
               $lastID = $schedule->getLastID() + 1;
             }else{
@@ -110,7 +108,6 @@ class ScheduleController extends Controller
             $len = count($request->input('concerns'));
 
             if($len > 0){
-
               foreach($request->input('concerns') as $concern_id){
                 if($i == $len - 1){
                   $concernList = $concernList . $concern_id;
@@ -149,10 +146,19 @@ class ScheduleController extends Controller
 
               $audit->insertData($data);
 
+              $userDetails = $user->getData('id',$request->input('professor_id'));
+              try {
+                Session::put('schedule_id', $schedule->getLastID());
+                \Mail::to($userDetails->email)->send(new \App\Mail\ScheduleConsultation());
+              } catch(Exception $e) {
+                return Response::json(array(
+                    'success' => true
+                ));
+              }
+
               return Response::json(array(
                   'result' => true
               ));
-
             }else{
               return Response::json(array(
                   'result' => false,
@@ -332,8 +338,25 @@ class ScheduleController extends Controller
       $schedule = new Schedule;
       $audit = new AuditTrail;
       $user = new User;
+      
+      if($request->input('status') == 1){
+        $data = [
+          'status' => $request->input('status')
+        ];
 
-      if($request->input('status') == 2){
+        Session::put('appointment_id', $request->input('appointment_id'));
+
+        $scheduleDetails = $schedule->getDataByID($request->input('appointment_id'));
+        $studentDetails = $user->getData('id',$scheduleDetails->student_id);
+
+        try {
+          \Mail::to($studentDetails->email)->send(new \App\Mail\ApproveAppointment());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
+      }else if($request->input('status') == 2){
         $data = [
           'remarks' => $request->input('reasonDetails'),
           'status' => $request->input('status')
@@ -346,14 +369,30 @@ class ScheduleController extends Controller
         $studentDetails = $user->getData('id',$scheduleDetails->student_id);
 
         try {
-          // \Mail::to('joseph.fidelino@gmail.com')->send(new \App\Mail\RejectAppointment());
           \Mail::to($studentDetails->email)->send(new \App\Mail\RejectAppointment());
         } catch(Exception $e) {
           return Response::json(array(
               'success' => true
           ));
         }
+      }else if($request->input('status') == 4){
+        $data = [
+          'status' => $request->input('status')
+        ];
 
+        Session::put('appointment_id', $request->input('appointment_id'));
+        Session::put('remarks', $request->input('reasonDetails'));
+
+        $scheduleDetails = $schedule->getDataByID($request->input('appointment_id'));
+        $studentDetails = $user->getData('id',$scheduleDetails->student_id);
+
+        try {
+          \Mail::to($studentDetails->email)->send(new \App\Mail\CompleteAppointment());
+        } catch(Exception $e) {
+          return Response::json(array(
+              'success' => true
+          ));
+        }
       }else{
         $data = [
           'status' => $request->input('status')

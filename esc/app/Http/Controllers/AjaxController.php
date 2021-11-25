@@ -197,13 +197,34 @@ class AjaxController extends Controller
               case "studentAppealList":
                   if ($request->input('status') == 'completed') {
                     $dtResult = Helpers::setDatatable($appeal->getCompletedDataTable(),array('users.fname','users.lname','users.email'));
+                  } else if (($request->input('status') == 'pending')) {
+                    $dtResult = Helpers::setDatatable($appeal->getDataTableByStatus(0),array('users.fname','users.lname','users.email'));
+                  } else if (($request->input('status') == 'declined')) {
+                    $dtResult = Helpers::setDatatable($appeal->getDataTableByStatus(3),array('users.fname','users.lname','users.email'));
                   } else {
-                    $dtResult = Helpers::setDatatable($appeal->getDataTable(),array('users.fname','users.lname','users.email'));
+                    $dtResult = Helpers::setDatatable($appeal->getDataTableByStatus(1),array('users.fname','users.lname','users.email'));
                   }
 
                   foreach($dtResult['objResult'] as $aRow) {
-
-                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+                      
+                      if($aRow->status == 0){ //pending
+                        $button = "
+                        <button class='btn btn-default viewDetails' data-id='$aRow->slug'><span class='glyphicon glyphicon-search'></span></button>
+                        <button class='btn btn-primary evaluate' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
+                        ";
+                      }elseif($aRow->status == 1){ //scheduled
+                        $button = "
+                        <button class='btn btn-default viewDetails' data-id='$aRow->slug'><span class='glyphicon glyphicon-search'></span></button>
+                        <button class='btn btn-primary evaluate' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
+                        <button class='btn btn-success acceptAppeal' data-id='$aRow->slug'><span class='glyphicon glyphicon-ok-sign'></span></button>
+                        <button class='btn btn-danger declineAppeal' data-id='$aRow->slug'><span class='glyphicon glyphicon-remove'></span></button>
+                        ";
+                      }else{
+                        $button = "
+                        <button class='btn btn-default viewDetails' data-id='$aRow->slug'><span class='glyphicon glyphicon-search'></span></button>
+                        <button class='btn btn-primary evaluate' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
+                        ";
+                      }
 
                       $data = array(
                           $aRow->id,
@@ -212,6 +233,35 @@ class AjaxController extends Controller
                           $aRow->email,
                           $aRow->section,
                           $aRow->program,
+                          $button
+                      );
+                      $dtResult['aaData'][] = $data;
+                  }
+                  unset($dtResult['objResult']);
+                  echo json_encode($dtResult);
+                  break;
+
+              case "studentAppealListTracker":
+                  $dtResult = Helpers::setDatatable($appeal->getAllDataTableByStudentID(),array('appeal.concerns','appeal.section'));
+
+                  foreach($dtResult['objResult'] as $aRow) {
+                    $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+                    
+                    if($aRow->status == 0){
+                      $status = "<span class='label label-default'>Pending</span>";
+                    }else if($aRow->status == 2){
+                      $status = "<span class='label label-success'>Completed</span>";
+                    }else if($aRow->status == 3){
+                      $status = "<span class='label label-danger'>Declined</span>";
+                    }else{
+                      $status = "<span class='label label-primary'>Scheduled</span>";
+                    }
+
+                      $data = array(
+                          $aRow->concerns,
+                          $aRow->section,
+                          $aRow->program,
+                          $status,
                           $button
                       );
                       $dtResult['aaData'][] = $data;

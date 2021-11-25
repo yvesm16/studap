@@ -61,7 +61,6 @@ class Schedule extends Model
           ->where($column,Auth::id())
           ->count();
       }
-
     }
 
     public function getLastID(){

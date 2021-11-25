@@ -24,9 +24,13 @@ class CreateAppealTable extends Migration
           $table->string('concerns',225);
           $table->string('contact_number',225);
           $table->string('email',225);
-          $table->string('attached1');
-          $table->string('attached2');
+          $table->datetime('start_time')->nullable();
+          $table->datetime('end_time')->nullable();
+          $table->string('attached1')->nullable();
+          $table->string('attached2')->nullable();
           $table->string('attached3')->nullable();
+          $table->string('message')->nullable();
+          $table->string('remarks')->nullable();
           $table->integer('status')->comment('0-Pending|1-EvaluatedByDirector|2-OnlineConference/Done');
           $table->timestamp('created_at')->useCurrent();
           $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
