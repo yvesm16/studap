@@ -15,15 +15,18 @@
       </div>
       <div class="col-sm-12">
         <p>
-          Hello {{ $student_fname }} {{ $student_lname }},
+          Hello,
         </p>
         <p>
-          <h1>Update on your Student Appeal</h1>
+          <h1>Dean request for  Student Appeal Meeting</h1>
         </p>
         <p>
           <ul>
             <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_lname }}</li>
-            <li><b>Status</b>: <span style="color: green">{{ $status}}</span></li>
+            <li><b>Student Name</b>: {{ $student_fname }} {{ $student_lname }}</li>
+            <li><b>Start Datetime</b>: {{ $start_time }}</li>
+            <li><b>End Datetime</b>: {{ $end_time }}</li>
+            <li><p><b>Message</b>: {{ $messages }}</p> </li>
           </ul>
         </p>
         <p style="margin-top: 5%">

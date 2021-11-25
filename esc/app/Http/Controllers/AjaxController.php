@@ -216,6 +216,8 @@ class AjaxController extends Controller
                         $button = "
                         <button class='btn btn-default viewDetails' data-id='$aRow->slug'><span class='glyphicon glyphicon-search'></span></button>
                         <button class='btn btn-primary evaluate' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
+                        <button class='btn btn-info evaluate2' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
+                        <button class='btn btn-warning evaluate3' data-id='$aRow->slug'><span class='glyphicon glyphicon-eye-open'></span></button>
                         <button class='btn btn-success acceptAppeal' data-id='$aRow->slug'><span class='glyphicon glyphicon-ok-sign'></span></button>
                         <button class='btn btn-danger declineAppeal' data-id='$aRow->slug'><span class='glyphicon glyphicon-remove'></span></button>
                         ";

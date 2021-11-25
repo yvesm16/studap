@@ -22,7 +22,7 @@
         </p>
         <p>
           <ul>
-            <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_fname }}</li>
+            <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_lname }}</li>
             <li><b>Status</b>: <span style="color: red">Disapproved</span></li>
             <li><b>Reason</b>: {{ $remarks }}</li>
           </ul>

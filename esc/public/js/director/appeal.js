@@ -51,13 +51,14 @@ $(document).ready(function() {
             document.getElementById("transaction_number").textContent = data.transaction_number;
             document.getElementById("student_id").textContent = data.student_id;
             document.getElementById("student_name").textContent = data.student_name;
+            document.getElementById("attached1").textContent = data.attached1;
             document.getElementById("attached2").textContent = data.attached2;
             document.getElementById("attached3").textContent = data.attached3;
+            
             $('#message').val(data.message);
             $('#appeal_id').val(data.transaction_number);
-            $("#objectViewDocumentPDF").attr("data", data.path);
-            $("#embedViewDocumentPDF").attr("src", data.path);
-            $('#studApEvaluationModal').modal('toggle');
+            $("#objectViewDocumentPDF").attr("data", data.attached_file_path);
+            $("#embedViewDocumentPDF").attr("src", data.attached_file_path);
 
             if (data.status > 0) {
               $('#submitStudentAppealEval').css('display','none');
@@ -83,6 +84,119 @@ $(document).ready(function() {
             } else {
               $('#attached3').css('display','none');
             }
+            $('#studApEvaluationLevel1Modal').modal('toggle');
+          }
+        }
+      });
+  });
+
+  $('#studentAppealTable').delegate('.evaluate2','click', function (){
+      $.ajax({
+        url: BASE_URL + '/director/getDirectorAppealDetails',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+          appeal_slug : $(this).data('id')
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            console.log(data);
+            document.getElementById("transaction_number-2").textContent = data.transaction_number;
+            document.getElementById("student_id-2").textContent = data.student_id;
+            document.getElementById("student_name-2").textContent = data.student_name;
+            document.getElementById("attached2-2").textContent = data.attached2;
+            document.getElementById("attached3-2").textContent = data.attached3;
+            
+            $('#prof_email-2').val(data.prof_email);
+            $('#message-2').val(data.message);
+            $('#appeal_id-2').val(data.transaction_number);
+            $("#objectViewDocumentPDF-2").attr("data", data.attached_file_path);
+            $("#embedViewDocumentPDF-2").attr("src", data.attached_file_path);
+
+            if (data.status > 0) {
+              $('#submitStudentAppealEval').css('display','none');
+            }
+            
+            if (data.attached1) {
+              document.getElementById("attached1-2").textContent = data.attached1;
+              $('#attached1-2').css('display','block');
+            } else {
+              $('#attached1-2').css('display','none');
+            }
+
+            if (data.attached2) {
+              document.getElementById("attached2-2").textContent = data.attached2;
+              $('#attached2-2').css('display','block');
+            } else {
+              $('#attached2-2').css('display','none');
+            }
+            
+            if (data.attached3) {
+              document.getElementById("attached3-2").textContent = data.attached3;
+              $('#attached3-2').css('display','block');
+            } else {
+              $('#attached3-2').css('display','none');
+            }
+            $('#studApEvaluationLevel2Modal').modal('toggle');
+          }
+        }
+      });
+  });
+
+  $('#studentAppealTable').delegate('.evaluate3','click', function (){
+      $.ajax({
+        url: BASE_URL + '/director/getDirectorAppealDetails',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+          appeal_slug : $(this).data('id')
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            console.log(data);
+            document.getElementById("transaction_number-3").textContent = data.transaction_number;
+            document.getElementById("student_id-3").textContent = data.student_id;
+            document.getElementById("student_name-3").textContent = data.student_name;
+            document.getElementById("attached2-3").textContent = data.attached2;
+            document.getElementById("attached3-3").textContent = data.attached3;
+            
+            $('#prof_email-3').val(data.prof_email);
+            $('#message-3').val(data.message);
+            $('#appeal_id-3').val(data.transaction_number);
+            $("#objectViewDocumentPDF-3").attr("data", data.attached_file_path);
+            $("#embedViewDocumentPDF-3").attr("src", data.attached_file_path);
+
+            if (data.status > 0) {
+              $('#submitStudentAppealEval').css('display','none');
+            }
+            
+            if (data.attached1) {
+              document.getElementById("attached1-3").textContent = data.attached1;
+              $('#attached1-3').css('display','block');
+            } else {
+              $('#attached1-3').css('display','none');
+            }
+
+            if (data.attached2) {
+              document.getElementById("attached2-3").textContent = data.attached2;
+              $('#attached2-3').css('display','block');
+            } else {
+              $('#attached2-3').css('display','none');
+            }
+            
+            if (data.attached3) {
+              document.getElementById("attached3-3").textContent = data.attached3;
+              $('#attached3-3').css('display','block');
+            } else {
+              $('#attached3-3').css('display','none');
+            }
+            $('#studApEvaluationLevel3Modal').modal('toggle');
           }
         }
       });
@@ -148,7 +262,7 @@ $(document).ready(function() {
             document.getElementById("secondStepText").textContent = 'Completed';
             document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("thirdStepText").textContent = 'Completed';
-            document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
+            document.getElementById("fourthStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("fourthStepText").textContent = 'Completed';
           }
           $('#studApDetailsModal').modal('toggle');

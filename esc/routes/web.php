@@ -151,7 +151,4 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/linkstorage', function () {
       Artisan::call('storage:link');
     });
-    
-
-
 });

@@ -128,7 +128,13 @@
           <button class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button> - View
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-primary'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate
+          <button class='btn btn-primary'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 1
+        </div>
+        <div class="col-lg-2" style="margin-bottom: 1%">
+          <button class='btn btn-info'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 2
+        </div>
+        <div class="col-lg-2" style="margin-bottom: 1%">
+          <button class='btn btn-warning'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 3
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
           <button class='btn btn-success'><span class='glyphicon glyphicon-ok-sign'></span></button> - Accept
@@ -169,5 +175,7 @@
 </body>
 </html>
 
-@include('global.studApEvaluationModal')
+@include('global.studApEvaluationLevel1Modal')
+@include('global.studApEvaluationLevel2Modal')
+@include('global.studApEvaluationLevel3Modal')
 @include('global.studApDetailsModal')

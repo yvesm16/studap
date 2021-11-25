@@ -24,6 +24,7 @@ class CreateAppealTable extends Migration
           $table->string('concerns',225);
           $table->string('contact_number',225);
           $table->string('email',225);
+          $table->string('prof_email',225)->nullable();
           $table->datetime('start_time')->nullable();
           $table->datetime('end_time')->nullable();
           $table->string('attached1')->nullable();

@@ -22,7 +22,7 @@
         </p>
         <p>
           <ul>
-            <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_fname }}</li>
+            <li><b>Dean Name</b>: {{ $director_fname }} {{ $director_lname }}</li>
             <li><b>Start Datetime</b>: {{ $start_time }}</li>
             <li><b>End Datetime</b>: {{ $end_time }}</li>
             <li><p><b>Message</b>: {{ $messages }}</p> </li>
