@@ -415,7 +415,18 @@ class CreditController extends Controller
       $credit_details = $credit->getDataByParameter('slug',$request->slug);
       
       $this->updateCreditStatusInsertAudit($credit_details);
+      
+      if($request->status == 4){
       $userDetails = $user->getData('id',$credit_details->student_id);
+      
+      try {
+        \Mail::to($userDetails->email)->send(new \App\Mail\satisfaction());
+      } catch(Exception $e) {
+        return Response::json(array(
+            'success' => true
+        ));
+      }
+    }
 
       // try {
       //   session()->put('slug', $credit_details->slug);

@@ -7,7 +7,7 @@
   <center>
     <div>  
       <h4>
-        UNIVERSITY OF SANTO TOMAS<br>College of Information Computing Sciences
+        UNIVERSITY OF SANTO THOMAS<br>College of Information Computing Sciences
       </h4>
       <label>
         Generated On: {{ $generated_on }}
