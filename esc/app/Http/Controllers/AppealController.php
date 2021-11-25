@@ -160,6 +160,7 @@ class AppealController extends Controller
       
       $appointment_date = '';
       $appointment_time = '';
+      // dd($appointmentDetails);
       if ($appointmentDetails->start_time) {
         $appointment_date = explode(' ',$appointmentDetails->start_time)[0];
         $appointment_time = date('h:i A', strtotime(explode(' ',$appointmentDetails->start_time)[1]));
