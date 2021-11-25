@@ -115,6 +115,18 @@ class AppealController extends Controller
       ];
       $audit->insertData($data);
 
+      try {
+        Session::put('appeal_id', $appealLastID);
+        $director_id = $this->getTargetReceiver($appeal_details);
+        $directorDetails = $user->getData('id',$director_id);
+
+        \Mail::to($directorDetails->email)->send(new \App\Mail\StudentAppealRequest());
+      } catch(Exception $e) {
+        return Response::json(array(
+            'success' => true
+        ));
+      }
+
       return Redirect::to('student/appeal')
         ->with('success','Appeal Request was successfully submitted!');
     }
