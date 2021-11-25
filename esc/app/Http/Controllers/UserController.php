@@ -33,8 +33,7 @@ class UserController extends Controller
         $slug = md5($user->getLastID());
       }
   
-      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
-      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('rpwd')){
         $data = [
           'fname' => $request->input('fname'),
@@ -146,8 +145,7 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
-      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
-      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
       if($request->input('pwd') == $request->input('cpwd')){
 
         $data = [
@@ -386,8 +384,7 @@ class UserController extends Controller
     public function changePassword(Request $request){ 
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-      if(strlen($request->input('pwd'))<=8 || preg_match("#[0-9]+#", $request->input('pwd')) || preg_match("#[a-z]+#", $request->input('pwd')) || 
-      preg_match("#[A-Z]+#", $request->input('pwd')) || preg_match("/[\'^£$%&*()}{@#~?><>,|=_+!-]/", $request->input('pwd'))) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){
