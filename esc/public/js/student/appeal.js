@@ -84,7 +84,7 @@ $(document).ready(function() {
             document.getElementById("secondStepText").textContent = 'Completed';
             document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("thirdStepText").textContent = 'Completed';
-            document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
+            document.getElementById("fourthStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("fourthStepText").textContent = 'Completed';
           }
           $('#studApDetailsModal').modal('toggle');
