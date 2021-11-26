@@ -11,7 +11,8 @@ use App\Models\User;
 use App\Models\Files;
 use App\Models\AuditTrail;
 use App\Models\Credit;
-//student appeal
+use App\Models\Appeal;
+
 use DB;
 
 use Auth;
@@ -46,14 +47,12 @@ class DashboardController extends Controller
         $finalar = $total;
 
         $cc = new Credit;
-        $ccTotal = $cc
-        ->where('status', 1)
-        ->count();
-        $finalcc = $ccTotal;
-
+        $ap= new Appeal;
+        
+        
         $sa = 0;
         $finalsa=0;
-        $accptReq = round($finalar + $finalcc /3);
+        $accptReq = round($finalar);
 
         //backlogs
         //cosnul
@@ -66,22 +65,33 @@ class DashboardController extends Controller
         }else {
             $FCB = 0;
         }
-        $finalar = $FCB;
-    
+        $backlog1 = round($FCB);
+        
         //studap
+        $sa = $ap->where('status','!=', 2)->get();
+        
+        if(count($cb) > 0){
+            $FSA = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+            ->where('status', '!=', 2)
+            ->count();
+        }else {
+            $FSA = 0;
+        }
 
+        
+        $backlog2 = round($FSA);
         //cc
         $cc2 = $cc->where('status','!=', 3)->get();
-        if(count($cb) > 0){
+        if(count($cc2) > 0){
             $FCC = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
             ->where('status', '!=', 3)
             ->count();
         }else {
             $FCC = 0;
         }
-        $finalcc = $FCC;
+        $backlog3 = round($FCC);
 
-        $backlog = round($finalar + $finalcc /3);
+        $backlog = ($backlog1 + $backlog2 + $backlog3 /3);
 
         //completed
         //consul
@@ -97,22 +107,33 @@ class DashboardController extends Controller
         $timear = round((int)$aveTime[0]->timediff/3600) ; //final formula
         
         //studap
-        $sa = 0;
+        $aveTimesa = $ap
+        ->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffsa"))
+        ->where('status', 2)
+        ->get();
+
+        $reqsa = $ap
+        ->where('status',2)
+        ->count();
+        $numReqsa = $reqsa;
+        $timesa = round((int)$aveTimesa[0]->timediffsa/3600) ;
+    
 
         //cc
         $aveTimecc = $cc
         ->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffcc"))
         ->where('status', 3)
         ->get();
-
-        $reqcc = $ar
+        
+        $reqcc = $cc
         ->where('status',3)
         ->count();
         $numReqcc = $reqcc;
         $timecc = round((int)$aveTimecc[0]->timediffcc/3600) ;
 
-        $numReq = round($numReqar + $numReqcc /3);
-        $time = round($timear + $timecc /3);
+        $numReq = round($numReqar + $numReqcc + $numReqsa /3);
+
+        $time = round($timear + $timecc + $timesa /3);
 
         //Elapsed Time
         //consul
@@ -128,6 +149,16 @@ class DashboardController extends Controller
         }
 
         //sa
+        $pendingsa = $ap
+        ->where('status', 1)
+        ->get();
+
+        if(count($pendingsa) >= 1) { 
+            $etimesa = $ap->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffsa"))->get();
+            $ETimesa = round((int)$etimesa[0]->timediffsa/3600) ;
+        }else {
+            $ETimesa = 0;
+        }
 
         //cc
         $pendingcc = $cc
@@ -141,7 +172,7 @@ class DashboardController extends Controller
             $ETimecc = 0;
         }
 
-        $ETime = round($ETimear + $ETimecc / 3);
+        $ETime = round($ETimear + $ETimecc + $ETimesa / 3);
 
         //navbar
         $user = new User;
@@ -154,8 +185,8 @@ class DashboardController extends Controller
         $lname = $userDetails->lname;
         
     
-        return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq', 'fname','lname', 'time', 'numReq',
-        'backlog', 'ETime'));
+        return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq', 'fname','lname', 'time','timecc' ,
+        'timesa', 'timear','numReq','backlog','backlog1', 'backlog2', 'backlog3',  'ETime', 'ETimear', 'ETimesa', 'ETimecc'));
     }
 
     

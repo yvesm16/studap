@@ -196,10 +196,10 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Completed Time"],
+                        labels: ["Consultation (minutes)",  "Student Appeal (minutes)" ,  "Course Crediting (minutes)"],
                         datasets: [{
                             label: '',
-                            data: [{{$time}}],
+                            data: [{{$timear}}, {{$timesa}}, {{$timecc}}],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
@@ -236,10 +236,10 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Number of Backlogs"],
+                        labels: ["Consultation", "Student Appeal", "Course Crediting"],
                         datasets: [{
                             label: '',
-                            data: [{{$backlog}}],
+                            data: [{{$backlog1}}, {{$backlog2}}, {{$backlog3}}],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
@@ -275,10 +275,10 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Average Elapased Time"],
+                        labels: ["Consultation (minutes) ", "Student Appeal (minutes)", "Course Crediting (minutes)"],
                         datasets: [{
                             label: '',
-                            data: [{{$ETime}}],
+                            data: [{{$ETimear}}, {{$ETimesa}}, {{$ETimecc}}],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',

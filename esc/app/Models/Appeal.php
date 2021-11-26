@@ -10,6 +10,7 @@ use Auth;
 class Appeal extends Model
 {
     use HasFactory;
+    public $table = 'appeal';
 
     public function getLastID(){
       return DB::table('appeal')

@@ -218,7 +218,7 @@ $(document).ready(function(){
           },
           dataType    :'json',
           success: function (data) {
-          if(data.student_id <10) {
+          if(data.student_id >=10) {
             if(data.result == true){
               $('#successStudentID').css('display','block');
               $('#failedStudentID').css('display','none');
