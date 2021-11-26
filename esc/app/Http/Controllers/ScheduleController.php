@@ -618,7 +618,6 @@ class ScheduleController extends Controller
     $userDetails = $user->getData('id',Auth::id());
     $scheduleDetails = $schedule->getAppointmentRequestForPDF(4);
 
-
     foreach ($scheduleDetails as $schedule_detail) {
       $concernDetails = '';
       $concernOthers = '';
