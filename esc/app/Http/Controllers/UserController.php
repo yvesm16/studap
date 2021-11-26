@@ -417,14 +417,14 @@ class UserController extends Controller
           return Response::json(array(
             'result' => false,
             'text' => 'Invalid current password!'
-        ));
+          ));
         }
       }else  {
-      return Response::json(array(
-        'result' => false,
-        'text' => 'Must contain 8 characters, capital letters, numbers, and special characters'
-      ));
-    }
+        return Response::json(array(
+          'result' => false,
+          'text' => 'Must contain 8 characters, capital letters, numbers, and special characters'
+        ));
+      }
     } 
     
 

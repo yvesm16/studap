@@ -71,32 +71,32 @@
           <li class="active"><a data-toggle="tab" href="#home">Change Password</a></li>
           <li><a data-toggle="tab" href="#menu1">Signature</a></li>
         </ul>
-        <form action="{{ URL::to('/changePassword') }}" method="post">
 
         <div class="tab-content">
           <div id="home" class="tab-pane fade in active">
-            <div class="form-group">
-              <label for="pwd">Current Password:</label>
-              <input type="password" class="form-control" id="currentPassword" placeholder="Enter password" name="currentPassword">
-            </div>
-            <div class="form-group">
-              <label for="npwd">New Password:</label>
-              <input type="password" class="form-control" id="newPassword" placeholder="Enter password" name="newPassword">
-            </div>
-            <div class="form-group">
-              <label for="npwd">Confirm Password:</label>
-              <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" name="confirmPassword">
-            </div>
-            <div class="alert alert-success" style="display: none" id="successPassword">
-                Password was successfully updated!
-            </div>
-            <div class="alert alert-danger" style="display: none" id="failedPassword">
-                <span id="failedContent"></span>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="submitChangePassword">Submit</button>
-            </div>
-          </form>
+            <form action="{{ URL::to('/changePassword') }}" method="post">
+              <div class="form-group">
+                <label for="pwd">Current Password:</label>
+                <input type="password" class="form-control" id="currentPassword" placeholder="Enter password" name="currentPassword">
+              </div>
+              <div class="form-group">
+                <label for="npwd">New Password:</label>
+                <input type="password" class="form-control" id="newPassword" placeholder="Enter password" name="newPassword">
+              </div>
+              <div class="form-group">
+                <label for="npwd">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Enter password" name="confirmPassword">
+              </div>
+              <div class="alert alert-success" style="display: none" id="successPassword">
+                  Password was successfully updated!
+              </div>
+              <div class="alert alert-danger" style="display: none" id="failedPassword">
+                  <span id="failedContent"></span>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" id="submitChangePassword">Submit</button>
+              </div>
+            </form>
           </div>
           <div id="menu1" class="tab-pane fade" style="padding-top: 1%">
             <form action="{{ URL::to('director/uploadSignature') }}" method="post" enctype="multipart/form-data">
