@@ -32,21 +32,26 @@ class UserController extends Controller
       }else{
         $slug = md5($user->getLastID());
       }
+
+      $uppercase = preg_match('@[A-Z]@', $request->input('pwd'));
+      $lowercase = preg_match('@[a-z]@', $request->input('pwd'));
+      $number    = preg_match('@[0-9]@', $request->input('pwd'));
+      $specialChars = preg_match('@[^\w]@', $request->input('pwd'));
   
-      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->input('pwd'))) {
-      if($request->input('pwd') == $request->input('rpwd')){
-        $data = [
-          'fname' => $request->input('fname'),
-          'lname' => $request->input('lname'),
-          'email' => $request->input('email'),
-          'slug' => $slug,
-          'password' => Hash::make($request->input('pwd')),
-          'type' => $request->input('type'),
-          'verified' => 0,
-          'status' => 0
-        ];
-      
-        if (str_contains($request->email, '@ust.edu.ph')) {
+      if($uppercase && $lowercase && $number && $specialChars && strlen($request->input('pwd')) > 7) {
+        if($request->input('pwd') == $request->input('rpwd')){
+          $data = [
+            'fname' => $request->input('fname'),
+            'lname' => $request->input('lname'),
+            'email' => $request->input('email'),
+            'slug' => $slug,
+            'password' => Hash::make($request->input('pwd')),
+            'type' => $request->input('type'),
+            'verified' => 0,
+            'status' => 0
+          ];
+        
+          if (str_contains($request->email, '@ust.edu.ph')) {
             $userDetails = $user->getData('email',$request->email);
             if($userDetails == null){
               $user->insertData($data);
@@ -72,22 +77,21 @@ class UserController extends Controller
                 ->withInput()
                 ->with('error','Account already exists!');
             }
+          }else{
+            return Redirect::to('register')
+              ->withInput()
+              ->with('error','Only your UST account shall be used for this website!');
+          }
         }else{
           return Redirect::to('register')
             ->withInput()
-            ->with('error','Only your UST account shall be used for this website!');
+            ->with('error','Password does not match!');
         }
-      }else{
+      }else {
         return Redirect::to('register')
-          ->withInput()
-          ->with('error','Password does not match!');
+            ->withInput()
+            ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
       }
-    }else {
-      return Redirect::to('register')
-          ->withInput()
-          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
-    }
-  
     }
 
     public function verifyUser($slug){
@@ -384,7 +388,13 @@ class UserController extends Controller
     public function changePassword(Request $request){ 
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
-      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
+      
+      $uppercase = preg_match('@[A-Z]@', $request->newPassword);
+      $lowercase = preg_match('@[a-z]@', $request->newPassword);
+      $number    = preg_match('@[0-9]@', $request->newPassword);
+      $specialChars = preg_match('@[^\w]@', $request->newPassword);
+  
+      if($uppercase && $lowercase && $number && $specialChars && strlen($request->newPassword) > 7) {
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){
