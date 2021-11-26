@@ -77,6 +77,8 @@ class ScheduleController extends Controller
       $appointment_start = date('H:i:s',strtotime($request->input('appointment_start')));
       $appointment_end = date('H:i:s',strtotime($request->input('appointment_end')));
 
+      // dd($request->input());
+
       if($request->input('professor_id') == '' || $request->input('appointment_date') == '' || $request->input('appointment_start') == '' || $request->input('appointment_end') == '' || $request->input('concerns') == ''){
         return Response::json(array(
             'result' => false,
@@ -116,6 +118,12 @@ class ScheduleController extends Controller
                 }
                 $concernDetails = $concerns->getDataByID($concern_id);
                 if($concernDetails->text == 'Others'){
+                  if($request->input('othersText') == ''){
+                    return Response::json(array(
+                      'result' => false,
+                      'text' => 'All fields are required!'
+                    ));
+                  }
                   $concernText = $request->input('othersText');
                 }
                 $i++;

@@ -158,15 +158,16 @@ class AppealController extends Controller
       $file_path = $files->getActiveFilesByParameter('appeal_id',$appointmentDetails->id);
       $auditDetails = $audit->getAllDataByParameter('row_id',$appointmentDetails->id, 'table_name', 'appeal');
       
-      $appointment_date = '';
-      $appointment_time = '';
+      $date = '';
+      $start_time = '';
+      $end_time = '';
       // dd($appointmentDetails);
       if ($appointmentDetails->start_time) {
-        $appointment_date = explode(' ',$appointmentDetails->start_time)[0];
-        $appointment_time = date('h:i A', strtotime(explode(' ',$appointmentDetails->start_time)[1]));
+        $date = explode(' ',$appointmentDetails->start_time)[0];
+        $start_time = date('h:i A', strtotime(explode(' ',$appointmentDetails->start_time)[1]));
 
         if ($appointmentDetails->end_time) {
-          $appointment_time = $appointment_time . ' - ' . date('h:i A', strtotime(explode(' ',$appointmentDetails->end_time)[1]));
+          $end_time = date('h:i A', strtotime(explode(' ',$appointmentDetails->end_time)[1]));
         }
       }
       
@@ -190,8 +191,9 @@ class AppealController extends Controller
         'message' => $appointmentDetails->message,
         'remarks' => $appointmentDetails->remarks,
         'attached_file_path' => $path,
-        'appointment_date' => $appointment_date,
-        'appointment_time' => $appointment_time,
+        'date' => $date,
+        'start' => $start_time,
+        'end' => $end_time,
         'auditDetails' => $auditDetails,
       ));
     }

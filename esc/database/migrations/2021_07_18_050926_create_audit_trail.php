@@ -18,7 +18,7 @@ class CreateAuditTrail extends Migration
           $table->string('slug',225);
           $table->string('table_name');
           $table->integer('row_id');
-          $table->integer('targetReceiver');
+          $table->integer('targetReceiver')->nullable();
           $table->integer('triggeredBy')->nullable();
           $table->integer('status')->comment('0 - Unread | 1 - Read');
           $table->timestamp('created_at')->useCurrent();

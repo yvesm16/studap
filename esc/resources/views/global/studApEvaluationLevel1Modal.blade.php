@@ -33,18 +33,6 @@
                 <span style="display:none" id="attached3"></span>
               </div>    
               <br>
-
-              @if(session()->has('message'))
-                <div class="alert-danger" style="color:#FF0000;">
-                   session()->get('message') }}
-                </div>
-              @endif
-              @if(session()->has('emessage'))
-                <div class="alert-danger" style="color:#00FF00;">
-                   session()->get('emessage') }}
-                </div>
-              @endif
-              <br>
               
               <form id="student-appeal-eval" action="{{ URL::to('director/postMeeting') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -53,17 +41,27 @@
                 <div class="row">
                   <div class="col-md-10">
                     <label>Date:</label>
-                    <input class="form-control" id="eval-course-grade-form-time2" type="date" id="start" name="date" required>
+                    <input class="form-control" id="date" type="date" name="date" required>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-5">
                     <label>Start Time:</label>
-                    <input type="time" class="form-control" id="start" name="start" min="07:00" max="19:00" step="600" required>
+                    <div class='input-group date datetimepicker2' onclick="validateAppointmentTimeLevel1('start')">
+                      <input type='text' class="form-control" id="start" name="start" required />
+                      <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
                   </div>
                   <div class="col-md-5">
                     <label>End Time:</label>
-                    <input type="time" class="form-control" id="end" name="end" min="08:00" max="19:00" step="600" required>
+                    <div class='input-group date datetimepicker3' onclick="validateAppointmentTimeLevel1('end')">
+                      <input type='text' class="form-control" id="end" name="end" required/>
+                      <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
                   </div>
                 </div>
                   
@@ -77,6 +75,16 @@
       
                 <button id="submitStudentAppealEval" class="btn btn-primary" name="confirm" type="submit" value="Button">Confirm</button>
               </form>
+              <br>
+              <div class="alert alert-success" style="display: none" id="successNotification">
+                  Appointment was successfully submitted. Wait for further updates.
+              </div>
+              <div class="alert alert-danger" style="display: none" id="failedNotification">
+                  <span id="failedText"></span>
+              </div>
+              <div class="alert alert-danger" style="display: none" id="failedNotificationTime">
+                  <span id="failedTextTime"></span>
+              </div>
             </div>
             <div class="col-md-6">
               <div class="row">

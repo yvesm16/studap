@@ -53,15 +53,18 @@ $(document).ready(function () {
           document.getElementById("transaction_number").textContent = data.transaction_number;
           document.getElementById("student_id").textContent = data.student_id;
           document.getElementById("student_name").textContent = data.student_name;
+          document.getElementById("attached1").textContent = data.attached1;
           document.getElementById("attached2").textContent = data.attached2;
           document.getElementById("attached3").textContent = data.attached3;
+          $('#date').val(data.date);
+          $('#start').val(data.start);
+          $('#end').val(data.end);
           $('#message').val(data.message);
           $('#appeal_id').val(data.transaction_number);
-          $("#objectViewDocumentPDF").attr("data", data.path);
-          $("#embedViewDocumentPDF").attr("src", data.path);
-          $('#studApEvaluationModal').modal('toggle');
+          $("#objectViewDocumentPDF").attr("data", data.attached_file_path);
+          $("#embedViewDocumentPDF").attr("src", data.attached_file_path);
 
-          if (data.status > 0) {
+          if (data.status > 1) {
             $('#submitStudentAppealEval').css('display', 'none');
           }
 
@@ -85,6 +88,119 @@ $(document).ready(function () {
           } else {
             $('#attached3').css('display', 'none');
           }
+
+          $('#studApEvaluationLevel1Modal').modal('toggle');
+        }
+      }
+    });
+  });
+  $('#studentAppealTable').delegate('.evaluate2', 'click', function () {
+    $.ajax({
+      url: BASE_URL + '/director/getDirectorAppealDetails',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      data: {
+        appeal_slug: $(this).data('id')
+      },
+      dataType: 'json',
+      success: function success(data) {
+        if (data.result == true) {
+          document.getElementById("transaction_number-2").textContent = data.transaction_number;
+          document.getElementById("student_id-2").textContent = data.student_id;
+          document.getElementById("student_name-2").textContent = data.student_name;
+          document.getElementById("attached2-2").textContent = data.attached2;
+          document.getElementById("attached3-2").textContent = data.attached3;
+          $('#date-2').val(data.date);
+          $('#start-2').val(data.start);
+          $('#end-2').val(data.end);
+          $('#prof_email-2').val(data.prof_email);
+          $('#message-2').val(data.message);
+          $('#appeal_id-2').val(data.transaction_number);
+          $("#objectViewDocumentPDF-2").attr("data", data.attached_file_path);
+          $("#embedViewDocumentPDF-2").attr("src", data.attached_file_path);
+
+          if (data.status > 1) {
+            $('#submitStudentAppealEval-2').css('display', 'none');
+          }
+
+          if (data.attached1) {
+            document.getElementById("attached1-2").textContent = data.attached1;
+            $('#attached1-2').css('display', 'block');
+          } else {
+            $('#attached1-2').css('display', 'none');
+          }
+
+          if (data.attached2) {
+            document.getElementById("attached2-2").textContent = data.attached2;
+            $('#attached2-2').css('display', 'block');
+          } else {
+            $('#attached2-2').css('display', 'none');
+          }
+
+          if (data.attached3) {
+            document.getElementById("attached3-2").textContent = data.attached3;
+            $('#attached3-2').css('display', 'block');
+          } else {
+            $('#attached3-2').css('display', 'none');
+          }
+
+          $('#studApEvaluationLevel2Modal').modal('toggle');
+        }
+      }
+    });
+  });
+  $('#studentAppealTable').delegate('.evaluate3', 'click', function () {
+    $.ajax({
+      url: BASE_URL + '/director/getDirectorAppealDetails',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      data: {
+        appeal_slug: $(this).data('id')
+      },
+      dataType: 'json',
+      success: function success(data) {
+        if (data.result == true) {
+          document.getElementById("transaction_number-3").textContent = data.transaction_number;
+          document.getElementById("student_id-3").textContent = data.student_id;
+          document.getElementById("student_name-3").textContent = data.student_name;
+          document.getElementById("attached2-3").textContent = data.attached2;
+          document.getElementById("attached3-3").textContent = data.attached3;
+          $('#prof_email-3').val(data.prof_email);
+          $('#message-3').val(data.message);
+          $('#appeal_id-3').val(data.transaction_number);
+          $("#objectViewDocumentPDF-3").attr("data", data.attached_file_path);
+          $("#embedViewDocumentPDF-3").attr("src", data.attached_file_path);
+
+          if (data.status > 1) {
+            $('#submitStudentAppealEval-3').css('display', 'none');
+          }
+
+          if (data.attached1) {
+            document.getElementById("attached1-3").textContent = data.attached1;
+            $('#attached1-3').css('display', 'block');
+          } else {
+            $('#attached1-3').css('display', 'none');
+          }
+
+          if (data.attached2) {
+            document.getElementById("attached2-3").textContent = data.attached2;
+            $('#attached2-3').css('display', 'block');
+          } else {
+            $('#attached2-3').css('display', 'none');
+          }
+
+          if (data.attached3) {
+            document.getElementById("attached3-3").textContent = data.attached3;
+            $('#attached3-3').css('display', 'block');
+          } else {
+            $('#attached3-3').css('display', 'none');
+          }
+
+          $('#studApEvaluationLevel3Modal').modal('toggle');
         }
       }
     });
@@ -150,7 +266,7 @@ $(document).ready(function () {
             document.getElementById("secondStepText").textContent = 'Completed';
             document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("thirdStepText").textContent = 'Completed';
-            document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
+            document.getElementById("fourthStepDate").textContent = data.auditDetails[2]['created_at'];
             document.getElementById("fourthStepText").textContent = 'Completed';
           }
 
@@ -209,142 +325,104 @@ $(document).ready(function () {
         }
       });
     }
-  }); // $('#consultationTable').delegate('.startAppointment','click', function (){
-  //     if (confirm('Are you sure you want to start this appointment?')) {
-  //       $.ajax({
-  //           url: BASE_URL + '/professor/updateAppointmentStatus',
-  //           headers: {
-  //               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //           },
-  //           type: 'POST',
-  //           data: {
-  //               appointment_id : $(this).data('id'),
-  //               status: 3
-  //           },
-  //           dataType    :'json',
-  //           success: function (data) {
-  //             if(data.result == true){
-  //               $('#consultationTable').dataTable().api().ajax.reload();
-  //               alert('Appointment was successfully updated!');
-  //               window.location.reload();
-  //             }
-  //           }
-  //       });
-  //     }
-  // });
-  // $('#consultationTable').delegate('.endAppointment','click', function (){
-  //     if (confirm('Are you sure you want to complete this appointment?')) {
-  //       $.ajax({
-  //           url: BASE_URL + '/professor/updateAppointmentStatus',
-  //           headers: {
-  //               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //           },
-  //           type: 'POST',
-  //           data: {
-  //               appointment_id : $(this).data('id'),
-  //               status: 4
-  //           },
-  //           dataType    :'json',
-  //           success: function (data) {
-  //             if(data.result == true){
-  //               $('#consultationTable').dataTable().api().ajax.reload();
-  //               alert('Appointment was successfully updated!');
-  //               window.location.reload();
-  //             }
-  //           }
-  //       });
-  //     }
-  // });
-  // $('#slotTable').delegate('.updateSlot','click', function (){
-  //     $.ajax({
-  //         url: BASE_URL + '/professor/getSlotDetails',
-  //         headers: {
-  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //         },
-  //         type: 'POST',
-  //         data: {
-  //             slot_id : $(this).data('id')
-  //         },
-  //         dataType    :'json',
-  //         success: function (data) {
-  //           if(data.result == true){
-  //             var slotDate = data.data['start_time'].split(' ')[0];
-  //             var slotStartTime = data.data['start_time'].split(' ')[1];
-  //             slotStartTime = convert(slotStartTime);
-  //             var slotEndTime = data.data['end_time'].split(' ')[1];
-  //             slotEndTime = convert(slotEndTime);
-  //             var slotTitle = data.data['title'];
-  //             $('#slot_id').val(data.data['id']);
-  //             $('#slot_name').val(slotTitle);
-  //             $('#slot_date').val(slotDate);
-  //             $('#slot_start').val(slotStartTime);
-  //             $('#slot_end').val(slotEndTime);
-  //             $(".addSlotDiv").css('display','none');
-  //             $(".updateSlotDiv").css('display','block');
-  //             $('#successNotification').css('display','none');
-  //             $('#failedNotification').css('display','none');
-  //           }
-  //         }
-  //     });
-  // });
-  // $('.updateSlot').on('click', function (){
-  //     $.ajax({
-  //         url: BASE_URL + '/professor/updateSlotDetails',
-  //         headers: {
-  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //         },
-  //         type: 'POST',
-  //         data: {
-  //             slot_id : $('#slot_id').val(),
-  //             slot_title : $('#slot_name').val(),
-  //             slot_date : $('#slot_date').val(),
-  //             slot_start : $('#slot_start').val(),
-  //             slot_end : $('#slot_end').val()
-  //         },
-  //         dataType    :'json',
-  //         success: function (data) {
-  //           if(data.result == true){
-  //             $(".addSlotDiv").css('display','block');
-  //             $(".updateSlotDiv").css('display','none');
-  //             $('#successNotification').css('display','block');
-  //             $('#failedNotification').css('display','none');
-  //             $('#slot_name').val('');
-  //             $('#slot_date').val('');
-  //             $('#slot_start').val('');
-  //             $('#slot_end').val('');
-  //             document.getElementById("successSlotContent").textContent = data.text;
-  //             $('#slotTable').dataTable().api().ajax.reload();
-  //           }else{
-  //             $('#successNotification').css('display','none');
-  //             $('#failedNotification').css('display','block');
-  //             document.getElementById("failedSlotContent").textContent = data.text;
-  //           }
-  //         }
-  //     });
-  // });
-  // $('#submitStudentAppealEval').on('click',function(){
-  // $.ajax({
-  //     url: BASE_URL + '/director/updateMeeting',
-  //     headers: {
-  //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //     },
-  //     type: 'POST',
-  //     data: {
-  //         appointment_id : $('#appointment_id').val(),
-  //         data : $('#meetingLink').val(),
-  //         transaction : 0
-  //     },
-  //     dataType    :'json',
-  //     success: function (data) {
-  //       if(data.result == true){
-  //         alert('Appointment meeting link was successfully updated');
-  //       }
-  //     }
-  // });
-  //   console.log('hi');
-  // });
+  });
+  $('.datetimepicker2').datetimepicker({
+    'format': 'LT'
+  });
+  $('.datetimepicker3').datetimepicker({
+    'format': 'LT'
+  });
 });
 
 function convert(input) {
   return moment(input, 'HH:mm').format('h:mm A');
+} // function startIt(){
+//   validateAppointmentTime("start");
+// }
+
+
+function validateAppointmentTimeLevel2(param) {
+  var start = $("#start").val();
+  var end = $("#end").val();
+  console.log(start); // validateAppointmentTime(start, end);
+}
+
+function validateAppointmentTimeLevel1(param) {
+  //  7am  - 8pm
+  var hourArray = ["7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"];
+  console.log(param);
+  var start = $("#start").val();
+  start = convertTo24Hour(start.toLowerCase());
+  var sHr = start.split(":");
+  sHr = sHr[0];
+  var end = $("#end").val();
+  end = convertTo24Hour(end.toLowerCase());
+  var eHr = end.split(":");
+  eHr = eHr[0];
+
+  if (hourArray.indexOf(sHr) !== -1) {
+    $("#failedNotificationTime").hide();
+    $("#failedNotificationTime").css('display', 'none');
+    $("#submitStudentAppealEval").attr('disabled', false);
+    SumHours(start, end);
+  } else {
+    $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+    $("#submitStudentAppealEval").attr('disabled', true);
+    $("#failedNotificationTime").show();
+  }
+
+  if (hourArray.indexOf(eHr) !== -1) {
+    $("#failedNotificationTime").hide();
+    $("#failedNotificationTime").css('display', 'none');
+    $("#submitStudentAppealEval").attr('disabled', false);
+    SumHours(start, end);
+  } else {
+    $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+    $("#submitStudentAppealEval").attr('disabled', true);
+    $("#failedNotificationTime").show();
+  } // setTimeout(function(){ validateAppointmentTime("start"); }, 3000);
+
+}
+
+function convertTo24Hour(time) {
+  var hours = parseInt(time.substr(0, 2));
+
+  if (time.indexOf('am') != -1 && hours == 12) {
+    time = time.replace('12', '0');
+  }
+
+  if (time.indexOf('pm') != -1 && hours < 12) {
+    time = time.replace(hours, hours + 12);
+  }
+
+  return time.replace(/(am|pm)/, '');
+}
+
+function SumHours(smon, fmon) {
+  var diff = 0;
+
+  if (smon && fmon) {
+    smon = ConvertToSeconds(smon);
+    fmon = ConvertToSeconds(fmon);
+    diff = Math.abs(fmon - smon);
+
+    if (diff < 1800) {
+      $("#failedTextTime").text("Appointment Minimum Time : 30 Mins");
+      $("#failedNotificationTime").show();
+      $("#submitStudentAppealEval").attr('disabled', true);
+    } else if (diff > 10800) {
+      $("#failedTextTime").text("Appointment Maximum Time : 3 Hours");
+      $("#failedNotificationTime").show();
+      $("#submitStudentAppealEval").attr('disabled', true);
+    } else {
+      $("#failedNotificationTime").hide();
+      $("#failedNotificationTime").css('display', 'none');
+      $("#submitStudentAppealEval").attr('disabled', false);
+    }
+  }
+}
+
+function ConvertToSeconds(time) {
+  var splitTime = time.split(":");
+  return splitTime[0] * 3600 + splitTime[1] * 60;
 }

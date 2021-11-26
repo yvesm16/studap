@@ -149,16 +149,16 @@
           </div>
 
           <div class="col-md-6" style="text-align: left">
-              <input type="text" class="form-control" name="email" id="email" required>
+              <input type="email" class="form-control" name="email" id="email" required>
           </div>
         </div>
 
-        <div class="col-md-12" style="text-align: right; margin-top: 10px; margin-bottom: 20px">
+        <div class="col-md-12" style="text-align: right; margin-top: 10px;margin-bottom: 10px">
           <button type="submit" class="btn btn-primary submit-appeal">Submit Form</button>
         </div>
       </div>
       @if (session('success'))
-        <div class="alert alert-success" style="margin-top: 5%">
+        <div class="alert alert-success" style="margin-top: 7%">
           <strong>Success!</strong> Appeal request was successfully submitted!
         </div>
       @endif
