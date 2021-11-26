@@ -16,7 +16,12 @@
 </head>
 <body>
 
-@include('professor.nav')
+@if($user_type == '1')
+    @include('professor.nav')
+@else
+    @include('director.nav')
+@endif
+
 <input type="hidden" id="status" name="status" value="{{ $status }}">
 <div class="container indexMargin home">
   <div id="page-wrapper">

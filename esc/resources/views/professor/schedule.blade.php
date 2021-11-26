@@ -24,7 +24,11 @@
 </head>
 <body>
 
-@include('professor.nav')
+@if($user_type == '1')
+    @include('professor.nav')
+@else
+    @include('director.nav')
+@endif
 
 <div class="container indexMargin">
   <input class="form-control" type="hidden" name="slot_id" id="slot_id" />

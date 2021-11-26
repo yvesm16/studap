@@ -25,7 +25,7 @@ class ScheduleController extends Controller
       $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
-      $allProfessor = $user->getAllDataByParameter('type',1);
+      $allProfessor = $user->getAllDataByWhereIn('type',[1,2]);
 
       $data = [
         'id' => Auth::id(),
@@ -198,6 +198,7 @@ class ScheduleController extends Controller
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
+        'user_type' => $userDetails->type,
         'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 
@@ -251,7 +252,6 @@ class ScheduleController extends Controller
                 $endDate = date('Y-m-d', strtotime($request->input('slot_end_date')));
 
                 while($startDate <= $endDate){
-
                   $data = [
                     'slug' => md5($lastID),
                     'professor_id' => Auth::id(),
@@ -273,7 +273,7 @@ class ScheduleController extends Controller
 
                   $audit->insertData($data);
 
-                  $startDate = date('Y-m-d', strtotime($startDate . ' +7 day'));
+                  $startDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
 
                   $start = $startDate . ' ' . $slot_start;
                   $end = $startDate . ' ' . $slot_end;

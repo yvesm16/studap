@@ -38,6 +38,10 @@ $(document).ready(function () {
                     text = "<div class='alert alert-info'><strong>New</strong> " + data.fname + " " + data.lname + " sent a student appeal request.</div>";
                   } else if (data.type == 2) {
                     text = "<div class='alert alert-info'><strong>New!</strong> " + data.fname + " " + data.lname + " sent a course credit request.</div>";
+                  } else {
+                    if (data.status == 0) {
+                      text = "<div class='alert alert-info'><strong>New!</strong> " + notif[i]['fname'] + " " + notif[i]['lname'] + " is asking for an appointment.</div>";
+                    }
                   }
 
                   message = message + text;

@@ -84,4 +84,10 @@ class User extends Authenticatable
         ->where($column,$param)
         ->get();
     }
+
+    public function getAllDataByWhereIn($column,$param){
+      return DB::table('users')
+        ->whereIn($column,$param)
+        ->get();
+    }
 }

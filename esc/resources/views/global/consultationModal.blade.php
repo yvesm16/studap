@@ -28,7 +28,7 @@
               <span id="appointment_time"></span>
             </div>
           </div>
-          @if($user_type == 1)
+          @if($user_type == 1||$user_type == 2)
             @if($status > 0)
               <div class="row form-group" style="margin-bottom: 1%">
                 <div class="col-md-4">

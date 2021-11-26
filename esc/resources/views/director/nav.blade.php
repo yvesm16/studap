@@ -19,6 +19,8 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/home'); }} ">Home</a></li>
+        <li <?php echo (str_contains($actual_link,'schedule')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/schedule'); }} ">Schedule</a></li>
+        <li <?php echo (str_contains($actual_link,'requests')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/requests/0'); }} ">Requests</a></li>
         <li <?php echo (str_contains($actual_link,'student_appeal')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/student_appeal/pending'); }}" class="student_appeal">Student Appeal</a></li>
         <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/crediting/1'); }}" class="crediting">Crediting</a></li>
         <li <?php echo (str_contains($actual_link,'dashboard')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('director/dashboard'); }}">Dashboard</a></li>
