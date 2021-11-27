@@ -144,4 +144,12 @@ class Appeal extends Model
         '))
         ->get();
     }
+    
+    public function checkSlotOverlap($start,$end){
+      return DB::table('appeal')
+        ->whereBetween('start_time',[$start,$end])
+        ->orWhereBetween('end_time',[$start,$end])
+        ->where('status',1)
+        ->count();
+    }
 }

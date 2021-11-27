@@ -131,7 +131,7 @@
                 @if($subject->status == 0)
                   <span class="label label-info">Waiting for Chairperson</span>
                 @elseif($subject->status == 1)
-                  <span class="label label-info">Waiting for Director</span>
+                  <span class="label label-info">Waiting for Dean</span>
                 @elseif($subject->status == 5)
                   <span class="label label-danger">Rejected</span><br>
                   {{ $subject->remarks }}

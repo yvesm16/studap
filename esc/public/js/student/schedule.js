@@ -6,7 +6,8 @@ $(document).ready(function() {
 
   $('#datetimepicker1').datetimepicker({
     'format': 'YYYY-MM-DD',
-    'minDate': today
+    'minDate': today,
+    'maxDate': moment().add(6, 'day')
   });
   $('#datetimepicker2').datetimepicker({
     'format': 'LT'

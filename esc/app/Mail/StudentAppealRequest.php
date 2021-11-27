@@ -42,6 +42,9 @@ class StudentAppealRequest extends Mailable
 
       return $this->view('emails.studentAppealRequest')
         ->with([
+          'section' => $appointmentDetails->section,
+          'created_at' => $appointmentDetails->created_at,
+          'concerns' => $appointmentDetails->concerns,
           'director_fname' => $user->getData('id',$director_id->director)->fname,
           'director_lname' => $user->getData('id',$director_id->director)->lname,
           'student_fname' => $user->getData('id',$appointmentDetails->student_id)->fname,

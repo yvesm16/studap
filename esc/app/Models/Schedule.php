@@ -165,4 +165,13 @@ class Schedule extends Model
         ->get();
     }
 
+    public function getApprovedAppointmentForTomorrow($tomorrow_start_time, $tomorrow_end_time) {
+      return DB::table('professor_schedule')
+        ->where('start_time','>=',$tomorrow_start_time)
+        ->where('start_time','<=',$tomorrow_end_time)
+        ->WhereNotNull('student_id')
+        ->where('status',1)
+        ->get();
+    }
+
 }

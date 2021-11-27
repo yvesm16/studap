@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>IICS E-Services - Email Account Verification</title>
+    <title>CICS E-Services - Email Account Verification</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -15,22 +15,22 @@
       </div>
       <div class="col-sm-12">
         <p>
-          Hello {{ $director_fname }} {{ $director_lname }},
+          Hello {{ $target_fname }} {{ $target_lname }},
         </p>
         <p>
-          <h1>Student Appeal Request</h1>
+          <h1>Reminder: Tomorrow is your Consultation</h1>
+          with {{ $with_fname }} {{ $with_lname }}
         </p>
         <p>
           <ul>
-            <li><b>Student Name</b>: {{ $student_fname }} {{ $student_lname }}</li>
-            <li><b>Section</b>: {{ $section }}</li>
-            <li><b>Date submitted</b>: {{ $created_at }}</li>
-            <li><b>Concerns</b>: {{ $concerns }}</li>
+            <li><b>Start Datetime</b>: {{ $start_time }}</li>
+            <li><b>End Datetime</b>: {{ $end_time }}</li>
+            <li><b>Meeting Link</b>: <a href="{{ $meeting_link }}">{{ $meeting_link }}</a></li>
           </ul>
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>
-          IICS E-Services Support Team
+          CICS E-Services Support Team
         </p>
       </div>
     </div>

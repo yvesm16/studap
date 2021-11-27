@@ -75,7 +75,7 @@
             <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email" required>
           </div>
           <div class="form-group">
-            <label for="npwd">Position: <i>(Enter 1 for professor, 2 for Director, 3 for Secretary, 4 for Registrar)</i></label>
+            <label for="npwd">Position: <i>(Enter 1 for professor, 2 for Dean, 3 for Secretary, 4 for Registrar)</i></label>
             <input class="form-control" id="type" placeholder="Enter Email" name="type"  type="number" min="1" max="4" required>
           </div>
           <div class="form-group">
@@ -125,7 +125,7 @@
                             @elseif ($user->type==1)     
                                 <p>Professor<p>
                             @elseif ($user->type==2) 
-                                <p>Director<p>
+                                <p>Dean<p>
                             @elseif($user->type==3)
                                 <p>Secretary<p>
                             @elseif($user->type==4) 

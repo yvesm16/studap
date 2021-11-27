@@ -56,8 +56,8 @@ $(document).ready(function() {
             document.getElementById("attached3").textContent = data.attached3;
             
             $('#date').val(data.date);
-            $('#start').val(data.start);
-            $('#end').val(data.end);
+            // $('#start').val(data.start);
+            // $('#end').val(data.end);
             $('#message').val(data.message);
             $('#appeal_id').val(data.transaction_number);
             $("#objectViewDocumentPDF").attr("data", data.attached_file_path);
@@ -113,8 +113,8 @@ $(document).ready(function() {
             document.getElementById("attached3-2").textContent = data.attached3;
             
             $('#date-2').val(data.date);
-            $('#start-2').val(data.start);
-            $('#end-2').val(data.end);
+            // $('#start-2').val(data.start);
+            // $('#end-2').val(data.end);
             $('#prof_email-2').val(data.prof_email);
             $('#message-2').val(data.message);
             $('#appeal_id-2').val(data.transaction_number);
@@ -171,8 +171,8 @@ $(document).ready(function() {
             document.getElementById("attached3-3").textContent = data.attached3;
             
             $('#date-3').val(data.date);
-            $('#start-3').val(data.start);
-            $('#end-3').val(data.end);
+            // $('#start-3').val(data.start);
+            // $('#end-3').val(data.end);
             $('#prof_email-3').val(data.prof_email);
             $('#message-3').val(data.message);
             $('#appeal_id-3').val(data.transaction_number);
@@ -307,30 +307,143 @@ $(document).ready(function() {
       $('#remarks_appeal_slug').val($(this).data('id'));
       $('#remarksModal').modal('toggle');
   });
-
-  $('#submitRemarks').on('click',function(){
-    if (confirm('Are you sure you want to reject this request?')) {
+  
+  $('#studentAppealTable').delegate('.remarks','click', function (){
+      $('#remarks_appeal_slug').val($(this).data('id'));
       $.ajax({
-        url: BASE_URL + '/director/updateAppealStatus',
+        url: BASE_URL + '/director/getDirectorAppealDetails',
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         type: 'POST',
         data: {
-          appeal_slug : $('#remarks_appeal_slug').val(),
-          reasonDetails : $('#reasonDetails').val(),
-          status: 3
+          appeal_slug : $(this).data('id')
         },
         dataType    :'json',
         success: function (data) {
           if(data.result == true){
-            $('#studentAppealTable').dataTable().api().ajax.reload();
-            alert('Request was successfully updated!');
-            window.location.reload();
+            $('#reasonDetails').val(data.remarks);
+            $('#remarksModal').modal('toggle');
           }
         }
       });
-    }
+  });
+
+  $('#submitRemarks').on('click',function(){
+    $.ajax({
+      url: BASE_URL + '/director/updateAppealStatus',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      data: {
+        appeal_slug : $('#remarks_appeal_slug').val(),
+        reasonDetails : $('#reasonDetails').val()
+      },
+      dataType    :'json',
+      success: function (data) {
+        if(data.result == true){
+          $('#studentAppealTable').dataTable().api().ajax.reload();
+          alert('Remarks was successfully added!');
+          window.location.reload();
+        }
+      }
+    });
+  });
+
+  $('#submitStudentAppealEval').on('click', function (){
+    $('#successNotification').css('display','none');
+    $('#failedNotification').css('display','none');
+    $.ajax({
+        url: BASE_URL + '/director/postMeeting',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+          level : $('#level').val(),
+          appeal_id : $('#appeal_id').val(),
+          date : $('#date').val(),
+          start : $('#start').val(),
+          end : $('#end').val(),
+          message : $('#message').val()
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            $('#successNotification').css('display','block');
+            $('#failedNotification').css('display','none');
+          }else{
+            $('#successNotification').css('display','none');
+            $('#failedNotification').css('display','block');
+            document.getElementById("failedText").textContent = data.text;
+          }
+        }
+    });
+  });
+
+  $('#submitStudentAppealEval-2').on('click', function (){
+    $('#successNotification-2').css('display','none');
+    $('#failedNotification-2').css('display','none');
+    $.ajax({
+        url: BASE_URL + '/director/postMeeting',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+          level : $('#level-2').val(),
+          appeal_id : $('#appeal_id-2').val(),
+          prof_email : $('#prof_email-2').val(),
+          date : $('#date-2').val(),
+          start : $('#start-2').val(),
+          end : $('#end-2').val(),
+          message : $('#message-2').val()
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            $('#successNotification-2').css('display','block');
+            $('#failedNotification-2').css('display','none');
+          }else{
+            $('#successNotification-2').css('display','none');
+            $('#failedNotification-2').css('display','block');
+            document.getElementById("failedText-2").textContent = data.text;
+          }
+        }
+    });
+  });
+
+  $('#submitStudentAppealEval-3').on('click', function (){
+    $('#successNotification-3').css('display','none');
+    $('#failedNotification-3').css('display','none');
+    $.ajax({
+        url: BASE_URL + '/director/postMeeting',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+          level : $('#level-3').val(),
+          appeal_id : $('#appeal_id-3').val(),
+          prof_email : $('#prof_email-3').val(),
+          date : $('#date-3').val(),
+          start : $('#start-3').val(),
+          end : $('#end-3').val(),
+          message : $('#message-3').val()
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            $('#successNotification-3').css('display','block');
+            $('#failedNotification-3').css('display','none');
+          }else{
+            $('#successNotification-3').css('display','none');
+            $('#failedNotification-3').css('display','block');
+            document.getElementById("failedText-3").textContent = data.text;
+          }
+        }
+    });
   });
 
   
@@ -395,7 +508,7 @@ function validateAppointmentTimeLevel1(param){
     $("#failedNotificationTime").show();
   }
 
-  // setTimeout(function(){ validateAppointmentTime("start"); }, 3000);
+  setTimeout(function(){ validateAppointmentTimeLevel1("start"); }, 3000);
 }
 
 function validateAppointmentTimeLevel2(param){
@@ -434,6 +547,8 @@ function validateAppointmentTimeLevel2(param){
     $("#submitStudentAppealEval-2").attr('disabled',true);
     $("#failedNotificationTime-2").show();
   }
+
+  setTimeout(function(){ validateAppointmentTimeLevel2("start"); }, 3000);
 }
 
 function validateAppointmentTimeLevel3(param){
@@ -472,6 +587,8 @@ function validateAppointmentTimeLevel3(param){
     $("#submitStudentAppealEval-3").attr('disabled',true);
     $("#failedNotificationTime-3").show();
   }
+
+  setTimeout(function(){ validateAppointmentTimeLevel3("start"); }, 3000);
 }
 
 function convertTo24Hour(time) {
