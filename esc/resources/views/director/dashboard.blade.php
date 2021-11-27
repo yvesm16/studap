@@ -47,7 +47,7 @@
                 </div>
                 <div class='col-sm-12 col-md-12 col-lg-2' style='text-align:center'>
                     <p>Weekly - Average Number of Declined Request</p>
-                    <p></p>
+                    <p>{{$decline}}</p>
                 </div>
             </div>
         </div>
