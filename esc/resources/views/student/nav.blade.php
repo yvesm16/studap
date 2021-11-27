@@ -218,23 +218,18 @@ $(document).ready(function(){
           },
           dataType    :'json',
           success: function (data) {
-          if(data.student_id >=10) {
             if(data.result == true){
               $('#successStudentID').css('display','block');
               $('#failedStudentID').css('display','none');
-              $('#warningStudentID').css('display','none');
+              // $('#warningStudentID').css('display','none');
 
             }else{
               $('#successStudentID').css('display','none');
               $('#failedStudentID').css('display','block');
-              $('#warningStudentID').css('display','none');
+              // $('#warningStudentID').css('display','none');
 
             }
-          }else {
-            $('#successStudentID').css('display','none');
-            $('#failedStudentID').css('display','none');
-            $('#warningStudentID').css('display','block');
-          }
+          
           }
       });
     });
@@ -254,7 +249,7 @@ $(document).ready(function(){
         <div class="modal-body">
           <div class="form-group">
             <label>Student ID</label>
-            <input type="number" class="form-control" id="student_id" name="student_id" maxlength="10" minlength="10">
+            <input type="number" class="form-control" id="student_id" name="student_id" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" >
           </div>
           <div class="form-group">
             <label>Course</label>
@@ -265,11 +260,8 @@ $(document).ready(function(){
             <div class="alert alert-success" style="display: none" id="successStudentID">
                 Data was successfully saved!
             </div>
-            <div class="alert alert-warning" style="display: none" id="warningStudentID">
-              UST Student number only has 10 digits!
-          </div>
             <div class="alert alert-danger" style="display: none" id="failedStudentID">
-                Student ID is already existing!
+                Student ID has 10 digits / Student ID is already existing!
             </div>
           </div>
         </div>
