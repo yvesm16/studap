@@ -212,64 +212,91 @@ class AppealController extends Controller
         $start = $request->date . ' ' . $start;
         $end = $request->date . ' ' . $end;
         $prof_email = '';
-        
-        if ($request->level == '2' || $request->level == '3') {
-          $prof_email = $request->prof_email;
-        }
 
-        $data = [
-          'message' => $request->message,
-          'prof_email' => $prof_email,
-          'start_time' => $start,
-          'end_time' => $end,
-          'status' => 1
-        ];
-        $appeal->updateDataByID($data,$request->appeal_id);
+        $check_start = date('Y-m-d H:i:s', strtotime($start . ' +1 minute'));
+        $check_end = date('Y-m-d H:i:s', strtotime($end . ' -1 minute'));
+        $slotExist = $appeal->checkSlotOverlap($check_start,$check_end);
 
-        $appealDetails = $appeal->getDataByID($request->appeal_id);
+        if($slotExist > 0){
+          // return back()->with('result',false)->with('text', 'Slot schedule overlap!');
+          return Response::json(array(
+            'result' => false,
+            'text' => 'Slot schedule overlap!'
+          ));
+        }else{
         
-        if ($request->level == '1') {
-          $auditLastID = $audit->getLastID();
-          if($auditLastID == null){
-            $auditLastID = 1;
-          }else{
-            $auditLastID += 1;
+          if ($request->level == '2' || $request->level == '3') {
+            if ($request->prof_email) {
+              $prof_email = $request->prof_email;
+            } else {
+              return Response::json(array(
+                'result' => false,
+                'text' => 'Enter Professor Email!'
+              ));
+            }
           }
 
           $data = [
-            'slug' => md5($auditLastID),
-            'table_name' => 'appeal',
-            'row_id' => $request->appeal_id,
-            'targetReceiver' => $this->getTargetReceiver($appealDetails),
-            'triggeredBy' => Auth::id(),
-            'status' => 0
+            'message' => $request->message,
+            'prof_email' => $prof_email,
+            'start_time' => $start,
+            'end_time' => $end,
+            'status' => 1
           ];
-          $audit->insertData($data);
-        }
+          $appeal->updateDataByID($data,$request->appeal_id);
 
-        Session::put('appeal_id', $request->appeal_id);
-  
-        try {
           $appealDetails = $appeal->getDataByID($request->appeal_id);
-          $studentDetails = $user->getData('id',$appealDetails->student_id);
+          
           if ($request->level == '1') {
-            \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
-          } else if ($request->level == '2') {
-            \Mail::to($prof_email)->send(new \App\Mail\StudentAppealMeetingForProf());
-          } else {
-            \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
-            \Mail::to($prof_email)->send(new \App\Mail\StudentAppealMeetingForProf());
+            $auditLastID = $audit->getLastID();
+            if($auditLastID == null){
+              $auditLastID = 1;
+            }else{
+              $auditLastID += 1;
+            }
+
+            $data = [
+              'slug' => md5($auditLastID),
+              'table_name' => 'appeal',
+              'row_id' => $request->appeal_id,
+              'targetReceiver' => $this->getTargetReceiver($appealDetails),
+              'triggeredBy' => Auth::id(),
+              'status' => 0
+            ];
+            $audit->insertData($data);
           }
-        } catch(Exception $e) {
-          return Response::json(array(
-              'success' => true
-          ));
+
+          Session::put('appeal_id', $request->appeal_id);
+    
+          try {
+            $appealDetails = $appeal->getDataByID($request->appeal_id);
+            $studentDetails = $user->getData('id',$appealDetails->student_id);
+            if ($request->level == '1') {
+              \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
+            } else if ($request->level == '2') {
+              \Mail::to($prof_email)->send(new \App\Mail\StudentAppealMeetingForProf());
+            } else {
+              \Mail::to($studentDetails->email)->send(new \App\Mail\StudentAppealMeeting());
+              \Mail::to($prof_email)->send(new \App\Mail\StudentAppealMeetingForProf());
+            }
+          } catch(Exception $e) {
+            return Response::json(array(
+                'success' => true
+            ));
+          }
         }
       }else{
-        return back()->with('result',false)->with('text', 'Invalid start and end time!');
+        // return back()->with('result',false)->with('text', 'Invalid start and end time!');
+        return Response::json(array(
+          'result' => false,
+          'text' => 'Invalid start and end time!'
+        ));
       }
 
-      return back()->with('result',true);
+      // return back()->with('result',true);
+      return Response::json(array(
+        'result' => true
+      ));
     }
 
     public function updateAppealStatus(Request $request){
@@ -280,56 +307,64 @@ class AppealController extends Controller
       $appointmentDetails = $appeal->getDataBySlug($request->input('appeal_slug'));
       $studentDetails = $user->getData('id',$appointmentDetails->student_id);
 
-      if($request->input('status') == 3){
-        $data = [
-          'remarks' => $request->input('reasonDetails'),
-          'status' => $request->input('status')
-        ];
-
-        Session::put('appeal_id', $appointmentDetails->id);
-        Session::put('remarks', $request->input('reasonDetails'));
-
-        try {
-          \Mail::to($studentDetails->email)->send(new \App\Mail\RejectStudentAppeal());
-        } catch(Exception $e) {
-          return Response::json(array(
-              'success' => true
-          ));
+      if($request->input('status')){
+        if($request->input('status') == 3){
+          $data = [
+            'remarks' => $request->input('reasonDetails'),
+            'status' => $request->input('status')
+          ];
+  
+          Session::put('appeal_id', $appointmentDetails->id);
+          Session::put('remarks', $request->input('reasonDetails'));
+  
+          try {
+            \Mail::to($studentDetails->email)->send(new \App\Mail\RejectStudentAppeal());
+          } catch(Exception $e) {
+            return Response::json(array(
+                'success' => true
+            ));
+          }
+        }else{
+          $data = [
+            'status' => $request->input('status')
+          ];
+  
+          Session::put('appeal_id', $appointmentDetails->id);
+  
+          try {
+            \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateStudentAppeal());
+          } catch(Exception $e) {
+            return Response::json(array(
+                'success' => true
+            ));
+          }
         }
+  
+        $appeal->updateDataByID($data,$appointmentDetails->id);
+  
+        $auditLastID = $audit->getLastID();
+        if($auditLastID == null){
+          $auditLastID = 1;
+        }else{
+          $auditLastID += 1;
+        }
+  
+        $data = [
+          'slug' => md5($auditLastID),
+          'table_name' => 'appeal',
+          'row_id' => $appointmentDetails->id,
+          'targetReceiver' => $this->getTargetReceiver($appointmentDetails),
+          'triggeredBy' => Auth::id(),
+          'status' => 0
+        ];
+        $audit->insertData($data);
       }else{
         $data = [
-          'status' => $request->input('status')
+          'remarks' => $request->input('reasonDetails')
         ];
-
-        Session::put('appeal_id', $appointmentDetails->id);
-
-        try {
-          \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateStudentAppeal());
-        } catch(Exception $e) {
-          return Response::json(array(
-              'success' => true
-          ));
-        }
+        
+        $appeal->updateDataByID($data,$appointmentDetails->id);
       }
-
-      $appeal->updateDataByID($data,$appointmentDetails->id);
-
-      $auditLastID = $audit->getLastID();
-      if($auditLastID == null){
-        $auditLastID = 1;
-      }else{
-        $auditLastID += 1;
-      }
-
-      $data = [
-        'slug' => md5($auditLastID),
-        'table_name' => 'appeal',
-        'row_id' => $appointmentDetails->id,
-        'targetReceiver' => $this->getTargetReceiver($appointmentDetails),
-        'triggeredBy' => Auth::id(),
-        'status' => 0
-      ];
-      $audit->insertData($data);
 
       return Response::json(array(
           'result' => true

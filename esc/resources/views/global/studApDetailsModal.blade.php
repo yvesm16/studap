@@ -63,7 +63,7 @@
                   <div style="width: 25px; height: 25px; background-color: gray; border-radius: 50%;" id="secondStep"></div>
                 </div>
                 <div class="col-md-11">
-                  <label>Step 2:</label> <br>Evaluated by the Director
+                  <label>Step 2:</label> <br>Evaluated by the Dean
                 </div>
               </div>
             </div>
@@ -127,11 +127,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Reject Appointment</h4>
+        <h4 class="modal-title">Student Appeal</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="usr">Reason:</label>
+          <label for="usr">Enter Remarks:</label>
           <textarea class="form-control" id="reasonDetails" style="resize: none"></textarea>
           <input type="hidden" id="remarks_appeal_slug">
         </div>

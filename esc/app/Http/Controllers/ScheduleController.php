@@ -89,7 +89,7 @@ class ScheduleController extends Controller
           $start = $request->input('appointment_date') . ' ' . $appointment_start;
           $end = $request->input('appointment_date') . ' ' . $appointment_end;
 
-          $slotExist = $schedule->checkSlotOverlap($start,'student_id',Auth::id());
+          $slotExist = $schedule->checkSlotOverlap($start,'professor_id',intval($request->input('professor_id')));
 
           if($slotExist > 0){
             return Response::json(array(

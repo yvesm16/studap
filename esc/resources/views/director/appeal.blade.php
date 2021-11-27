@@ -33,7 +33,7 @@
           </div>
       </div>
       <div class="row">
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-8">
               <div class="panel panel-warning">
                   <div class="panel-heading">
                       <div class="row">
@@ -57,7 +57,7 @@
                   </a>
               </div>
           </div>
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-4 col-md-8">
               <div class="panel panel-info">
                   <div class="panel-heading">
                       <div class="row">
@@ -81,7 +81,7 @@
                   </a>
               </div>
           </div>
-          <div class="col-lg-3 col-md-6">
+          <!-- <div class="col-lg-3 col-md-6">
               <div class="panel panel-danger">
                   <div class="panel-heading">
                       <div class="row">
@@ -104,8 +104,8 @@
                       </div>
                   </a>
               </div>
-          </div>
-          <div class="col-lg-3 col-md-6">
+          </div> -->
+          <div class="col-lg-4 col-md-8">
               <div class="panel panel-success">
                   <div class="panel-heading">
                       <div class="row">
@@ -144,13 +144,16 @@
           <button class='btn btn-warning'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 3
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-success'><span class='glyphicon glyphicon-ok-sign'></span></button> - Accept
+          <button class='btn btn-success'><span class='glyphicon glyphicon-ok-sign'></span></button> - Resolve
         </div>
-        <div class="col-lg-2" style="margin-bottom: 1%">
+        <!-- <div class="col-lg-2" style="margin-bottom: 1%">
           <button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></button> - Decline
+        </div> -->
+        <div class="col-lg-2" style="margin-bottom: 1%">
+          <button class='btn'><span class='glyphicon glyphicon-bookmark'></button> - Remarks
         </div>
         <div class="col-lg-3 downloadCompletedListReportDiv" style="margin-bottom: 1%;">
-          <button class="btn btn-warning"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
+          <button class="btn btn-default"><span class="glyphicon glyphicon-cloud-download"></span></button> - Download Report
         </div>
       </div>
       <div class="row">

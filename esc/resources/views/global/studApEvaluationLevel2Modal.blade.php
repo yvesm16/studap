@@ -34,8 +34,8 @@
               </div>    
               <br>
               
-              <form id="student-appeal-eval-2" action="{{ URL::to('director/postMeeting') }}" method="post" enctype="multipart/form-data">
-                @csrf
+              <!-- <form id="student-appeal-eval-2" action="{{ URL::to('director/postMeeting') }}" method="post" enctype="multipart/form-data"> -->
+                <!-- @csrf -->
                 <input class="form-control" id="level-2" type="hidden" name="level" value="2">
                 <input class="form-control" id="appeal_id-2" type="hidden" name="appeal_id">
                 <div class="row">
@@ -80,7 +80,8 @@
                 <br>
       
                 <button id="submitStudentAppealEval-2" class="btn btn-primary" name="confirm" type="submit" value="Button">Confirm</button>
-              </form>
+              <!-- </form> -->
+              <br>
               <br>
               <div class="alert alert-success" style="display: none" id="successNotification-2">
                   Appointment was successfully submitted. Wait for further updates.
