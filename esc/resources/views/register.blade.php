@@ -59,9 +59,9 @@
               <label class="radio-inline">
                 <input type="radio" name="type" checked value="0">Student
               </label>
-              <label class="radio-inline">
+              {{-- <label class="radio-inline">
                 <input type="radio" name="type" value="1">Faculty
-              </label>
+              </label> --}}
             </div>
             <div class="form-group">
               <label for="pwd">Password:</label>
