@@ -104,7 +104,6 @@
   <div class="row" style="overflow: scroll; margin-top: 1%">
     <ul class="nav nav-tabs">
       <li class="active"><a href="{{ URL::to('professor/schedule'); }}">Calendar</a></li>
-      <li><a data-toggle="tab" href="#menu1">Manage Schedule</a></li>
     </ul>
     <div class="tab-content" style="margin-top: 2%">
       <div id="home" class="tab-pane fade in active">
