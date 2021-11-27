@@ -57,10 +57,10 @@ class DashboardController extends Controller
         //backlogs
         //cosnul
 
-        $cb = $ar->where('status','!=', 4)->get();
+        $cb = $ar->where('status','<>', 4)->get();
         if(count($cb) > 0){
             $FCB = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
-            ->where('status', '!=', 4)
+            ->where('status', '<>', 4)
             ->count();
         }else {
             $FCB = 0;
@@ -68,11 +68,12 @@ class DashboardController extends Controller
         $backlog1 = round($FCB);
         
         //studap
-        $sa = $ap->where('status','!=', 2)->get();
+        $sa = $ap->where('status','<>', 2)->get();
         
-        if(count($cb) > 0){
-            $FSA = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
-            ->where('status', '!=', 2)
+        if(count($sa) > 0){
+            $FSA = $ap
+            ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+            ->where('status', '<>', 2)
             ->count();
         }else {
             $FSA = 0;
@@ -81,17 +82,19 @@ class DashboardController extends Controller
         
         $backlog2 = round($FSA);
         //cc
-        $cc2 = $cc->where('status','!=', 3)->get();
+        $cc2 = $cc->where('status', '<>' ,3)->get();
+        
         if(count($cc2) > 0){
-            $FCC = $ar->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
-            ->where('status', '!=', 3)
+            $FCC = $cc
+            ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+            ->where('status', '<>', 3)
             ->count();
         }else {
             $FCC = 0;
         }
         $backlog3 = round($FCC);
 
-        $backlog = ($backlog1 + $backlog2 + $backlog3 /3);
+        $backlog = round($backlog1 + $backlog2 + $backlog3 /3);
 
         //completed
         //consul
@@ -174,6 +177,18 @@ class DashboardController extends Controller
 
         $ETime = round($ETimear + $ETimecc + $ETimesa / 3);
 
+        //declined 
+        //consul
+        $dar = $ar->where('status', 2)->count();
+
+        //studap no need
+
+        //cc
+        $dcc = $cc->where('status', 5)->count();
+
+        $decline = round($dar + $dcc / 2);
+
+        
         //navbar
         $user = new User;
         $files = new Files;
@@ -186,7 +201,7 @@ class DashboardController extends Controller
         
     
         return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq', 'fname','lname', 'time','timecc' ,
-        'timesa', 'timear','numReq','backlog','backlog1', 'backlog2', 'backlog3',  'ETime', 'ETimear', 'ETimesa', 'ETimecc'));
+        'timesa', 'timear','numReq','backlog','backlog1', 'backlog2', 'backlog3',  'ETime', 'ETimear', 'ETimesa', 'ETimecc', 'dcc', 'dar', 'decline'));
     }
 
     

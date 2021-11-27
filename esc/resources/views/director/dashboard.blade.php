@@ -25,11 +25,11 @@
             {{-- <tr id="tr-dashboard"> --}}
         <div class='container'>
             <div classs='row'>
-                <div class='col-sm-12 col-md-6 col-lg-3'style='text-align:center'>
+                <div class='col-sm-12 col-md-6 col-lg-2'style='text-align:center'>
                     <p>Average level of satisfaction from the request</p>
                     <p>{{$ave}}</p>
                 </div>
-                <div class='col-sm-12 col-md-6 col-lg-3' style='text-align:center'>
+                <div class='col-sm-12 col-md-6 col-lg-2' style='text-align:center'>
                     <p>Weekly - Number of backlog of service request</p>
                     <p>{{$backlog}}</p>
                 </div>
@@ -44,6 +44,10 @@
                 <div class='col-sm-12 col-md-12 col-lg-2' style='text-align:center'>
                     <p>Weekly - Number of Accepted Consultation</p>
                     <p>{{$accptReq}}</p>
+                </div>
+                <div class='col-sm-12 col-md-12 col-lg-2' style='text-align:center'>
+                    <p>Weekly - Average Number of Declined Request</p>
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -71,9 +75,13 @@
                 <p id="th-dashboard2">The Average Time the Request is Completed</p> 
                 <canvas id="completed" class="imgdash" >
             </div>
-            <div class='col-sm-12 col-md-12 col-lg-12' style='align-content:center'>
+            <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
                 <p id="th-dashboard2">Number of Accepted Consultation Appointment</p>
                 <canvas id="acceptReq" class="imgdash" >
+            </div>
+            <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
+                <p id="th-dashboard2">Number of Declined Request</p>
+                <canvas id="decline" class="imgdash" >
             </div>
 
         </div>
@@ -279,6 +287,44 @@
                         datasets: [{
                             label: '',
                             data: [{{$ETimear}}, {{$ETimesa}}, {{$ETimecc}}],
+                            backgroundColor: [
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(186, 166, 175, 1)',
+                                'rgba(160, 89, 97, 1)',
+                                'rgba(171, 49, 60, 1)',
+                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            responsive: true,
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true,
+                                    precision:0
+
+                                }
+                            }]
+                        }
+                    }
+                });
+                var ctx = document.getElementById("decline").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Consultation", "Course Crediting"],
+                        datasets: [{
+                            label: '',
+                            data: [{{$dar}}, {{$dcc}}],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
