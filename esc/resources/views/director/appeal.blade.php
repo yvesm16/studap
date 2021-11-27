@@ -135,13 +135,13 @@
           <button class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button> - View
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-primary'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 1
+          <button class='btn btn-primary'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 1 Conference with the Student
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-info'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 2
+          <button class='btn btn-info'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 2 Conference with the concerned Professor
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
-          <button class='btn btn-warning'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 3
+          <button class='btn btn-warning'><span class='glyphicon glyphicon-eye-open'></span></button> - Evaluate Level 3 Conference with the Student and concerned Professor
         </div>
         <div class="col-lg-2" style="margin-bottom: 1%">
           <button class='btn btn-success'><span class='glyphicon glyphicon-ok-sign'></span></button> - Resolve

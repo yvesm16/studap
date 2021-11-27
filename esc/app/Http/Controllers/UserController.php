@@ -33,12 +33,8 @@ class UserController extends Controller
         $slug = md5($user->getLastID());
       }
 
-      $uppercase = preg_match('@[A-Z]@', $request->input('pwd'));
-      $lowercase = preg_match('@[a-z]@', $request->input('pwd'));
-      $number    = preg_match('@[0-9]@', $request->input('pwd'));
-      $specialChars = preg_match('@[^\w]@', $request->input('pwd'));
-  
-      if($uppercase && $lowercase && $number && $specialChars && strlen($request->input('pwd')) > 7) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->input('pwd'))) {
+
         if($request->input('pwd') == $request->input('rpwd')){
           $data = [
             'fname' => $request->input('fname'),
@@ -389,12 +385,8 @@ class UserController extends Controller
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
       
-      $uppercase = preg_match('@[A-Z]@', $request->newPassword);
-      $lowercase = preg_match('@[a-z]@', $request->newPassword);
-      $number    = preg_match('@[0-9]@', $request->newPassword);
-      $specialChars = preg_match('@[^\w]@', $request->newPassword);
-  
-      if($uppercase && $lowercase && $number && $specialChars && strlen($request->newPassword) > 7) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
+
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){
@@ -560,15 +552,16 @@ class UserController extends Controller
 
     public function postStudentID(Request $request){
       $user = new User;
+      
 
       $existStudentID = $user->studentIDExist($request->input('student_id'));
-
+    if(strlen($request->input('student_id'))==10){
       if($existStudentID == null){
         $data = [
           'student_id' => $request->input('student_id'),
           'course_id' => $request->input('course_id')
         ];
-
+        
         $user->updateData('id',Auth::id(),$data);
 
         return Response::json(array(
@@ -580,6 +573,12 @@ class UserController extends Controller
             'result' => false
         ));
       }
+    
+    }else{
+      return Response::json(array(
+          'result' => false
+      ));
+    }
 
     }
 
