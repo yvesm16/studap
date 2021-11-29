@@ -29,6 +29,14 @@
             <li><a href="{{ URL::to('student/tracker/crediting') }}">Crediting</a></li>
           </ul>
         </li>
+        <li <?php echo (str_contains($actual_link,'guideline')) ? 'class="active"' : ''; ?> class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Guidelines <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ URL::to('student/guidelines/consultation') }}">Consultation</a></li>
+            <li><a href="{{ URL::to('student/guidelines/studentappeal') }}">Appeal</a></li>
+            <li><a href="{{ URL::to('student/guidelines/coursecrediting') }}">Crediting</a></li>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" style="text-decoration: none; color: white">Hi {{ $fname }} {{ $lname }}!</a></li>

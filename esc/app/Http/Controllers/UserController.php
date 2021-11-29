@@ -67,7 +67,8 @@ class UserController extends Controller
 
               return Redirect::to('register')
                 ->withInput()
-                ->with('success','Verification Link has been sent to your email');
+                ->with('success','Verification Link has been sent to your email spam folder (Note: Please click on the "not spam" button for
+                for the succeeding email notification will be sent directly to your inbox. Thank You)');
             }else{
               return Redirect::to('register')
                 ->withInput()
@@ -86,7 +87,7 @@ class UserController extends Controller
       }else {
         return Redirect::to('register')
             ->withInput()
-            ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+            ->with('error','Must contain atleast 8 characters, atleast a capital letter , atleast a number, and atleast a special character');
       }
     }
 
@@ -613,6 +614,34 @@ class UserController extends Controller
       }
 
       return view('statisfaction');
+    }
+
+    public function guideCons (){
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+      $fname = $userDetails->fname;
+      $lname = $userDetails->lname;
+
+
+      return view ('student/guideCons', compact('fname', 'lname'));
+    }
+
+    public function guideSA (){
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+      $fname = $userDetails->fname;
+      $lname = $userDetails->lname;
+
+      return view ('student/guideSA', compact('fname', 'lname'));
+    }
+
+    public function guideCC (){
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+      $fname = $userDetails->fname;
+      $lname = $userDetails->lname;
+
+      return view ('student/guideCC', compact('fname', 'lname'));
     }
 
 }
