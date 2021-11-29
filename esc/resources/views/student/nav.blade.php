@@ -71,7 +71,7 @@
       <form action="{{ URL::to('/changePassword') }}" method="post">
       <div class="modal-body">
           <div class="form-group">
-            <label for="pwd">Current Password:</label>
+            <label for="pwd">Current Password: <br><i>Must be at least 8 Characters, at least a capital letter, at least a number, and at least a special character</i></label>
             <input type="password" class="form-control" id="currentPassword" placeholder="Enter password" name="currentPassword">
           </div>
           <div class="form-group">

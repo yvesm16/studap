@@ -169,6 +169,7 @@ class UserController extends Controller
     }
     }
 
+
     public function checkLogin(Request $request){
       $user = new User;
       $userDetails = $user->getData('email',$request->input('email'));
@@ -396,10 +397,15 @@ class UserController extends Controller
             ];
 
             $user->updateData('id',Auth::id(),$data);
-            return Response::json(array(
+            try {
+              \Mail::to($userDetails->email)->send(new \App\Mail\SuccessForgotPass());
+            } catch(Exception $e) {
+              return Response::json(array(
                 'result' => true,
                 'text' => 'Password was successfully updated!'
             ));
+            }
+            
           }else{
             return Response::json(array(
                 'result' => false,

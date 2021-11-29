@@ -85,7 +85,7 @@
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           <div class="col-md-6" style="text-align: left">
             <label>Attach Documents</label><br>
-            (If multiple attachments, compile in one file)
+            (If multiple attachments, compile in one pdf file)
           </div>
 
           <div class="col-md-6" style="text-align: left">
@@ -135,13 +135,13 @@
         </div>
 
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
-          <div class="col-md-6" style="text-align: left">
+          {{-- <div class="col-md-6" style="text-align: left">
               <label>Active Contact Number</label>
-          </div>
+          </div> --}}
 
-          <div class="col-md-6" style="text-align: left">
+          {{-- <div class="col-md-6" style="text-align: left">
               <input type="number" class="form-control" name="contact_number" id="contact_number" maxlength="11" minlength='11' required>
-          </div>
+          </div> --}}
         </div>
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           <div class="col-md-6" style="text-align: left">

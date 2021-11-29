@@ -63,11 +63,11 @@
 
       <div class="modal-body">
           <div class="form-group">
-            <label for="pwd">First Name: <i>(No numerical values are allowed)</i></label>
+            <label for="pwd">First Name: <i>(Example: Juan Miguel Jr.)</i></label>
             <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname" pattern="[a-zA-Z]{1,}" required>
           </div>
           <div class="form-group">
-            <label for="npwd">Last Name: <i>(No numerical values are allowed)</i></label>
+            <label for="npwd">Last Name: </label>
             <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname" pattern="[a-zA-Z]{1,}" required>
           </div>
           <div class="form-group">
@@ -117,21 +117,21 @@
                         
                         <tr>
                             <td style="text-align:center">{{$user->id}}</td>
-                            <td style="text-align:center">{{$user->lname}},{{$user->fname}}</td>
-                            <td style="text-align:center">{{$user->email}}</td>
-                            <td style="text-align:center">
+                            <td style="text-align:left; "><p style='margin-left:10px'>{{$user->lname}},{{$user->fname}}</td></p>
+                            <td style="text-align:left"><p style='margin-left:10px'>{{$user->email}}</td></p>
+                            <td style="text-align:left">
                             @if ($user->id == 8 || $user->id == 9 || $user->id == 10)
-                                <p> Department Chair</p>
+                            <p style='margin-left:10px'> Department Chair</p>
                             @elseif ($user->type==1)     
-                                <p>Professor<p>
+                            <p style='margin-left:10px'>Professor<p>
                             @elseif ($user->type==2) 
-                                <p>Dean<p>
+                            <p style='margin-left:10px'>Dean<p>
                             @elseif($user->type==3)
-                                <p>Secretary<p>
+                            <p style='margin-left:10px'>Secretary<p>
                             @elseif($user->type==4) 
-                                <p>Registrar</p>
+                            <p style='margin-left:10px'>Registrar</p>
                             @else 
-                                <p>Undentified<p>
+                            <p style='margin-left:10px'>Undentified<p>
                             @endif
                             
                             </td>

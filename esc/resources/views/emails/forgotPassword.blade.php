@@ -21,7 +21,7 @@
           Please click this [<b><a href="{{ URL::to('reset-password'); }}/{{ $slug }}">link</a></b>] to reset your password
         </p>
         <p style="margin-top: 5%">
-          You will be redirected to the reset password page of IICS E-Services.
+          You will be redirected to the reset password page of CICS E-Services.
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>

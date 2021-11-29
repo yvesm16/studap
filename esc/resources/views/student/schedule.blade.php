@@ -67,6 +67,13 @@
         <h4 class="modal-title">Consultation Form</h4>
       </div>
       <div class="modal-body">
+        <i>
+          Note: <br>
+          <ul>
+            <li>Check first the availability of the professor before reserving a slot</li>
+            <li>You can only reserve a slot within a week</li>
+          </ul>
+        </i>
         <!-- <form action="#"> -->
           <input type="hidden" id="hdnBaseUrl" value="{{ URL::to('/') }}">
           <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -78,6 +85,7 @@
               @endforeach
             </select>
           </div>
+  
           <div class="form-group">
             <label>Appointment Date</label>
             <div class='input-group date' id='datetimepicker1'>
