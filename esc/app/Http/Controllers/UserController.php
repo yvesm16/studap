@@ -146,7 +146,7 @@ class UserController extends Controller
     }
 
     public function resetPassword(Request $request){
-      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
+      if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->input('pwd'))) {
       if($request->input('pwd') == $request->input('cpwd')){
 
         $data = [
@@ -165,7 +165,7 @@ class UserController extends Controller
       }
     }else {
       return Redirect::to('reset-password/' . $request->input('slug'))
-          ->with('error','Must contain 8 characters, capital letters, numbers, and special characters');
+          ->with('error','Must contain atleast 8 characters,atleast a capital letter, atleast a number, and atleast a special character');
     }
     }
 
@@ -415,7 +415,7 @@ class UserController extends Controller
       }else  {
         return Response::json(array(
           'result' => false,
-          'text' => 'Must contain 8 characters, capital letters, numbers, and special characters'
+          'text' => 'Must contain atleast 8 characters, atleast a capital letter,atleast a number, and atleast a special character'
         ));
       }
     } 
