@@ -186,7 +186,7 @@ class UserController extends Controller
               return Redirect::to('director/home');
             }elseif($userDetails->type == 3){
               return Redirect::to('secretary/home');
-            }elseif($userDetails->type == 4){
+            }elseif($userDetails->type == 4){ 
               return Redirect::to('registrar/home');
             }else{
               return Redirect::to('professor/home');
@@ -615,7 +615,6 @@ class UserController extends Controller
 
 
       }else {
-        Session::flash('warning', "An error has occured. Please refresh the page and Try Again");
         return view('statisfaction');
       }
 

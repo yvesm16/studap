@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::match(array('GET', 'POST'), 'getNotification',[NotificationController::class, 'getNotification']);
     Route::match(array('GET', 'POST'), 'getNotificationDetails',[NotificationController::class, 'getNotificationDetails']);
     Route::match(array('GET', 'POST'), 'updateNotificationStatus',[NotificationController::class, 'updateNotificationStatus']);
-    Route::match(array('GET', 'POST'), 'statisfaction',[UserController::class, 'statisfaction']);
+    Route::match(array('GET', 'POST'), 'satisfaction',[UserController::class, 'statisfaction']);
 
     Route::match(array('GET', 'POST'), 'schedule/details/completed_pdf',[ScheduleController::class, 'completedConsultationListPDF']);
     Route::match(array('GET', 'POST'), 'student_appeal/details/completed_pdf',[AppealController::class, 'completedStudentAppealListPDF']);
