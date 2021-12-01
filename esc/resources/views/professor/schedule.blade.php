@@ -26,6 +26,8 @@
 
 @if($user_type == '1')
     @include('professor.nav')
+@elif($user_type == '3')
+    @include('secretary.nav')
 @else
     @include('director.nav')
 @endif

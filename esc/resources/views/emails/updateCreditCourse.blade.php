@@ -23,7 +23,7 @@
           <ul>
             <li><b>Student Name</b>: {{ $student_fname }} {{ $student_lname }}</li>
             <li><b>Concerns</b>: {{ $concerns }}</li>
-            <li><b>Contact No.</b>: {{ $contact_number }}</li>
+            <!-- <li><b>Contact No.</b>: {{-- $contact_number --}}</li> -->
           </ul>
         </p>
         <p style="margin-top: 5%">

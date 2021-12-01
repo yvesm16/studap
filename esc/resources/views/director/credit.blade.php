@@ -90,7 +90,8 @@
                             <th>ID</th>
                             <th>Student Number</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Course(s) Taken from other Program/College/University</th>
+                            <th>Equivalent Course(s) in the New Program to be enrolled</th>
                             <th>Section</th>
                             <th>Actions</th>
                         </tr>
@@ -124,7 +125,7 @@
             "bServerSide": true,
             "pagingType": "full_numbers",
             "iDisplayLength": 7,
-            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=1",
+            "sAjaxSource": BASE_URL+ "/ajax?type=courseCreditList&status=" + pathname.split('/')[3] + "&minimum_status=2",
             "aoColumnDefs": [{
                 "bSortable": false,
                 "aTargets": [1,2,3,4,5]

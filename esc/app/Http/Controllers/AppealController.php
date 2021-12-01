@@ -66,6 +66,7 @@ class AppealController extends Controller
         'section' => $request->input('section'),
         'contact_number' => $request->input('contact_number'),
         'email' => $request->input('email'),
+        'prof_email' => $request->input('prof_email'),
         'attached1' => $file_type_1,
         'attached2' => $file_type_2,
         'attached3' => $file_type_3,
@@ -211,7 +212,7 @@ class AppealController extends Controller
       if($start < $end){
         $start = $request->date . ' ' . $start;
         $end = $request->date . ' ' . $end;
-        $prof_email = '';
+        $prof_email = $request->prof_email ? $request->prof_email : '';
 
         $check_start = date('Y-m-d H:i:s', strtotime($start . ' +1 minute'));
         $check_end = date('Y-m-d H:i:s', strtotime($end . ' -1 minute'));

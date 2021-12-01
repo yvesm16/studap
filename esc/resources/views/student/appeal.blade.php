@@ -133,6 +133,16 @@
             <input type="text" class="form-control" name="others" id="others_input">
           </div>
         </div>
+        
+        <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
+          <div class="col-md-6" style="text-align: left">
+              <label>Professor Email</label>
+          </div>
+
+          <div class="col-md-6" style="text-align: left">
+              <input type="email" class="form-control" name="prof_email" id="prof_email" required>
+          </div>
+        </div>
 
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           {{-- <div class="col-md-6" style="text-align: left">

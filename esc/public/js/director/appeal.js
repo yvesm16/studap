@@ -54,6 +54,7 @@ $(document).ready(function() {
             document.getElementById("attached1").textContent = data.attached1;
             document.getElementById("attached2").textContent = data.attached2;
             document.getElementById("attached3").textContent = data.attached3;
+            document.getElementById("prof_email_involve").textContent = data.prof_email;
             
             $('#date').val(data.date);
             // $('#start').val(data.start);
@@ -463,13 +464,6 @@ function convert(input) {
 // function startIt(){
 //   validateAppointmentTime("start");
 // }
-
-function validateAppointmentTimeLevel2(param){
-  var start = $("#start").val();
-  var end = $("#end").val();
-  console.log(start);
-  // validateAppointmentTime(start, end);
-}
 
 function validateAppointmentTimeLevel1(param){
   //  7am  - 8pm

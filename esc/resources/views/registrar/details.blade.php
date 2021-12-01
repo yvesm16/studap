@@ -145,7 +145,7 @@
               
               <td>
                 <div id="chairpersonSignatureDiv">
-                  @if($subject->status == 0)
+                  @if($subject->status == 0 || $subject->status == 5)
                     &nbsp
                   @else
 										<img src="{{ url(str_replace('public','storage',$chairperson_signature_path)) }}" width="15%"/>
@@ -174,7 +174,7 @@
     </div>
     <div class="col-md-4">
       <div id="directorSignatureDiv">
-        @if($subject->status < 2)
+        @if($creditDetails->status < 2 || $creditDetails->status == 5)
           &nbsp
         @else
           <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
@@ -185,7 +185,7 @@
     </div>
     <div class="col-md-4">
       <div id="registrarSignatureDiv">
-        @if($subject->status < 3)
+        @if($creditDetails->status < 3 || $creditDetails->status == 5)
           &nbsp
         @else
           <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="25%"/>

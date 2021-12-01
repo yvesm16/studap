@@ -23,7 +23,11 @@
               <div class="row">
                 <label>Student Name:</label>
                 <span id="student_name"></span>
-              </div>       
+              </div>     
+              <div class="row">
+                <label>Email of Professor involve:</label>
+                <span id="prof_email_involve"></span>
+              </div>    
               <br>
 
               <div class="row">
