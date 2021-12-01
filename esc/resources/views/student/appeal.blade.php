@@ -66,10 +66,10 @@
         </div>
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           <div class="col-md-6" style="text-align: left">
-              <label>Section</label>
+              <label>Section <i>Example: 4ISC </i></label>
           </div>
 
-          <div class="col-md-6" style="text-align: left">
+          <div class="col-md-6" style="text-align: left"  pattern="[a-zA-Z]{1,}>
               <input type="text" class="form-control" name="section" id="section" required>
           </div>
         </div>
@@ -135,13 +135,13 @@
         </div>
 
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
-          {{-- <div class="col-md-6" style="text-align: left">
+          <div class="col-md-6" style="text-align: left">
               <label>Active Contact Number</label>
-          </div> --}}
+          </div>
 
-          {{-- <div class="col-md-6" style="text-align: left">
+          <div class="col-md-6" style="text-align: left">
               <input type="number" class="form-control" name="contact_number" id="contact_number" maxlength="11" minlength='11' required>
-          </div> --}}
+          </div>
         </div>
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           <div class="col-md-6" style="text-align: left">

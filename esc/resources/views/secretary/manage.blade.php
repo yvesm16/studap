@@ -62,9 +62,13 @@
         @csrf
 
       <div class="modal-body">
+        <div class="form-group">
+          <label for="pwd">Prefixes and Title: </label>
+          <input type="text" class="form-control" id="prefix" placeholder="Example: Asst. Prof. Dean" name="prefix" required>
+        </div>
           <div class="form-group">
-            <label for="pwd">First Name: <i>(Example: Juan Miguel Jr.)</i></label>
-            <input type="text" class="form-control" id="fname" placeholder="Enter First Name" name="fname" pattern="[a-zA-Z]{1,}" required>
+            <label for="pwd">First Name: </label>
+            <input type="text" class="form-control" id="fname" placeholder="Example: Juan Miguel Jr." name="fname" pattern="[a-zA-Z]{1,}" required>
           </div>
           <div class="form-group">
             <label for="npwd">Last Name: </label>
@@ -108,6 +112,7 @@
                             <th style="text-align:center">Email</th>
                             <th style="text-align:center">Position</th>
                             <th style="text-align:center">Status</th>
+                            {{-- <th style="text-align:center">Action</th> --}}
                             
 
                         </tr>
@@ -117,7 +122,7 @@
                         
                         <tr>
                             <td style="text-align:center">{{$user->id}}</td>
-                            <td style="text-align:left; "><p style='margin-left:10px'>{{$user->lname}},{{$user->fname}}</td></p>
+                            <td style="text-align:left; "><p style='margin-left:10px'>{{$user->prefix}} {{$user->fname}} {{$user->lname}}</td></p>
                             <td style="text-align:left"><p style='margin-left:10px'>{{$user->email}}</td></p>
                             <td style="text-align:left">
                             @if ($user->id == 8 || $user->id == 9 || $user->id == 10)

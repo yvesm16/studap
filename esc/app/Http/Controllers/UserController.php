@@ -442,6 +442,7 @@ class UserController extends Controller
       $slug = md5($user->getLastID());
         if(str_contains($request->email, 'ust.edu.ph')) {
           $data = [
+            'prefix' => $request->input('prefix'),
             'fname' => $request->input('fname'),
             'lname' => $request->input('lname'),
             'email' => $request->input('email'),
