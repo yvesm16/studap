@@ -90,7 +90,8 @@
                             <th>ID</th>
                             <th>Student Number</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Course(s) Taken from other Program/College/University</th>
+                            <th>Equivalent Course(s) in the New Program to be enrolled</th>
                             <th>Section</th>
                             <th>Actions</th>
                         </tr>

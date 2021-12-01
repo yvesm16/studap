@@ -85,6 +85,14 @@ class SubjectCrediting extends Model
         ->get();
     }
 
+    public function getDataCountByCreditSlugAndStatus($slug,$status){
+      return DB::table('subject_crediting')
+        ->join('credit_course','credit_course.id','=','subject_crediting.credit_course_id')
+        ->where('credit_course.slug',$slug)
+        ->whereIn('subject_crediting.status',$status)
+        ->count();
+    }
+
     // public function getDataTable($id){
     //   return DB::table('subject_crediting')
     //     ->join('credit_course','credit_course.id','=','subject_crediting.credit_course_id')

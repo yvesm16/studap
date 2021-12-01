@@ -177,18 +177,27 @@ class AjaxController extends Controller
                   }
 
                   foreach($dtResult['objResult'] as $aRow) {
+                    $subject_crediting_details = $subject_crediting->getAllDataByCreditID($aRow->id);
+                    $course_abbr = '';
+                    $course_title = '';
 
-                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+                    foreach($subject_crediting_details as $subject_crediting_detail) {
+                      $course_abbr = $course_abbr . $subject_crediting_detail->course_abbr . '<br>';
+                      $course_title = $course_title . $subject_crediting_detail->course_title . '<br>';
+                    }
 
-                      $data = array(
-                          $aRow->id,
-                          $aRow->student_id,
-                          $aRow->fname . ' ' . $aRow->lname,
-                          $aRow->email,
-                          $aRow->section,
-                          $button
-                      );
-                      $dtResult['aaData'][] = $data;
+                    $button = "<button class='btn btn-default viewDetails' data-id='$aRow->slug'>View Details</button>";
+
+                    $data = array(
+                      $aRow->id,
+                      $aRow->student_id,
+                      $aRow->fname . ' ' . $aRow->lname,
+                      $course_abbr,
+                      $course_title,
+                      $aRow->section,
+                      $button
+                    );
+                    $dtResult['aaData'][] = $data;
                   }
                   unset($dtResult['objResult']);
                   echo json_encode($dtResult);

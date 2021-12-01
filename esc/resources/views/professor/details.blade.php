@@ -145,7 +145,7 @@
               
               <td>
                 <div id="signatureDiv">
-                  @if($subject->status == 0)
+                  @if($subject->status == 0 || $subject->status == 5)
                     &nbsp
                   @else
                     <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="15%"/>

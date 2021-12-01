@@ -375,18 +375,18 @@ class CreditController extends Controller
 
       $current_user = $user->getData('id',Auth::id());
 
-      if ($current_user->type == 0) {
+      if ($current_user->type == 0 && $credit_details->status != 5) {
         $next_target = $course->getCourseByID($credit_details->new_course_id);
         $next_target_id = $next_target->chairperson;
-      } else if ($current_user->type == 1) {
+      } else if ($current_user->type == 1 && $credit_details->status != 5) {
         $next_target = $course->getChairperson(Auth::id());
         $next_target_id = $next_target->director;
-      } else if ($current_user->type == 2) {
+      } else if ($current_user->type == 2 && $credit_details->status != 5) {
         // $next_target = $course->getDirector(Auth::id());
         // $next_target_id = $next_target->secretary;
         $next_target = $user->getData('type',4);
         $next_target_id = $next_target->id;
-      } else if ($current_user->type == 3) {
+      } else if ($current_user->type == 3 && $credit_details->status != 5) {
         $next_target = $user->getData('type',4);
         $next_target_id = $next_target->id;
       } else {
@@ -413,14 +413,25 @@ class CreditController extends Controller
       $audit->insertData($data);
     }
 
+    public function getRealStatusOfCourseCredit($request) {
+      $subject = new SubjectCrediting;
+      $all_subject_count = $subject->getDataCountByCreditSlugAndStatus($request->slug,[0,1,2,3,4,5]);
+      $denied = $subject->getDataCountByCreditSlugAndStatus($request->slug,[5]);
+
+      if ($all_subject_count == $denied) {
+        return 5;
+      }
+
+      return $request->status;
+    }
+
     public function updateCreditStatus(Request $request){
       $credit = new Credit;
       $user = new User;
       $files = new Files;
-      $subject = new SubjectCrediting;
 
       $data = [
-        'status' => $request->status
+        'status' => $this->getRealStatusOfCourseCredit($request)
       ];
 
       $credit->updateDataByParamater('slug',$request->slug,$data);

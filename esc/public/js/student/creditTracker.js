@@ -59,46 +59,54 @@ $(document).ready(function() {
                 document.getElementById("new_program").textContent = data.new_program['text'];
                 document.getElementById("original_program").textContent = data.original_program['text'];
                 document.getElementById("remarksDetail").value = data.remarks ? data.remarks.join("\n") : "";
+                                
+                if (data.status >= 0) {
+                  $('#firstStep').css('background-color','green');
+                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
+                  document.getElementById("firstStepText").textContent = 'Completed';
+                }
+                if (data.status >= 1 && data.auditDetails[1]['created_at']) {
+                  $('#secondStep').css('background-color','green');
+                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
+                  document.getElementById("secondStepText").textContent = 'Completed';
+                }
                 
-                if(data.status == 0){
-                  $('#firstStep').css('background-color','green');
-                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                  document.getElementById("firstStepText").textContent = 'Completed';
-                }else if (data.status == 1) {
-                  $('#firstStep').css('background-color','green');
-                  $('#secondStep').css('background-color','green');
-                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                  document.getElementById("firstStepText").textContent = 'Completed';
-                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                  document.getElementById("secondStepText").textContent = 'Completed';
-                // }else if (data.status == 2 || data.status == 3) {
-                }else if (data.status == 2) {
-                  $('#firstStep').css('background-color','green');
-                  $('#secondStep').css('background-color','green');
+                if (data.status >= 2 && data.auditDetails[2]) {
                   $('#thirdStep').css('background-color','green');
-                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                  document.getElementById("firstStepText").textContent = 'Completed';
-                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                  document.getElementById("secondStepText").textContent = 'Completed';
                   document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
                   document.getElementById("thirdStepText").textContent = 'Completed';
-                }else{
-                  $('#firstStep').css('background-color','green');
-                  $('#secondStep').css('background-color','green');
-                  $('#thirdStep').css('background-color','green');
+                }
+                if (data.status >= 3 && data.auditDetails[3]) {
                   $('#fourthStep').css('background-color','green');
                   $('#fifthStep').css('background-color','green');
-                  document.getElementById("firstStepDate").textContent = data.auditDetails[0]['created_at'];
-                  document.getElementById("firstStepText").textContent = 'Completed';
-                  document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
-                  document.getElementById("secondStepText").textContent = 'Completed';
-                  document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
-                  document.getElementById("thirdStepText").textContent = 'Completed';
                   document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
                   document.getElementById("fourthStepText").textContent = 'Completed';
                   document.getElementById("fifthStepDate").textContent = data.auditDetails[3]['created_at'];
                   document.getElementById("fifthStepText").textContent = 'Completed';
                 }
+
+                if (data.status == 5) {
+                  if (!data.auditDetails[2]) {
+                    $('#secondStep').css('background-color','red');
+                    document.getElementById("secondStepDate").textContent = data.auditDetails[1]['created_at'];
+                    document.getElementById("secondStepText").textContent = 'Denied';
+                  }
+                  if (!data.auditDetails[3] && data.auditDetails[2]) {
+                    $('#thirdStep').css('background-color','red');
+                    $('#fourthStep').css('background-color','red');
+                    document.getElementById("thirdStepDate").textContent = data.auditDetails[2]['created_at'];
+                    document.getElementById("thirdStepText").textContent = 'Denied';
+                    document.getElementById("fourthStepText").textContent = 'Denied';
+                  }
+                  if (data.auditDetails[3]) {
+                    $('#fourthStep').css('background-color','red');
+                    document.getElementById("fourthStepDate").textContent = data.auditDetails[3]['created_at'];
+                    document.getElementById("fourthStepText").textContent = 'Denied';
+                  }
+                  $('#fifthStep').css('background-color','green');
+                  document.getElementById("fifthStepText").textContent = 'Completed';
+                }
+
                 $('#studentCreditTrackerModal').modal('toggle');
               }
             }

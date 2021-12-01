@@ -25,7 +25,7 @@ class ScheduleController extends Controller
       $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
-      $allProfessor = $user->getAllDataByWhereIn('type',[1,2]);
+      $allProfessor = $user->getAllDataByWhereIn('type',[1,2,3]);
 
       $data = [
         'id' => Auth::id(),
