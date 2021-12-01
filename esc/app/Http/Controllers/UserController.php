@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Files;
@@ -157,8 +158,17 @@ class UserController extends Controller
           ->where('slug',$request->input('slug'))
           ->update($data);
 
-        return Redirect::to('/')
-          ->with('success','Password was updated!');
+          $getEmail = DB::table('users')
+          ->where('slug',$request->input('slug'))
+          ->pluck('email');
+          try {
+            \Mail::to($getEmail)->send(new \App\Mail\SuccessForgetPass());
+          } catch(Exception $e) {
+            return Redirect::to('/')
+            ->with('success','Password was updated!');
+          
+          }
+       
       }else{
         return Redirect::to('reset-password/' . $request->input('slug'))
           ->with('error','Password mistmatch!');
@@ -387,8 +397,10 @@ class UserController extends Controller
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
       
+      
       if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->newPassword)) {
 
+        
         if(Hash::check($request->currentPassword,$userDetails->password)){
         
           if($request->newPassword == $request->confirmPassword){
@@ -397,14 +409,12 @@ class UserController extends Controller
             ];
 
             $user->updateData('id',Auth::id(),$data);
-            try {
-              \Mail::to($userDetails->email)->send(new \App\Mail\SuccessForgotPass());
-            } catch(Exception $e) {
+            
+    
               return Response::json(array(
                 'result' => true,
                 'text' => 'Password was successfully updated!'
-            ));
-            }
+              ));
             
           }else{
             return Response::json(array(

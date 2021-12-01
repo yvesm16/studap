@@ -16,12 +16,13 @@
 
     <div class="container indexMargin home">
         <div class='row'>
-            <h1 style='text-align: left; margin-left: 40px'> Course Crediting Guidelines</h1>
+            <h1 style='text-align: center;'> Course Crediting Guidelines</h1>
 
-            <div class='col-sm-12 col-md-12 col-lg-12'>
+            <div class='col-sm-12 col-md-6 col-lg-6'>
+                <h3 style='text-align: left; margin-left: 25px'> Process Map</h3>
                 <img src="{{ URL::asset('img/guideline_cc.png')}}" height="1000px" style="margin-top: 1%">
             </div>
-            <div class='col-sm-12 col-md-12 col-lg-12 ' style='text-align: left; margin-left: 40px;margin-top: 50px; '>
+            <div class='col-sm-12 col-md-6 col-lg-6 ' style='text-align: left;'>
                 <h3 style='text-align: left;'> Step by Step Procedure</h3>
 
                 <p style='font-size: 15px; margin-right: 40px;'><b>Step 1:</b> Login with your registered credentials.<br>
