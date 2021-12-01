@@ -11,7 +11,7 @@
   <div style="margin-left: 15%; padding:2%; background-color: white; width:75%; border-radius: 15px;" class="container">
     <div class="row">
       <div class="col-sm-12" style="text-align: center">
-        <img src="http://104.237.150.196/esc/public/img/iicslogo.png" width="100px">
+        {{-- <img src="http://104.237.150.196/esc/public/img/iicslogo.png" width="100px"> --}}
       </div>
       <div class="col-sm-12">
         
