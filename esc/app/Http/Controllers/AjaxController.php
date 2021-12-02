@@ -246,6 +246,8 @@ class AjaxController extends Controller
                           $aRow->email,
                           $aRow->section,
                           $aRow->program,
+                          $aRow->prof_email ? $aRow->prof_email : '',
+                          $aRow->concerns ? $aRow->concerns : '',
                           $button
                       );
                       $dtResult['aaData'][] = $data;

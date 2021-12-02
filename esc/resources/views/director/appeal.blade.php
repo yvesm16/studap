@@ -170,6 +170,8 @@
                             <th>Email</th>
                             <th>Section</th>
                             <th>Program</th>
+                            <th>Professor Involve</th>
+                            <th>Specific Conern(s)</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
