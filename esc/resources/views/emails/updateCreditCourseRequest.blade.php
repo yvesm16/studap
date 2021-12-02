@@ -20,10 +20,15 @@
           <h1>Credit Course Request Update</h1>
         </p>
         <p>
+          Check your Status Tracker in Course Crediting for more details.
           <ul>
             <li><b>Processed By</b>: {{ $current_fname }} {{ $current_lname }}</li>
             <li><b>Status</b>: {{ $status }}</li>
           </ul>
+        </p>
+        <p>
+          Thank you for using ESC E-Services in processing your request. Rate your experience while using the website by clicking on the link and help us improve. 
+          <a href="https://esc-cics.com/satisfaction">E-Services Student Satisfaction</a>         
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>
