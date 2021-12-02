@@ -52,12 +52,7 @@ class UserController extends Controller
             $userDetails = $user->getData('email',$request->email);
             if($userDetails == null){
               $user->insertData($data);
-              // if(env('APP_ENV') == 'local'){
-                // \Mail::to(env('APP_EMAIL'))->send(new \App\Mail\Registration());
-              // }else{
-                // \Mail::to($request->email)->send(new \App\Mail\Registration());
-              // }
-
+              
               try {
                 \Mail::to($request->email)->send(new \App\Mail\Registration());
               } catch(Exception $e) {

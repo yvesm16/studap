@@ -460,6 +460,8 @@ class CreditController extends Controller
           Session::put('credit_course_id', $credit_details->id);
           Session::put('next_target_id', $nextTargetID);
           \Mail::to($userDetails->email)->send(new \App\Mail\UpdateCreditCourse());
+          \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateCourseCreditingRequest());
+
           // \Mail::to($studentDetails->email)->send(new \App\Mail\UpdateCreditCourseRequest());
         } catch(Exception $e) {
           return Response::json(array(
