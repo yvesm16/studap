@@ -66,10 +66,10 @@
         </div>
         <div class="row" style="margin-top: 1%; margin-left: 15%; margin-right: 15%">
           <div class="col-md-6" style="text-align: left">
-              <label>Section <i>Example: 4ISC </i></label>
+              <label>Section <br><i>Example: 4ISC </i></label>
           </div>
 
-          <div class="col-md-6" style="text-align: left"  pattern="[a-zA-Z]{1,}>
+          <div class="col-md-6" style="text-align: left"  pattern="[a-zA-Z]{1,}">
               <input type="text" class="form-control" name="section" id="section" required>
           </div>
         </div>

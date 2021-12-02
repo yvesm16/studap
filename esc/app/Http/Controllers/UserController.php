@@ -207,7 +207,7 @@ class UserController extends Controller
           }
         }else{
           return Redirect::to('/')
-            ->with('error','Account is inactive!');
+            ->with('error','Account is inactive! Please contact the CICS Office staff to reactivate your account.');
         }
       }else{
         return Redirect::to('/')
@@ -438,7 +438,7 @@ class UserController extends Controller
     public function addUser(Request $request) {
       $user = new User;
       $slug = md5($user->getLastID());
-        if(str_contains($request->email, 'ust.edu.ph')) {
+        if(str_contains($request->email, '@ust.edu.ph')) {
           $data = [
             'prefix' => $request->input('prefix'),
             'fname' => $request->input('fname'),
