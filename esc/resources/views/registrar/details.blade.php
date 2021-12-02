@@ -169,10 +169,8 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 4%;">
-    <div class="col-md-2" style="text-align: left">
-    </div>
-    <div class="col-md-4">
+  <div class="row" style="margin-top: 1%;">
+    <div class="col-md-6" style="text-align: left;margin-left:5%;">
       <div id="directorSignatureDiv">
         @if($creditDetails->status < 2 || $creditDetails->status == 5)
           &nbsp
@@ -183,7 +181,7 @@
         @endif
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5" style="text-align: left">
       <div id="registrarSignatureDiv">
         @if($creditDetails->status < 3 || $creditDetails->status == 5)
           &nbsp
