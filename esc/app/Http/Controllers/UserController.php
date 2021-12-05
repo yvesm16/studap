@@ -615,14 +615,14 @@ class UserController extends Controller
           $rating->save();
 
           Session::flash('success', "Your rating has been submitted. Thank you for using ESC E-Services");
-          return view('statisfaction');
+          return view('satisfaction');
 
 
       }else {
-        return view('statisfaction');
+        return view('satisfaction');
       }
 
-      return view('statisfaction');
+      return view('satisfaction');
     }
 
     public function guideCons (){
