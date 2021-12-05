@@ -19,7 +19,7 @@
           Good Day!
         </p>    
         <p style="margin-top: 5%">
-          Your Course Crediting Request has been updated. Please check the status tracker for more information.
+          Your Course Crediting Request has been declined. Please check the status tracker for more information.
         </p>
         <p style="margin-top: 5%">
           Cheers,<br>

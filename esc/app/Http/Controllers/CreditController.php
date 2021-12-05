@@ -327,6 +327,9 @@ class CreditController extends Controller
       $files = new Files;
       $course = new Course;
       $subject = new SubjectCrediting;
+      $user = new User;
+      
+      
 
       $data = [
         'status' => $request->status,
@@ -468,6 +471,7 @@ class CreditController extends Controller
               'success' => true
           ));
         }
+        
       }
 
       return Response::json(array(
