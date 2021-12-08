@@ -24,7 +24,13 @@
         
         @if ($isProfessorChairperson)
           <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
+          <li <?php echo (str_contains($actual_link,'dashboard/cs')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/cs'); }}" class="">CS DASH</a></li>
+          <li <?php echo (str_contains($actual_link,'dashboard/it')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/it'); }}" class="">ITDASH</a></li>
+          <li <?php echo (str_contains($actual_link,'dashboard/is')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/is'); }}" class="">IS DASH</a></li>
+          
         @endif
+
+        
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>

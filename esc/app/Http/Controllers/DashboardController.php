@@ -12,6 +12,7 @@ use App\Models\Files;
 use App\Models\AuditTrail;
 use App\Models\Credit;
 use App\Models\Appeal;
+use App\Models\Course;
 
 use DB;
 
@@ -204,6 +205,55 @@ class DashboardController extends Controller
         'timesa', 'timear','numReq','backlog','backlog1', 'backlog2', 'backlog3',  'ETime', 'ETimear', 'ETimesa', 'ETimecc', 'dcc', 'dar', 'decline'));
     }
 
+    private function isProfessorChairperson($id){
+        $course = new Course;
+        $course_details = $course->getChairperson($id);
+  
+        return $course_details ? true : false;
+      }
+
+
+    public function itdash() {
+        $user = new User;
+        $userDetails = $user->getData('id',Auth::id());
+
+        $fname = $userDetails->fname;
+        $lname = $userDetails->lname;
+
+        return view('professor/itdash', compact('fname','lname'));
+    }
+
+
+
+    public function isdash() {
+        $user = new User;
+        $userDetails = $user->getData('id',Auth::id());
+
+        $fname = $userDetails->fname;
+        $lname = $userDetails->lname;
+
+        return view('professor/isdash', compact('fname','lname'));
+    }
+
+    public function csdash() {
+        $user = new User;
+
+        $userDetails = $user->getData('id',Auth::id());
+        $data = [
+            'id' => Auth::id(),
+            'fname' => $userDetails->fname,
+            'lname' => $userDetails->lname,
+            'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
+        ];
+        
+
+
+        
+
+
+
+        return view('professor/csdash', $data);
+    }
     
 
    

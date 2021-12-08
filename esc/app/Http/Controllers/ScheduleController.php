@@ -128,10 +128,12 @@ class ScheduleController extends Controller
                 }
                 $i++;
               }
-
+              $department = $user->select('department')->where('id', $request->input('professor_id'))->value('department');
+            // dd($department);
               $data = [
                 'slug' => md5($lastID),
                 'professor_id' => intval($request->input('professor_id')),
+                'department' => intval($department),
                 'student_id' => Auth::id(),
                 'title' => 'Appointment',
                 'start_time' => $start,

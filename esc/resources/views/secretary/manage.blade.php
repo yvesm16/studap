@@ -13,11 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"  />
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <!--filter-->
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
 
     
 </head>
 <body>
-
+ 
     @include('secretary.nav')
     <div class="container indexMargin home">
   <div id="page-wrapper">
@@ -25,6 +32,22 @@
           <div class="col-lg-12">
               <h1 class="page-header"><span id="titlePage">Manage User</span></h1>
           </div>
+          <div class='col-lg-12' style='text-align:right'>    
+              <button data-toggle="modal" data-target="#myDetails" id="add"type="button" class="btn btn-light">Add New User</button><br>
+          </div>
+          {{-- <div class='col-lg-6' style='text-align:left'>  
+            <div id='filters'>
+              <span>Filter by &nbsp;</span>
+              <select name='fetchval' id='fetchval'>
+                <option value='' disabled='' selected=''></option>
+                <option value=''>Information System</option>
+                <option>Information Technology</option>
+                <option>Computer Science</option>
+                <option>Office Staff</option>
+
+              </select>
+            </div>
+        </div> --}}
       </div>
       
       {{-- <div class="row downloadReportDiv" style="margin-bottom: 1%; text-align: right"> --}}
@@ -45,9 +68,7 @@
                       
                     @endif
                     <center>
-                    <div class='container'>
-                    <button data-toggle="modal" data-target="#myDetails" id="add"type="button" class="btn btn-light">Add New User</button><br>
-                    <div>
+                    
                     <div class="modal fade" id="myDetails" role="dialog">
   <div class="modal-dialog">
 
@@ -68,11 +89,11 @@
         </div>
           <div class="form-group">
             <label for="pwd">First Name: </label>
-            <input type="text" class="form-control" id="fname" placeholder="Example: Juan Miguel Jr." name="fname" pattern="[a-zA-Z]{1,}" required>
+            <input type="text" class="form-control" id="fname" placeholder="Example: Juan Miguel Jr." name="fname" required>
           </div>
           <div class="form-group">
             <label for="npwd">Last Name: </label>
-            <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname" pattern="[a-zA-Z]{1,}" required>
+            <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" name="lname" required>
           </div>
           <div class="form-group">
             <label for="npwd">Email:</label>
@@ -80,7 +101,11 @@
           </div>
           <div class="form-group">
             <label for="npwd">Position: <i>(Enter 1 for professor, 2 for Dean, 3 for Secretary, 4 for Registrar)</i></label>
-            <input class="form-control" id="type" placeholder="Enter Email" name="type"  type="number" min="1" max="4" required>
+            <input class="form-control" id="type" placeholder="Enter Position" name="type"  type="number" min="1" max="4" required>
+          </div>
+          <div class="form-group">
+            <label for="npwd">Department: <i>(Enter 0 for IT, 1 for IS, 2 for CS, 4 for Office Staff)</i></label>
+            <input class="form-control" id="department" placeholder="Enter department" name="type"  type="number" min="1" max="4" required>
           </div>
           <div class="form-group">
             <label for="npwd">Temporary Password:</label>
@@ -103,7 +128,7 @@
 
   </div>
 </div>
-                    <table width="80%" border="1">
+                    <table class="table table-striped table-bordered table-hover sortable" width="100%">
                         
                         <thead>
                         <tr>
@@ -111,6 +136,7 @@
                             <th style="text-align:center">Full Name</th> 
                             <th style="text-align:center">Email</th>
                             <th style="text-align:center">Position</th>
+                            <th style="text-align:center">Department</th>                            
                             <th style="text-align:center">Status</th>
                             {{-- <th style="text-align:center">Action</th> --}}
                             
@@ -119,7 +145,7 @@
                         </thead>
                         @foreach($user as $user)
                         
-                        
+                        <tbody>
                         <tr>
                             <td style="text-align:center">{{$user->id}}</td>
                             <td style="text-align:left; "><p style='margin-left:10px'>{{$user->prefix}} {{$user->fname}} {{$user->lname}}</td></p>
@@ -140,13 +166,26 @@
                             @endif
                             
                             </td>
+                            <td style="text-align:left">
+                              @if ($user->department == 0)
+                              <p style='margin-left:10px'> Information Technology</p>
+                              @elseif ($user->department== 1)     
+                              <p style='margin-left:10px'>Information System<p>
+                              @elseif ($user->department == 2) 
+                              <p style='margin-left:10px'>Computer Science<p>
+                              @elseif($user->department==3)
+                              <p style='margin-left:10px'>Office Staff<p>
+                              @else 
+                              <p style='margin-left:10px'>Undentified<p>
+                              @endif
+                            </td>
                             <td style="text-align:center">
                             <input id='status' data-id="{{$user->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $user->status ? 'checked' : '' }}>
 
                             {{-- <//input type='submit' name='action' id='inactive' value='Inactive'></input></td> --}}
 
                         </tr>
-                        
+                      </tbody>
                         @endforeach
 
                         <script>

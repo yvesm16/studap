@@ -93,6 +93,9 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'crediting/details/{slug}',[CreditController::class, 'chairpersonCreditDetailsPage']);
       Route::match(array('GET', 'POST'), 'uploadSignature',[UserController::class, 'uploadSignature']);
       Route::match(array('GET', 'POST'), 'getSignature',[UserController::class, 'getSignature']);
+      Route::match(array('GET', 'POST'), 'dashboard/cs',[DashboardController::class, 'csdash']);
+      Route::match(array('GET', 'POST'), 'dashboard/it',[DashboardController::class, 'itdash']);
+      Route::match(array('GET', 'POST'), 'dashboard/is',[DashboardController::class, 'isdash']);
     });
 
     Route::group(['prefix' => 'director'], function(){

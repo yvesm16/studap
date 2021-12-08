@@ -439,15 +439,24 @@ class UserController extends Controller
             'fname' => $request->input('fname'),
             'lname' => $request->input('lname'),
             'email' => $request->input('email'),
+            'department' => $request->input('department'),
             'slug' => $slug,
             'password' => Hash::make($request->input('tempPassword')),
             'type' => $request->input('type'),
             'verified' => 1,
             'status' => 0
           ];
-          $user->insertData($data);
 
-          return back()->with('success','New User has been successfully added');
+          $sendEmail = [
+            'email' => $request->input('email'),
+            'tempPassword' => $request->input('tempPassword')
+          ];
+          $user->insertData($data);
+          
+            \Mail::to($request->input('email'))->send(new \App\Mail\NewUser($sendEmail));
+
+            return back()->with('success','New User has been successfully added');
+        
 
         }else {
           return back()->with('warning','Input UST Email only. Try Again');
