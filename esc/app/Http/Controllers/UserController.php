@@ -231,6 +231,27 @@ class UserController extends Controller
       return $course_details ? true : false;
     }
 
+    private function getIS($id){
+      $course = new Course;
+      $course_details = $course->getIS($id);
+
+      return $course_details ? true : false;
+    }
+
+    private function getIT($id){
+      $course = new Course;
+      $course_details = $course->getIT($id);
+
+      return $course_details ? true : false;
+    }
+
+    private function getCS($id){
+      $course = new Course;
+      $course_details = $course->getCS($id);
+
+      return $course_details ? true : false;
+    }
+
     public function professorHome(){
       $user = new User;
       $files = new Files;
@@ -243,7 +264,10 @@ class UserController extends Controller
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'signature' => $chairpersonSignature,
-        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
+        'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
+        // 'getIS' => $this->getIS(Auth::id()),
+        // 'getIT' => $this->getIT(Auth::id()),
+        'getCS' => $this->getCS(Auth::id())
       ];
 
       return view('professor.index',$data);

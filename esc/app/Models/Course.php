@@ -49,4 +49,25 @@ class Course extends Model
         ->where('status',1)
         ->first();
     }
+
+    // public function getIS($user_id){
+    //   return DB::table('course')
+    //     ->where('chairperson',8)
+    //     ->where('status',1)
+    //     ->first();
+    // }
+
+    // public function getIT($user_id){
+    //   return DB::table('course')
+    //     ->where('chairperson',9)
+    //     ->where('status',1)
+    //     ->first();
+    // }
+
+    // public function getCS($user_id){
+    //   return DB::table('course')
+    //     ->where('chairperson',10)
+    //     ->where('status',1)
+    //     ->first();
+    // }
 }

@@ -140,6 +140,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'home',[UserController::class, 'studentHome']);
     });
 
+    
+
     Route::match(array('GET', 'POST'), 'ajax','AjaxController@ajax');
     Route::match(array('GET', 'POST'), 'logout',[UserController::class, 'logout']);
     Route::match(array('GET', 'POST'), 'changePassword',[UserController::class, 'changePassword']);

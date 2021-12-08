@@ -212,27 +212,58 @@ class DashboardController extends Controller
         return $course_details ? true : false;
       }
 
+    //   private function getIS($id){
+    //     $course = new Course;
+    //     $course_details = $course->getIS($id);
+  
+    //     return $course_details ? true : false;
+    //   }
+
+    //   private function getIT($id){
+    //     $course = new Course;
+    //     $course_details = $course->getIT($id);
+  
+    //     return $course_details ? true : false;
+    //   }
+
+    //   private function getCS($id){
+    //     $course = new Course;
+    //     $course_details = $course->getCS($id);
+  
+    //     return $course_details ? true : false;
+    //   }
+
 
     public function itdash() {
         $user = new User;
+
         $userDetails = $user->getData('id',Auth::id());
+        $data = [
+            'id' => Auth::id(),
+            'fname' => $userDetails->fname,
+            'lname' => $userDetails->lname,
+            'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
+            // 'getIS' => $this->getIT(Auth::id())
+        ];
 
-        $fname = $userDetails->fname;
-        $lname = $userDetails->lname;
-
-        return view('professor/itdash', compact('fname','lname'));
+        return view('professor/itdash', $data);
     }
 
 
 
     public function isdash() {
         $user = new User;
+
         $userDetails = $user->getData('id',Auth::id());
+        $data = [
+            'id' => Auth::id(),
+            'fname' => $userDetails->fname,
+            'lname' => $userDetails->lname,
+            'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
+            // 'getIS' => $this->getIS(Auth::id())
+        ];
 
-        $fname = $userDetails->fname;
-        $lname = $userDetails->lname;
-
-        return view('professor/isdash', compact('fname','lname'));
+        return view('professor/isdash', $data);
     }
 
     public function csdash() {
@@ -243,16 +274,191 @@ class DashboardController extends Controller
             'id' => Auth::id(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
-            'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
+            'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
+            // 'getCS' => $this->getCS(Auth::id())
         ];
         
+        //accepted
+        $ar = new Schedule;
+        $total = $ar->getAllApprovedScheduleByParameter('title','Appointment')->where('department', 2)->count();
+        $accepted = $total;
+
+        //elapsed
+        $pendingar = $ar
+        ->where('status', 1)
+        ->get();
+
+        if(count($pendingar) >= 1) { 
+            $etimear = $ar
+            ->select(DB::raw("AVG(TIME_TO_SEC(TIMEDIFF(updated_at, created_at))) AS timediffar"))
+            ->where([
+                ['department',2],
+                ['status', '<>', 4]
+                
+                ])
+            ->get();
+            $elapsed = round((int)$etimear[0]->timediffar/3600) ;
+        }else {
+            $elapsed = 0;
+        }
+
+        //declined
+        $user = new User;
+
+        $getID = $ar
+        // ->select('professor_id')
+        ->where('department', 2)
+        ->pluck('professor_id')
+        ->toArray();
+
+        // dd($getID);
+
+        $dar = $ar->where('status', 2)->get();
+        $seno =0;
+        $acula =0;
+        $cabero=0;
+        $cosme=0;
+        $decamora=0;
+        $estabillo=0;
+        $ponay=0;
+        $sideno=0;
+        $torralba=0;
+        
+        if(in_array(10,$getID)){
+            $seno = $dar->where('professor_id',10)->count();
+        }if(in_array(16,$getID)){
+            $acula = $dar->where('professor_id',16)->count();
+        }if(in_array(17,$getID)){
+            $cabero = $dar->where('professor_id',17)->count();
+
+        }if(in_array(18,$getID)){
+            $cosme = $dar->where('professor_id',18)->count();
+
+        }if(in_array(19,$getID)){
+            $decamora = $dar->where('professor_id',19)->count();
+
+        }if(in_array(20,$getID)){
+            $estabillo = $dar->where('professor_id',20)->count();
+
+        }if(in_array(21,$getID)){
+            $ponay = $dar->where('professor_id',21)->count();
+
+        }if(in_array(22,$getID)){
+            $sideno = $dar->where('professor_id',22)->count();
+
+        }if(in_array(23,$getID)){
+            $torralba = $dar->where('professor_id',23)->count();
+
+        }
+
+        //backlog
+        $seno2 =0;
+        $acula2 =0;
+        $cabero2=0;
+        $cosme2=0;
+        $decamora2=0;
+        $estabillo2=0;
+        $ponay2=0;
+        $sideno2=0;
+        $torralba2=0;
+
+        $getID2 = $ar
+        // ->select('professor_id')
+        ->where([
+            ['department', 2],
+            ['status', '<>', 4]
+            ])
+        ->pluck('professor_id')
+        ->toArray();
 
 
         
 
+        if(in_array(10,$getID2)){
+                $seno2 =$ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 10]
+                ])
+                ->count();
+        }if(in_array(16,$getID2)){
+                $acula2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 16]
+                ])
+                ->count();
+            
+        }if(in_array(17,$getID2)){
+                $cabero2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 17]
+                ])
+                ->count();
+            
+        }if(in_array(18,$getID2)){
+                $cosme2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 18]
+                ])
+                ->count();
+            
+        }if(in_array(19,$getID2)){
+                $decamora2 =$ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 19]
+                ])
+                ->count();
+            
+        }if(in_array(20,$getID2)){
+                $estabillo2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 20]
+                ])
+                ->count();
+           
+        }if(in_array(21,$getID2)){
+                $ponay2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 21]
+                ])
+                ->count();
+           
+        }if(in_array(22,$getID2)){
+                $sideno2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 22]
+                ])
+                ->count();
+            
+        }if(in_array(23,$getID2)){
+                $torralba2 = $ar
+                ->whereRaw("TIME_TO_SEC(TIMEDIFF(updated_at, created_at)) > 259200")
+                ->where([
+                    ['status', '<>', 4],
+                    ['professor_id', 23]
+                ])
+                ->count();
+           
+        }
 
-
-        return view('professor/csdash', $data);
+        return view('professor/csdash', $data, compact('accepted', 'elapsed','seno','acula','cabero','cosme','decamora', 'estabillo',
+            'ponay', 'sideno', 'torralba','seno2','acula2','cabero2','cosme2','decamora2', 'estabillo2',
+            'ponay2', 'sideno2', 'torralba2'));
     }
     
 

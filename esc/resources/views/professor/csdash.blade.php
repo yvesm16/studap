@@ -24,7 +24,13 @@
         {{-- <table id="dashboard-table"> --}}
             {{-- <tr id="tr-dashboard"> --}}
         
-
+    <p>
+    <img src="{{ URL::asset('img/iicslogo.png')}}" width="100px" style="margin-top: 1%">
+    <h1>CICS E-Services</h1>
+    <h2> Computer Science Department Dashboard</h2>
+    <h3> for Student Consultation</h3>
+  </p><br><br>
+  {{-- <h1>{{$sample}}</h1> --}}
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <div class='container'>
@@ -36,12 +42,12 @@
             {{-- <p>{{$getName}}</p> --}}
             <div class='col-sm-12 col-md-12 col-lg-12' style='align-content:center'>
                 <p> The Number of backlog of service request</p>
-                <canvas id="backlog" class="imgdash" >
+                <canvas id="backlog" class="imgdash" height='80px'>
 
             </div>
             <div class='col-sm-12 col-md-12 col-lg-12' style='align-content:center'>
                 <p id="th-dashboard2">Number of Declined Request</p>
-                <canvas id="decline" class="imgdash" >
+                <canvas id="decline" class="imgdash" height='80px'>
             </div>
             <div  class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
                 <p id="th-dashboard2">Average of Elapsed Time</p>  
@@ -100,22 +106,30 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Average Number of Accepted Consultation Request"],
+                        labels: ["Number of Accepted Consultation Request"],
                         datasets: [{
                             label: '',
-                            data: [4],
-                            backgroundColor: [
+                            data: [{{$accepted}}],
+                            backgroundColor: [  
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
-                                'rgba(167, 6, 11, 0.2)'
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
                             ],
                             borderColor: [
-                                'rgba(186, 166, 175, 1)',
-                                'rgba(160, 89, 97, 1)',
-                                'rgba(171, 49, 60, 1)',
-                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
                                 'rgba(167, 6, 11, 1)'
                             ],
                             borderWidth: 1
@@ -179,22 +193,50 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Consultation", "Student Appeal", "Course Crediting"],
+                        labels: [
+                            'Jose Seno',
+                        'Donata Acula',
+                        'Jonathan Cabero',
+                        "Perla Cosme",
+                        'Lawrence Decamora',
+                        'Cherry Rose Estabillo',
+                        'Charmaine Ponay',
+                        'Janette Sideno',
+                        'Edwin Torralba'
+                        ],
                         datasets: [{
                             label: '',
-                            data: [1,2,3],
+                            data: [
+                                {{$seno2}}, 
+                                {{$acula2}},
+                                {{$cabero2}},
+                                {{$cosme2}},
+                                {{$decamora2}},
+                                {{$estabillo2}},
+                                {{$ponay2}},
+                                {{$sideno2}},
+                                {{$torralba2}}
+                            ],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
-                                'rgba(167, 6, 11, 0.2)'
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
                             ],
                             borderColor: [
-                                'rgba(186, 166, 175, 1)',
-                                'rgba(160, 89, 97, 1)',
-                                'rgba(171, 49, 60, 1)',
-                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
                                 'rgba(167, 6, 11, 1)'
                             ],
                             borderWidth: 1
@@ -218,22 +260,30 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Consultation (minutes) ", "Student Appeal (minutes)", "Course Crediting (minutes)"],
+                        labels: ["Average (minutes)"],
                         datasets: [{
                             label: '',
-                            data: [1,2,3],
+                            data: [{{$elapsed}}],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
-                                'rgba(167, 6, 11, 0.2)'
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
                             ],
                             borderColor: [
-                                'rgba(186, 166, 175, 1)',
-                                'rgba(160, 89, 97, 1)',
-                                'rgba(171, 49, 60, 1)',
-                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
                                 'rgba(167, 6, 11, 1)'
                             ],
                             borderWidth: 1
@@ -256,22 +306,51 @@
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ["Consultation", "Course Crediting"],
+                        labels: [
+                        'Jose Seno',
+                        'Donata Acula',
+                        'Jonathan Cabero',
+                        "Perla Cosme",
+                        'Lawrence Decamora',
+                        'Cherry Rose Estabillo',
+                        'Charmaine Ponay',
+                        'Janette Sideno',
+                        'Edwin Torralba'
+                        ],
                         datasets: [{
                             label: '',
-                            data: [1,2],
+                            data: [
+                                {{$seno}}, 
+                                {{$acula}},
+                                {{$cabero}},
+                                {{$cosme}},
+                                {{$decamora}},
+                                {{$estabillo}},
+                                {{$ponay}},
+                                {{$sideno}},
+                                {{$torralba}}
+                            ],
                             backgroundColor: [
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
                                 'rgba(167, 6, 11, 0.2)',
-                                'rgba(167, 6, 11, 0.2)'
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                'rgba(167, 6, 11, 0.2)',
+                                
                             ],
                             borderColor: [
-                                'rgba(186, 166, 175, 1)',
-                                'rgba(160, 89, 97, 1)',
-                                'rgba(171, 49, 60, 1)',
-                                'rgba(180, 50, 60, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
+                                'rgba(167, 6, 11, 1)',
                                 'rgba(167, 6, 11, 1)'
                             ],
                             borderWidth: 1
