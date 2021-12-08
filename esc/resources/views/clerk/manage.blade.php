@@ -25,7 +25,7 @@
 </head>
 <body>
  
-    @include('secretary.nav')
+    @include('clerk.nav')
     <div class="container indexMargin home">
   <div id="page-wrapper">
       <div class="row">

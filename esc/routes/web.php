@@ -136,8 +136,12 @@ Route::group(['middleware' => 'auth'], function(){
       Route::match(array('GET', 'POST'), 'updateCreditStatus',[CreditController::class, 'updateCreditStatus']);
     });
 
-    Route::group(['prefix' => 'assistant'], function(){
-      Route::match(array('GET', 'POST'), 'home',[UserController::class, 'studentHome']);
+    Route::group(['prefix' => 'clerk'], function(){
+      Route::match(array('GET', 'POST'), 'home',[UserController::class, 'secretaryHome']);
+      Route::match(array('GET', 'POST'), 'manage', [ManageController::class, 'manage']);
+      Route::match(array('GET', 'POST'), 'userChangeStatus', [ManageController::class, 'userChangeStatus']);
+      Route::match(array('GET', 'POST'), 'addUser', [UserController::class, 'addUser']);
+
     });
 
     

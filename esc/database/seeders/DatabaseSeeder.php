@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
             'lname' => 'Gonzaga',
             'email' => 'rpgonzaga@ust.edu.ph',
             'password' => Hash::make('123'),
-            'type' => 3,
+            'type' => 5,
             'verified' => 1,
             'department' => 3,
             'status' => 1
@@ -286,7 +286,7 @@ class DatabaseSeeder extends Seeder
             'lname' => 'Kho',
             'email' => 'mgkho@ust.edu.ph',
             'password' => Hash::make('123'),
-            'type' => 1,
+            'type' => 5,
             'verified' => 1,
             'department' => 3,
             'status' => 1

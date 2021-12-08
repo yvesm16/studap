@@ -193,6 +193,8 @@ class UserController extends Controller
               return Redirect::to('secretary/home');
             }elseif($userDetails->type == 4){ 
               return Redirect::to('registrar/home');
+            }elseif($userDetails->type == 5){ 
+              return Redirect::to('clerk/home');
             }else{
               return Redirect::to('professor/home');
             }
@@ -231,26 +233,26 @@ class UserController extends Controller
       return $course_details ? true : false;
     }
 
-    private function getIS($id){
-      $course = new Course;
-      $course_details = $course->getIS($id);
+    // private function getIS($id){
+    //   $course = new Course;
+    //   $course_details = $course->getIS($id);
 
-      return $course_details ? true : false;
-    }
+    //   return $course_details ? true : false;
+    // }
 
-    private function getIT($id){
-      $course = new Course;
-      $course_details = $course->getIT($id);
+    // private function getIT($id){
+    //   $course = new Course;
+    //   $course_details = $course->getIT($id);
 
-      return $course_details ? true : false;
-    }
+    //   return $course_details ? true : false;
+    // }
 
-    private function getCS($id){
-      $course = new Course;
-      $course_details = $course->getCS($id);
+    // private function getCS($id){
+    //   $course = new Course;
+    //   $course_details = $course->getCS($id);
 
-      return $course_details ? true : false;
-    }
+    //   return $course_details ? true : false;
+    // }
 
     public function professorHome(){
       $user = new User;
@@ -267,7 +269,7 @@ class UserController extends Controller
         'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
         // 'getIS' => $this->getIS(Auth::id()),
         // 'getIT' => $this->getIT(Auth::id()),
-        'getCS' => $this->getCS(Auth::id())
+        // 'getCS' => $this->getCS(Auth::id())
       ];
 
       return view('professor.index',$data);
@@ -305,6 +307,23 @@ class UserController extends Controller
       ];
 
       return view('secretary.index',$data);
+    }
+
+    public function clerkHome(){
+      $user = new User;
+      $files = new Files;
+
+      $userDetails = $user->getData('id',Auth::id());
+      // $secretarySignature = $files->getAllActiveFileByUserByParameter('type',0);
+
+      $data = [
+        'id' => Auth::id(),
+        'fname' => $userDetails->fname,
+        'lname' => $userDetails->lname,
+        // 'signature' => $secretarySignature
+      ];
+
+      return view('clerk.index',$data);
     }
 
     public function registrarHome(){

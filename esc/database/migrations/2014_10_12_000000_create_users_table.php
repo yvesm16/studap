@@ -37,7 +37,7 @@ class CreateUsersTable extends Migration
           $table->string('student_id',225)->nullable(true);
           $table->integer('course_id')->unsigned()->comment('Course')->nullable();
           $table->foreign('course_id')->references('id')->on('course');
-          $table->integer('type')->comment('0-Student|1-Faculty|2-Director|3-Secretary|4-Registrar');
+          $table->integer('type')->comment('0-Student|1-Faculty|2-Director|3-Secretary|4-Registrar|5-Clerk');
           $table->integer('department')->comment('0-IT|1-IS|2-CS|3-staffs')->nullable(true);
           $table->integer('verified')->comment('0 - No | 1 - Yes');
           $table->integer('status')->comment('0 - Inactive | 1 - Active');
