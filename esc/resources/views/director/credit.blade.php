@@ -22,6 +22,51 @@
       <div class="row">
           <div class="col-lg-12">
               <h1 class="page-header"><span id="titlePage">Course Crediting</span></h1>
+              <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">Guidelines</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Guidelines for Course Crediting</h4>
+                  </div>
+                  <p >
+                    <ul style='text-align:left; margin-right:5%'>
+                        <center>
+                        <b><i>There are labels indicated for each provided button</i></b><br><br>
+                        </center>
+                        <b>For the Dean:</b><br>
+                        <li>The Pending View Details shows the pending course crediting request</li>
+                        <li>The View Details button must be click to show the information of the course crediting request</li>
+                        <li>View Document is clicked to show the attached files</li>
+                        <li>The approve button places the sign of the Dean</li>
+                        <li>The okay button on the modal must be clicked to confirm the approval of the request</li>
+                        <li>The decline button shows that the request is disapprove by the dean</li>
+                        <li>The reason modal must be filled out if it is disapproved </li>
+                        <li>The submit to Registrar button is clicked for the request to be transferred the CICS Registrar</li>
+                        <br><br>
+                        <b>In the Completed Tab:</b>
+                        <li>Click Completed View Details to show the requests that has been approved by the CICS Registrar </li>
+                        <li>Click View Details shows the details of the request </li>
+                        <li>The download report button which generates a pdf version of the completed list</li>
+
+
+                        
+
+                        <br><br>
+                    </ul>
+                  </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
           </div>
       </div>
       <div class="row">

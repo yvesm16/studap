@@ -71,7 +71,32 @@
               <label for="pwd">Retype Password:</label>
               <input type="password" class="form-control" id="rpwd" placeholder="Enter retype password" name="rpwd" required>
             </div>
-            <div class="form-group">
+            <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">Terms and Condition</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Terms And Condition</h4>
+                  </div>
+                  <p>
+                    adgshsas
+                  </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
+            <input type="radio" id="html" name="fav_language" value="HTML">
+<label for="html">Yes, I agree with the terms and condition</label><br>
+<input type="radio" id="css" name="fav_language" value="CSS">
+<label for="css">No, I decline</label><br>
               @if (session('error'))
                       <div class="alert alert-danger">
                           {{ session('error') }}
@@ -82,7 +107,7 @@
                           {{ session('success') }}
                       </div>
               @endif
-            </div>
+            </div><br>  
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>

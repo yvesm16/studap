@@ -30,6 +30,60 @@
       <div class="row">
           <div class="col-lg-12">
               <h1 class="page-header"><span id="titlePage">Student Appeal</span></h1>
+              <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">Guidelines</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Guidelines for Student Appeal on Course Grades</h4>
+                  </div>
+                  <p >
+                    <ul style='text-align:left; margin-right:5%'>
+                        <center>
+                        <b><i>There are labels indicated for each provided button</i></b><br><br>
+                        </center>
+                        <b>For the Student Apeeal on Course Grades:</b><br>
+                        <li>Pending View Details shows all the pending student appeal request</li>
+                    	<li> View Button shows the status tracker of the request</li>
+                    	<li>Evaluate Level 1 Button opens a modal that sets a conference with the student and an email will be sent for the details of the conference including the meeting link</li>
+                        <li>Evaluate Level 2 Button opens a modal that sets a conference with the involved professor and an email will be sent for the details of the conference including the meeting link</li>
+                        <li>Evaluate Level 3 Button opens a modal that sets a conference with the student and involved professor and an email will be sent for the details of the conference including the meeting link</li>
+                    	<li>Input the date of the conference with the participants and a preview is provided for the Dean to view the submitted documents of the student</li>
+                    	<li> Input the start time and end time of the consultation with the student</li>
+                        <li> confirm button approves the request and is transferred to the scheduled tab it will also email the student</li>
+                        <li> Close button closes the modal </li><br><br>
+                        <b>The remark button is to notify the student on what is the current update on his student (example: The professor and i will be having a conference regarding your appeal)</b><br><br>
+                        <center>
+                            <b><i>The resolved button is always available for the dean even if the other levels are not yet evaluated</i></b><br><br>
+                        </center>
+                        <br><br>
+                        <b>For the Completed tab:</b><br>
+                        <li>This tab shows the requests that has been completed</li>
+                        <li>Download Report button produces the pdf version of the list of completed request</li>
+                        <li>View button shows the status tracker modal</li>
+                        <br><br>
+                        <center>
+                        <b>You can ignore the evaluation button as the request has already been completed</b>
+                        </center>
+
+
+                        
+
+                        <br><br>
+                    </ul>
+                </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
           </div>
       </div>
       <div class="row">

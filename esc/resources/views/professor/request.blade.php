@@ -26,10 +26,55 @@
 
 <input type="hidden" id="status" name="status" value="{{ $status }}">
 <div class="container indexMargin home">
+    
   <div id="page-wrapper">
+      
       <div class="row">
           <div class="col-lg-12">
               <h1 class="page-header"><span id="titlePage">Consultations</span></h1>
+              <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">Guidelines</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Guidelines for Student Consultation</h4>
+                  </div>
+                  <p >
+                    <ul style='text-align:left; margin-right:5%'>
+                        <center>
+                        <b><i>There are labels indicated for each provided button</i></b><br><br>
+                        </center>
+                        <b>For the pending tab:</b><br>
+                        <li>View Button will show the appointment details and the status of the request</li>
+                    	<li>The close button closes the modal</li>
+                    	<li>The Blue check box button allows the professor to approve the request and continue the next step</li>
+                    	<li>The red x button disapproves the request and the request will transfer to the decline tab</li>
+                    	<li>When the professor click on the approve button it will reappear in the approved tab that indicates the request has been approved</li><br><br>
+                        <b>For the Approved tab:</b><br>
+                        <li>The view button must be clicked, and the meeting link must be entered in the input box</li>
+                    	<li>The save link button must be click so the meeting link will be saved to the student</li>
+                    	<li>The light blue check button must be clicked when the consultation is about to start</li>
+                    	<li>The green button will end the consultation and the request will be on the completed tab</li>
+                    	<li>Once the consultation has ended, the request is transfered to the completed tab</li><br><br>
+                        <b>For the Completed tab:</b><br>
+                        <li>The view details show the details of the request </li>
+                    	<li>The save link button must be click so the meeting link will be saved to the student</li>
+                    	<li>The download report button allows to generate the table into a pdf file</li>
+                    	<br><br>
+                    </ul>
+                </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
           </div>
       </div>
       <div class="row">
@@ -44,8 +89,10 @@
                               <div class="huge">{{ $pending }}</div>
                               <div>Pending</div>
                           </div>
+                          
                       </div>
                   </div>
+                  
                   <a href="{{ URL::to('professor/requests/0') }}" style="color: #8a6d3b">
                       <div class="panel-footer" style="background-color: white !important">
                           <span class="pull-right">
@@ -57,6 +104,7 @@
                   </a>
               </div>
           </div>
+          
           <div class="col-lg-3 col-md-6">
               <div class="panel panel-info">
                   <div class="panel-heading">
