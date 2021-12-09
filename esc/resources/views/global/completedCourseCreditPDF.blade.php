@@ -7,7 +7,7 @@
   <center>
     <div>  
       <h4>
-        UNIVERSITY OF SANTO THOMAS<br>College of Information Computing Sciences
+        UNIVERSITY OF SANTO TOMAS<br>College of Information Computing Sciences
       </h4>
       <h4>
         Request Fulfilled List for Course Crediting
