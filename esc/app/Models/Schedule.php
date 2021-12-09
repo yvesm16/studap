@@ -78,7 +78,7 @@ class Schedule extends Model
         ->where($column,$id)
         ->where('start_time','<=',$date)
         ->where('end_time','>',$date)
-        ->whereIn('status', [0, 1, 3, 4])
+        ->whereIn('status', [0, 1, 3])
         ->count();
     }
 

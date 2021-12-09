@@ -197,12 +197,33 @@ class DashboardController extends Controller
         $userDetails = $user->getData('id',Auth::id());
         $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
 
+        $prefix = $userDetails->prefix;
+        $suffix = $this->getSuffix();
         $fname = $userDetails->fname;
         $lname = $userDetails->lname;
         
-    
-        return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq', 'fname','lname', 'time','timecc' ,
+        return view('director/dashboard', compact('oc', 'tc', 'thc', 'fc','fic', 'ave','accptReq', 'prefix','suffix', 'fname','lname', 'time','timecc' ,
         'timesa', 'timear','numReq','backlog','backlog1', 'backlog2', 'backlog3',  'ETime', 'ETimear', 'ETimesa', 'ETimecc', 'dcc', 'dar', 'decline'));
+    }
+
+    private function getSuffix() {
+        $user = new User;
+        $userDetails = $user->getData('id',Auth::id());
+  
+        $suffix = '';
+        if ($userDetails->type == 1) {
+          $suffix = '- Teaching Official';
+  
+          if ($this->isProfessorChairperson(Auth::id())) {
+            $suffix = '- Academic Official';
+          }
+        } else if ($userDetails->type == 2 || $userDetails->type == 3) {
+          $suffix = '- Admin Official';
+        } else if ($userDetails->type == 4 || $userDetails->type == 5) {
+          $suffix = '- Office Staff';
+        }
+  
+        return $suffix;
     }
 
     private function isProfessorChairperson($id){
@@ -240,6 +261,8 @@ class DashboardController extends Controller
         $userDetails = $user->getData('id',Auth::id());
         $data = [
             'id' => Auth::id(),
+            'prefix' => $userDetails->prefix,
+            'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
@@ -538,6 +561,8 @@ class DashboardController extends Controller
         $userDetails = $user->getData('id',Auth::id());
         $data = [
             'id' => Auth::id(),
+            'prefix' => $userDetails->prefix,
+            'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
@@ -733,6 +758,8 @@ class DashboardController extends Controller
         $userDetails = $user->getData('id',Auth::id());
         $data = [
             'id' => Auth::id(),
+            'prefix' => $userDetails->prefix,
+            'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),

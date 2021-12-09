@@ -91,10 +91,10 @@ class ScheduleController extends Controller
 
           $slotExist = $schedule->checkSlotOverlap($start,'professor_id',intval($request->input('professor_id')));
 
-          if($slotExist > 0){
+          if($slotExist == 0){
             return Response::json(array(
                 'result' => false,
-                'text' => 'Slot schedule overlap!'
+                'text' => 'Slot Not Available!'
             ));
           }else{
             if($schedule->getLastID() == null){
@@ -184,6 +184,26 @@ class ScheduleController extends Controller
         }
       }
     }
+
+    private function getSuffix() {
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $suffix = '';
+      if ($userDetails->type == 1) {
+        $suffix = '- Teaching Official';
+
+        if ($this->isProfessorChairperson(Auth::id())) {
+          $suffix = '- Academic Official';
+        }
+      } else if ($userDetails->type == 2 || $userDetails->type == 3) {
+        $suffix = '- Admin Official';
+      } else if ($userDetails->type == 4 || $userDetails->type == 5) {
+        $suffix = '- Office Staff';
+      }
+
+      return $suffix;
+    }
     
     private function isProfessorChairperson($id){
       $course = new Course;
@@ -198,6 +218,8 @@ class ScheduleController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'user_type' => $userDetails->type,
@@ -549,6 +571,8 @@ class ScheduleController extends Controller
 
     $data = [
       'id' => Auth::id(),
+      'prefix' => $userDetails->prefix,
+      'suffix' => $this->getSuffix(),
       'fname' => $userDetails->fname,
       'lname' => $userDetails->lname,
       'user_type' => $userDetails->type,

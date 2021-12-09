@@ -37,7 +37,7 @@
         </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" style="text-decoration: none; color: white">Hi {{ $fname }} {{ $lname }}!</a></li>
+        <li><a href="#" style="text-decoration: none; color: white">{{ $prefix }} {{ $fname }} {{ $lname }} {{ $suffix }}</a></li>
         <li>
           <a href="#"
           data-toggle="popover"
