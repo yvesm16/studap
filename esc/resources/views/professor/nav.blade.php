@@ -24,10 +24,13 @@
         
         @if ($isProfessorChairperson)
           <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/crediting/0'); }}" class="crediting">Crediting</a></li>
-          <li <?php echo (str_contains($actual_link,'dashboard/cs')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/cs'); }}" class="">CS Dashboard</a></li>
-          <li <?php echo (str_contains($actual_link,'dashboard/it')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/it'); }}" class="">IT Dashboard</a></li>
-          <li <?php echo (str_contains($actual_link,'dashboard/is')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/is'); }}" class="">IS Dashboard</a></li>
-          
+          @if ($department == 0)
+            <li <?php echo (str_contains($actual_link,'dashboard/it')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/it'); }}" class="">IT Dashboard</a></li>
+          @elseif ($department == 1)
+            <li <?php echo (str_contains($actual_link,'dashboard/is')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/is'); }}" class="">IS Dashboard</a></li>
+          @elseif ($department == 2)
+            <li <?php echo (str_contains($actual_link,'dashboard/cs')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/cs'); }}" class="">CS Dashboard</a></li>
+          @endif
         @endif
 
         

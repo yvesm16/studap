@@ -233,6 +233,7 @@ class ScheduleController extends Controller
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'user_type' => $userDetails->type,
+        'department' => $userDetails->department,
         'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 
@@ -586,6 +587,7 @@ class ScheduleController extends Controller
       'fname' => $userDetails->fname,
       'lname' => $userDetails->lname,
       'user_type' => $userDetails->type,
+      'department' => $userDetails->department,
       'pending' => $schedule->getCountByStatus(0,'professor_id'),
       'approved' => $schedule->getCountByStatus(1,'professor_id'),
       'completed' => $schedule->getCountByStatus(4,'professor_id'),

@@ -265,6 +265,7 @@ class DashboardController extends Controller
             'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
+            'department' => $userDetails->department,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
             // 'getCS' => $this->getCS(Auth::id())
         ];
@@ -565,6 +566,7 @@ class DashboardController extends Controller
             'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
+            'department' => $userDetails->department,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
             // 'getCS' => $this->getCS(Auth::id())
         ];
@@ -762,6 +764,7 @@ class DashboardController extends Controller
             'suffix' => $this->getSuffix(),
             'fname' => $userDetails->fname,
             'lname' => $userDetails->lname,
+            'department' => $userDetails->department,
             'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
             // 'getCS' => $this->getCS(Auth::id())
         ];

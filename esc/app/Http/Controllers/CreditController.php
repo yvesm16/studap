@@ -202,6 +202,7 @@ class CreditController extends Controller
         'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
+        'department' => $userDetails->department,
         'studentDetails' => $studentDetails,
         'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
         'currentCourse' => $course->getCourseByID($studentDetails->course_id),

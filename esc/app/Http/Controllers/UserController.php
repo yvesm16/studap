@@ -277,6 +277,7 @@ class UserController extends Controller
         'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
+        'department' => $userDetails->department,
         'signature' => $chairpersonSignature,
         'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id()),
         // 'getIS' => $this->getIS(Auth::id()),
@@ -391,6 +392,7 @@ class UserController extends Controller
         'id' => Auth::id(),
         'prefix' => $userDetails->prefix,
         'suffix' => $this->getSuffix(),
+        'department' => $userDetails->department,
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname
       ];
