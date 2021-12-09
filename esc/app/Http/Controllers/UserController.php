@@ -209,8 +209,8 @@ class UserController extends Controller
               return Redirect::to('professor/home');
             }
           }else{
-            return Redirect::to('/')
-              ->with('error','Invalid email/password!');
+              return Redirect::to('/')
+                ->with('error','Invalid email/password!');
           }
         }else{
           return Redirect::to('/')

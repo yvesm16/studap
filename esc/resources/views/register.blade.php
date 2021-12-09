@@ -79,11 +79,36 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Terms And Condition</h4>
+                    {{-- <h4 class="modal-title">Terms And Condition</h4> --}}
                   </div>
-                  <p>
-                    adgshsas
-                  </p>
+                  <p style='margin-left:5%; margin-right:5%; text-align:justify'>
+                   <b>Welcome to CICS e - Services!</b><br><br>
+                      These terms and conditions outline the rules and regulations for the use of CICS e – Services Website. By accessing this website we assume you accept these terms and conditions. Do not proceed to CICS e - Services if you do not agree to take all the terms and conditions stated.
+                      Cookies<br>
+We employ the use of cookies. By accessing CICS e - Services, you agreed to use cookies in agreement with the CICS e – Services Privacy Policy. By Accepting, you allow us to receive cookies which collects the user’s details for each visit. These cookies are important for the functionalities of the website
+<br><br>
+<b>License</b><br>
+Unless otherwise stated, CICS e - Services and/or its licensors own the intellectual property rights for all material on CICS e - Services. All intellectual property rights are reserved. You may access this from CICS e - Services for your own personal use subjected to restrictions set in these terms and conditions.
+You must not:<br>
+<ul>
+<li>Republish material from CICS e - Services</li>
+<li>Sell, rent or sub-license material from CICS e - Services</li>
+<li>Reproduce, duplicate or copy material from CICS e - Services</li>
+<li>Redistribute content from CICS e - Services</li>
+</ul><br><br>
+<p style='margin-left:5%; margin-right:5%; text-align:justify'>
+
+This Agreement shall begin on the date hereof. Our Terms and Conditions were created with the help of the Terms And Conditions Template.
+CICS e - Services reserves the right to monitor all attachments and to remove any attachments which can be considered inappropriate, offensive or causes breach of these Terms and Conditions.
+You warrant and represent that:<br>
+<ul style='margin-left:5%; margin-right:5%; text-align:justify'>
+<li>You are entitled to attach documents on our website and have all necessary licenses and consents to do so;</li>
+<li>The attachements do not invade any intellectual property right, including without limitation copyright, patent or trademark of any third party;</li>
+<li>The attachements do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material which is an invasion of privacy
+Content Liability</li><br><br>
+<b ><i>We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third-party rights.</b></i>
+</ul>                  
+</p>
                   
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -93,7 +118,7 @@
             
               </div>
             </div><br>
-            <input type="radio" id="html" name="fav_language" value="HTML">
+            <input type="radio" id="html" name="fav_language" value="HTML" required>
 <label for="html">Yes, I agree with the terms and condition</label><br>
 <input type="radio" id="css" name="fav_language" value="CSS">
 <label for="css">No, I decline</label><br>
