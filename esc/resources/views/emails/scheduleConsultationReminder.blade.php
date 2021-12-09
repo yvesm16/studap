@@ -15,11 +15,11 @@
       </div>
       <div class="col-sm-12">
         <p>
-         {{ $target_prefix }} {{ $target_fname }} {{ $target_lname }} {{ $target_suffix }}
+          Good Day! {{ $target_fname }} {{ $target_lname }}
         </p>
         <p>
           <h1>Reminder: Tomorrow is your Consultation</h1>
-          with {{ $with_prefix }} {{ $with_fname }} {{ $with_lname }} {{ $with_suffix }}
+          with {{ $with_fname }} {{ $with_lname }}
         </p>
         <p>
           <ul>

@@ -217,7 +217,7 @@
   <div class="row" style="margin-top: 1%;">
     <div class="col-md-6" style="text-align: left;margin-left:5%;">
       <div id="directorSignatureDiv">
-        @if($creditDetails->status < 2 || $creditDetails->status == 5)
+        @if($creditDetails->status < 2 || $creditDetails->status == 5 || !$signature)
           &nbsp
         @else
           <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="25%"/>

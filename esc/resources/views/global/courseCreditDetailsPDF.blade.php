@@ -145,6 +145,11 @@
       <td width="100">&nbsp;</td>
       <td>Registrar</td>
     </tr>
+    <tr>
+      <td></td>
+      <td width="100"></td>
+      <td style="text-align:right">UST:SO33-00FO62a</td>
+    </tr>
   </table>
 </body>
 </html>

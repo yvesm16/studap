@@ -148,6 +148,26 @@ class CreditController extends Controller
         ->with('success','Credit Request was successfully submitted!');
     }
 
+    private function getSuffix() {
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $suffix = '';
+      if ($userDetails->type == 1) {
+        $suffix = '- Teaching Official';
+
+        if ($this->isProfessorChairperson(Auth::id())) {
+          $suffix = '- Academic Official';
+        }
+      } else if ($userDetails->type == 2 || $userDetails->type == 3) {
+        $suffix = '- Admin Official';
+      } else if ($userDetails->type == 4 || $userDetails->type == 5) {
+        $suffix = '- Office Staff';
+      }
+
+      return $suffix;
+    }
+
     private function isProfessorChairperson($id){
       $course = new Course;
       $course_details = $course->getChairperson($id);
@@ -178,6 +198,8 @@ class CreditController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'studentDetails' => $studentDetails,
@@ -210,19 +232,27 @@ class CreditController extends Controller
       $credit = new Credit;
       $creditDetails = $credit->getChairpersonSignatureBySlug($slug);
 
-      $userDetails = $user->getData('id',$creditDetails->chairperson);
-      // dd($creditDetails);
-      if ($creditDetails) {
-        return [
-          'path' => $creditDetails->path,
-          'chairperson_fname' => $userDetails->fname,
-          'chairperson_lname' => $userDetails->lname
-        ];
+      if($creditDetails) {
+        dd($creditDetails);
+        $userDetails = $user->getData('id',$creditDetails->chairperson);
+        if ($creditDetails) {
+          return [
+            'path' => $creditDetails->path,
+            'chairperson_fname' => $userDetails->fname,
+            'chairperson_lname' => $userDetails->lname
+          ];
+        } else {
+          return [
+            'path' => 'none',
+            'chairperson_fname' => $userDetails->fname,
+            'chairperson_lname' => $userDetails->lname
+          ];
+        }
       } else {
         return [
           'path' => 'none',
-          'chairperson_fname' => $userDetails->fname,
-          'chairperson_lname' => $userDetails->lname
+          'chairperson_fname' => '',
+          'chairperson_lname' => ''
         ];
       }
     }
@@ -232,20 +262,28 @@ class CreditController extends Controller
       $credit = new Credit;
       $creditDetails = $credit->getDirectorSignatureBySlug($slug);
 
-      $userDetails = $user->getData('id',$creditDetails->director);
       // dd($creditDetails);
       if ($creditDetails) {
-        return [
-          'path' => $creditDetails->path,
-          'director_fname' => $userDetails->fname,
-          'director_lname' => $userDetails->lname
-        ];
+        $userDetails = $user->getData('id',$creditDetails->director);
+        if($userDetails){
+          return [
+            'path' => $creditDetails->path,
+            'director_fname' => $userDetails->fname,
+            'director_lname' => $userDetails->lname
+          ];
+        }else{
+          return [
+            'path' => 'none',
+            'director_fname' => $userDetails->fname,
+            'director_lname' => $userDetails->lname
+          ];
+        }
       } else {
         return [
           'path' => 'none',
-          'director_fname' => $userDetails->fname,
-          'director_lname' => $userDetails->lname
-        ];
+          'director_fname' => '',
+          'director_lname' => ''
+        ];        
       }
     }
 
@@ -254,19 +292,27 @@ class CreditController extends Controller
       $files = new Files;
 
       $userDetails = $user->getData('type',4);
-      $signature = $files->getActiveFilesByParameter('user_id',$userDetails->id);
-      // dd($signature);
-      if ($signature) {
-        return [
-          'path' => $signature->path,
-          'registrar_fname' => $userDetails->fname,
-          'registrar_lname' => $userDetails->lname
-        ];
+      if($userDetails) {
+        $signature = $files->getActiveFilesByParameter('user_id',$userDetails->id);
+        // dd($signature);
+        if ($signature) {
+          return [
+            'path' => $signature->path,
+            'registrar_fname' => $userDetails->fname,
+            'registrar_lname' => $userDetails->lname
+          ];
+        } else {
+          return [
+            'path' => 'none',
+            'registrar_fname' => $userDetails->fname,
+            'registrar_lname' => $userDetails->lname
+          ];
+        }
       } else {
         return [
           'path' => 'none',
-          'registrar_fname' => $userDetails->fname,
-          'registrar_lname' => $userDetails->lname
+          'registrar_fname' => '',
+          'registrar_lname' => ''
         ];
       }
       

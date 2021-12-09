@@ -14,7 +14,7 @@
       </div>
       <div class="col-sm-12">
         <p>
-          {{ $target_prefix }} {{ $target_fname }} {{ $target_lname }} {{ $target_suffix }}
+          Good Day! {{ $target_fname }} {{ $target_lname }}
         </p>
         <p>
           <h1>Credit Course Request</h1>

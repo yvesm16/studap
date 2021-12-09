@@ -273,6 +273,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'signature' => $chairpersonSignature,
@@ -294,6 +296,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'signature' => $directorSignature
@@ -311,6 +315,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'signature' => $secretarySignature
@@ -327,6 +333,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
       ];
@@ -343,12 +351,34 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'signature' => $registrarSignature
       ];
 
       return view('registrar.index',$data);
+    }
+
+    private function getSuffix() {
+      $user = new User;
+      $userDetails = $user->getData('id',Auth::id());
+
+      $suffix = '';
+      if ($userDetails->type == 1) {
+        $suffix = '- Teaching Official';
+
+        if ($this->isProfessorChairperson(Auth::id())) {
+          $suffix = '- Academic Official';
+        }
+      } else if ($userDetails->type == 2 || $userDetails->type == 3) {
+        $suffix = '- Admin Official';
+      } else if ($userDetails->type == 4 || $userDetails->type == 5) {
+        $suffix = '- Office Staff';
+      }
+
+      return $suffix;
     }
 
     private function getCredit($pending_status,$completed_status){
@@ -359,6 +389,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname
       ];
@@ -408,6 +440,8 @@ class UserController extends Controller
 
       $data = [
         'id' => Auth::id(),
+        'prefix' => $userDetails->prefix,
+        'suffix' => $this->getSuffix(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname
       ];

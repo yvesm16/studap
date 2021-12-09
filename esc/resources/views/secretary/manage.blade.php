@@ -24,8 +24,12 @@
     
 </head>
 <body>
- 
-    @include('secretary.nav')
+    @if($user_type == '3')
+        @include('secretary.nav')
+    @else
+        @include('clerk.nav')
+    @endif
+
     <div class="container indexMargin home">
   <div id="page-wrapper">
       <div class="row">

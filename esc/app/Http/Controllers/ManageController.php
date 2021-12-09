@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Models\Course;
 use App\Models\Files;
+use Illuminate\Http\Request;
 use Auth;
 use Log;
 
@@ -17,6 +18,9 @@ class ManageController extends Controller
         $userDetails = $user->getData('id',Auth::id());
         $directorSignature = $files->getAllActiveFileByUserByParameter('type',0);
 
+        $user_type = $userDetails->type;
+        $prefix = $userDetails->prefix;
+        $suffix = $this->getSuffix();
         $fname = $userDetails->fname;
         $lname = $userDetails->lname;
 
@@ -36,7 +40,7 @@ class ManageController extends Controller
         //     $role = "Unidentified";
         // }
 
-        return view('secretary/manage', ['user' => $user2, 'role'=>$role], compact('fname','lname'));
+        return view('secretary/manage', ['user' => $user2, 'role'=>$role], compact('user_type','prefix','suffix','fname','lname'));
     }
     
     public function userChangeStatus(Request $request)
@@ -47,5 +51,32 @@ class ManageController extends Controller
         $user2->save();
   
         return response()->json(['success'=>'Status change successfully.']);
+    }
+
+    private function getSuffix() {
+        $user = new User;
+        $userDetails = $user->getData('id',Auth::id());
+  
+        $suffix = '';
+        if ($userDetails->type == 1) {
+          $suffix = '- Teaching Official';
+  
+          if ($this->isProfessorChairperson(Auth::id())) {
+            $suffix = '- Academic Official';
+          }
+        } else if ($userDetails->type == 2 || $userDetails->type == 3) {
+          $suffix = '- Admin Official';
+        } else if ($userDetails->type == 4 || $userDetails->type == 5) {
+          $suffix = '- Office Staff';
+        }
+  
+        return $suffix;
+    }
+
+    private function isProfessorChairperson($id){
+        $course = new Course;
+        $course_details = $course->getChairperson($id);
+  
+        return $course_details ? true : false;
     }
 }

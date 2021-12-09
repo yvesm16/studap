@@ -18,9 +18,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/home'); }} ">Home</a></li>
-
-        <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/manage'); }}">Manage Users</a></li>
+        <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('clerk/home'); }} ">Home</a></li>
+        <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('clerk/manage'); }}">Manage Users</a></li>
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
@@ -32,7 +31,7 @@
         </li> -->
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" style="text-decoration: none; color: white">Hi {{ $fname }} {{ $lname }}!</a></li>
+        <li><a href="#" style="text-decoration: none; color: white">{{ $prefix }} {{ $fname }} {{ $lname }} {{ $suffix }}</a></li>
         <li>
           <a href="#"
           data-toggle="popover"

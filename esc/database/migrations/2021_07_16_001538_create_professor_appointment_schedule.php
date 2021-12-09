@@ -18,7 +18,7 @@ class CreateProfessorAppointmentSchedule extends Migration
             $table->string('slug',225);
             $table->integer('professor_id')->unsigned()->comment('Professor');
             $table->foreign('professor_id')->references('id')->on('users');
-            $table->integer('department');
+            $table->integer('department')->nullable();
             $table->integer('student_id')->unsigned()->comment('Student')->nullable();
             $table->foreign('student_id')->references('id')->on('users');
             $table->string('title');
