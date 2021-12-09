@@ -25,7 +25,17 @@ class ScheduleController extends Controller
       $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
-      $allProfessor = $user->getAllDataByWhereIn('type',[1,2,3]);
+      if($userDetails->course_id == 1) {
+        $department = 0;
+      }else if($userDetails->course_id == 2) {
+        $department = 2;
+      }else if($userDetails->course_id == 3) {
+        $department = 1;
+      }else{
+        $department = 3;
+      }
+
+      $allProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$department);
 
       $data = [
         'id' => Auth::id(),

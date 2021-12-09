@@ -90,4 +90,11 @@ class User extends Authenticatable
         ->whereIn($column,$param)
         ->get();
     }
+    
+    public function getAllDataByWhereInAndByDepartment($column,$param,$department){
+      return DB::table('users')
+        ->whereIn($column,$param)
+        ->where('department',$department)
+        ->get();
+    }
 }
