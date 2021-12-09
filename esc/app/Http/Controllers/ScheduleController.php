@@ -104,7 +104,7 @@ class ScheduleController extends Controller
           if($consultation_hour == 0){
             return Response::json(array(
                 'result' => false,
-                'text' => 'Slot Not Available!'
+                'text' => 'Reserve a slot from the given Consultation Hours!'
             ));
           }else{
             $overlap_schedule = $schedule->checkSlotOverlap($start,'professor_id',intval($request->input('professor_id')));
