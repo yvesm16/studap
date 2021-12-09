@@ -15,10 +15,10 @@
       </div>
       <div class="col-sm-12">
         <p>
-          Hello,
+          Good Day!
         </p>
         <p>
-          <h1>Dean request for  Student Appeal Meeting</h1>
+          <h1>Dean request for Student Appeal Meeting</h1>
         </p>
         <p>
           <ul>

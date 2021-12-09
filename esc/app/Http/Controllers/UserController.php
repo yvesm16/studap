@@ -37,13 +37,23 @@ class UserController extends Controller
       if(preg_match_all('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/', $request->input('pwd'))) {
 
         if($request->input('pwd') == $request->input('rpwd')){
+          $type = 1;
+          $email_array = str_split($request->input('email'));
+          $email_array_count = count(str_split($request->input('email')));
+          
+          for($ctr = 0;$email_array[$ctr] != '@';$ctr++) {
+            if ($email_array[$ctr] == '.') {
+              $type = 0;
+            }
+          }          
+
           $data = [
             'fname' => $request->input('fname'),
             'lname' => $request->input('lname'),
             'email' => $request->input('email'),
             'slug' => $slug,
             'password' => Hash::make($request->input('pwd')),
-            'type' => $request->input('type'),
+            'type' => $type,
             'verified' => 0,
             'status' => 0
           ];
@@ -314,13 +324,11 @@ class UserController extends Controller
       $files = new Files;
 
       $userDetails = $user->getData('id',Auth::id());
-      // $secretarySignature = $files->getAllActiveFileByUserByParameter('type',0);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
-        // 'signature' => $secretarySignature
       ];
 
       return view('clerk.index',$data);

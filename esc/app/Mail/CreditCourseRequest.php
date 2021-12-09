@@ -44,6 +44,7 @@ class CreditCourseRequest extends Mailable
         ->with([
           'concerns' => $creditDetails->concerns,
           'contact_number' => $creditDetails->contact_number,
+          'chairperson_prefix' => $user->getData('id',$chairperson_id->chairperson)->prefix,
           'chairperson_fname' => $user->getData('id',$chairperson_id->chairperson)->fname,
           'chairperson_lname' => $user->getData('id',$chairperson_id->chairperson)->lname,
           'student_fname' => $user->getData('id',$creditDetails->student_id)->fname,

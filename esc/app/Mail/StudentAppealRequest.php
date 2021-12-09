@@ -45,6 +45,7 @@ class StudentAppealRequest extends Mailable
           'section' => $appointmentDetails->section,
           'created_at' => $appointmentDetails->created_at,
           'concerns' => $appointmentDetails->concerns,
+          'director_prefix' => $user->getData('id',$director_id->director)->prefix,
           'director_fname' => $user->getData('id',$director_id->director)->fname,
           'director_lname' => $user->getData('id',$director_id->director)->lname,
           'student_fname' => $user->getData('id',$appointmentDetails->student_id)->fname,

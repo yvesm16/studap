@@ -15,7 +15,7 @@
       </div>
       <div class="col-sm-12">
         <p>
-          Hello {{ $director_fname }} {{ $director_lname }},
+          {{ $director_prefix }} {{ $director_fname }} {{ $director_lname }} - Admin Official
         </p>
         <p>
           <h1>Student Appeal Request</h1>

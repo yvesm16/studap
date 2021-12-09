@@ -15,7 +15,7 @@
       </div>
       <div class="col-sm-12">
         <p>
-          Hello {{ $chairperson_fname }} {{ $chairperson_lname }},
+          {{ $chairperson_prefix }} {{ $chairperson_fname }} {{ $chairperson_lname }} - Academic Official
         </p>
         <p>
           <h1>Credit Course Request</h1>

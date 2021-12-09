@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             'id' => 1,
             'slug' => md5(1),
             'text' => 'Bachelor of Science in Information Technology',
-            'chairperson' => 2,
-            'director' => 3,
-            'secretary' => 4,
+            'chairperson' => 0,
+            'director' => 0,
+            'secretary' => 0,
             'status' => 1
         ]);
 
@@ -31,9 +31,9 @@ class DatabaseSeeder extends Seeder
             'id' => 2,
             'slug' => md5(2),
             'text' => 'Bachelor of Science in Computer Science',
-            'chairperson' => 6,
-            'director' => 3,
-            'secretary' => 4,
+            'chairperson' => 0,
+            'director' => 0,
+            'secretary' => 0,
             'status' => 1
         ]);
 
@@ -41,9 +41,9 @@ class DatabaseSeeder extends Seeder
             'id' => 3,
             'slug' => md5(3),
             'text' => 'Bachelor of Science in Information System',
-            'chairperson' => 7,
-            'director' => 3,
-            'secretary' => 4,
+            'chairperson' => 0,
+            'director' => 0,
+            'secretary' => 0,
             'status' => 1
         ]);
 

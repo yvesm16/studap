@@ -39,10 +39,21 @@ class UpdateCreditCourse extends Mailable
       
       $creditDetails = $credit->getDataByID(Session::get('credit_course_id'));
 
+      $suffix = '';
+      if($user->getData('id',Session::get('next_target_id'))->type == 1) {
+        $suffix = '- Academic Official';
+      } else if($user->getData('id',Session::get('next_target_id'))->type == 2) {
+        $suffix = '- Admin Official';
+      } else if($user->getData('id',Session::get('next_target_id'))->type == 4) {
+        $suffix = '- Office Staff';
+      }
+
       return $this->view('emails.updateCreditCourse')
         ->with([
           'concerns' => $creditDetails->concerns,
           'contact_number' => $creditDetails->contact_number,
+          'target_prefix' => $user->getData('id',Session::get('next_target_id'))->prefix,
+          'target_suffix' => $suffix,
           'target_fname' => $user->getData('id',Session::get('next_target_id'))->fname,
           'target_lname' => $user->getData('id',Session::get('next_target_id'))->lname,
           'student_fname' => $user->getData('id',$creditDetails->student_id)->fname,

@@ -56,10 +56,10 @@
               <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="{{ old('email') }}" required>
             </div>
             <div class="form-group">
-              <label class="radio-inline">
+            {{-- <label class="radio-inline">
                 <input type="radio" name="type" checked value="0">Student
               </label>
-              {{-- <label class="radio-inline">
+              <label class="radio-inline">
                 <input type="radio" name="type" value="1">Faculty
               </label> --}}
             </div>
