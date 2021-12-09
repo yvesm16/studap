@@ -586,5 +586,18 @@ class DatabaseSeeder extends Seeder
             'department' => 0,
             'status' => 1
         ]);
+        DB::table('users')->insert([
+            'id' => 37,
+            'slug' => md5(37),
+            'prefix'=> 'Asst. Prof.',
+            'fname' => 'Bernard',
+            'lname' => 'Sanidad',
+            'email' => 'bgsanidad@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 1,
+            'verified' => 1,
+            'department' => 0,
+            'status' => 1
+        ]);
     }
 }

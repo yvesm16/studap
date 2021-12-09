@@ -105,7 +105,7 @@
               </div>
             </form>
           </div>
-          <div id="menu1" class="tab-pane fade" style="padding-top: 1%">
+          {{-- <div id="menu1" class="tab-pane fade" style="padding-top: 1%">
             <form action="{{ URL::to('professor/uploadSignature') }}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
@@ -120,13 +120,13 @@
                 No current signature
               </span>
             </p>
-          </div>
+          </div> --}}
         </div>
 
       </div>
-      <div class="modal-footer">
+      {{-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+      </div> --}}
     </div>
 
   </div>
@@ -140,7 +140,7 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
+{{-- <script>
   $(document).ready(function(){
 
     var BASE_URL = $("#hdnBaseUrl").val();
@@ -166,31 +166,31 @@ $(document).ready(function(){
             }
           }
       });
-    });
+    }); --}}
 
-    $('.crediting').on('click',function(){
-      $.ajax({
-          url: BASE_URL + '/professor/getSignature',
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          type: 'POST',
-          data: {},
-          dataType    :'json',
-          success: function (data) {
-            if(data.result == true){
-              window.location.href = BASE_URL + '/professor/crediting/0';
-            }else{
-              $('#signatureModal').modal('show');
-              return false;
-            }
-          }
-      });
-    });
+    {{-- // $('.crediting').on('click',function(){
+    //   $.ajax({
+    //       url: BASE_URL + '/professor/getSignature',
+    //       headers: {
+    //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //       },
+    //       type: 'POST',
+    //       data: {},
+    //       dataType    :'json',
+    //       success: function (data) {
+    //         if(data.result == true){
+    //           window.location.href = BASE_URL + '/professor/crediting/0';
+    //         }else{
+    //           $('#signatureModal').modal('show');
+    //           return false;
+    //         }
+    //       }
+    //   });
+    // });
 
   });
-</script>
-
+</script> --}}
+{{-- 
 <div id="successModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -261,4 +261,4 @@ $(document).ready(function(){
     </div>
 
   </div>
-</div>
+</div> --}}
