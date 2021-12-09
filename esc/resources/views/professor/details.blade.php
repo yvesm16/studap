@@ -206,7 +206,7 @@
     </div>
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
       @if($creditDetails->status == 3 || $creditDetails->status == 5)
-        <button type="button" class="btn btn-default downloadDetails">Download</button>
+        <button type="button" class="btn btn-warning downloadDetails">Download Sheet</button>
       @endif
       <button type="button" class="btn btn-success viewDocument">View Document</button>
       <button type="button" class="btn btn-primary completeForm" disabled>Submit to Dean</button>
