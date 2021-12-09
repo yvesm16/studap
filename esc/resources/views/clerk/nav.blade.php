@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/home'); }} ">Home</a></li>
-}
+
         <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('secretary/manage'); }}">Manage Users</a></li>
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
