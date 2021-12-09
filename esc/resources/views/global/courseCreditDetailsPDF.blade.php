@@ -94,20 +94,57 @@
             <button class="btn btn-danger rejectSubject" data-id="{{ $subject->id }}">
               Decline
             </button>
-          @elseif($subject->status == 1)
-            <span class="label label-success">Approved</span>
-          @else
+          @elseif($subject->status == 5)
             <span class="label label-danger">Rejected</span><br>
             {{ $subject->remarks }}
+          @else
+            <span class="label label-success">Approved</span>
           @endif
         </td>
         <td>
-          <img src="{{ public_path(str_replace('public','storage',$subject->path)) }}" width="10%"><br>
-          <!-- {{ URL::to('/') }}/{{ str_replace('public','storage',$subject->path) }}<br> -->
-          {{ $subject->fname }} {{ $subject->lname }}
+          @if($subject->status != 0 && $subject->status != 5)
+            <img src="{{ public_path(str_replace('public','storage',$chairperson_signature_path)) }}" width="10%"><br>
+            {{ $chairperson_fname }} {{ $chairperson_lname }}
+          @endif
         </td>
       </tr>
     @endforeach
+  </table>
+  
+  <br>
+  <table>    
+    <tr>
+      <td>Endorsed by:</td>
+      <td width="100">&nbsp;</td>
+      <td>Noted by:</td>
+    </tr>
+    <tr>
+      <td>
+        @if($creditDetails->status >= 3 && $creditDetails->status != 5)
+          <img src="{{ public_path(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
+          <br>
+          {{ $director_fname }} {{ $director_lname }}
+        @endif
+      </td>
+      <td width="100">&nbsp;</td>
+      <td>
+        @if($creditDetails->status >= 3 && $creditDetails->status != 5)
+          <img src="{{ public_path(str_replace('public','storage',$registrar_signature_path)) }}" width="25%"/>
+          <br>
+          {{ $registrar_fname }} {{ $registrar_lname }}
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td width="200"><hr></td>
+      <td>&nbsp;</td>
+      <td width="200"><hr></td>
+    </tr>
+    <tr>
+      <td>Dean</td>
+      <td width="100">&nbsp;</td>
+      <td>Registrar</td>
+    </tr>
   </table>
 </body>
 </html>
