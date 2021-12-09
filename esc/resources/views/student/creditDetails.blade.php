@@ -43,7 +43,7 @@
       <h4>
         APPROVAL SHEET FOR COURSES TO BE CREDITED
       </h4>
-      <i>(to be accomplish by the transferees/shifters)</i>
+      <i>(to be accomplished by the transferees/shifters)</i>
     </div>
   </div>
   
