@@ -485,8 +485,7 @@ class CreditController extends Controller
       $files = new Files;
       $course = new Course;
       $subject = new SubjectCrediting;
-      $userDetails = $user->getData('id',Auth::id());
-      $directorSignature = $files->getActiveFileByUserByParameter('type',0);
+
       $creditDetails = $credit->getDataByParameter('slug',$slug);
       $studentDetails = $user->getData('id',$creditDetails->student_id);
       $a = $_SERVER['REQUEST_URI'];
@@ -498,9 +497,6 @@ class CreditController extends Controller
 
       $data = [
         'id' => Auth::id(),
-        'fname' => $userDetails->fname,
-        'lname' => $userDetails->lname,
-        'signature' => $directorSignature,
         'studentDetails' => $studentDetails,
         'newCourse' => $course->getCourseByID($creditDetails->new_course_id),
         'currentCourse' => $course->getCourseByID($studentDetails->course_id),
@@ -508,9 +504,24 @@ class CreditController extends Controller
         'allSubjects' => $allSubjects
       ];
 
-      // dd($allSubjects);
+      $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
+      $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
+      $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
 
-      $pdf = PDF::loadView('director.pdf', $data);
+      $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
+      $data['director_signature_path'] = $director_data['path'];
+      $data['director_fname'] = $director_data['director_fname'];
+      $data['director_lname'] = $director_data['director_lname'];
+
+      $registrar_data = $this->getRegistrarDataForCreditDetailsPage();
+      $data['registrar_signature_path'] = $registrar_data['path'];
+      $data['registrar_fname'] = $registrar_data['registrar_fname'];
+      $data['registrar_lname'] = $registrar_data['registrar_lname'];
+
+      // dd($data);
+
+      $pdf = PDF::loadView('global.courseCreditDetailsPDF', $data);
       // return $pdf->stream();
       return $pdf->download($creditDetails->slug . '.pdf');
     }

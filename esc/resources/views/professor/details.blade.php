@@ -205,7 +205,9 @@
       </table>
     </div>
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
-      <!-- <a href="{{ url(str_replace('public','storage',$attached_file_path)) }}"></a> -->
+      @if($creditDetails->status == 3 || $creditDetails->status == 5)
+        <button type="button" class="btn btn-default downloadDetails">Download</button>
+      @endif
       <button type="button" class="btn btn-success viewDocument">View Document</button>
       <button type="button" class="btn btn-primary completeForm" disabled>Submit to Dean</button>
     </div>
@@ -232,8 +234,6 @@
           },
           dataType    :'json',
           success: function (data) {
-            // $('.completeForm').prop('disabled',true);
-            // $('.completeForm').prop('disabled',false);
             $('.completeForm').prop('disabled',data.result);
           }
       });
@@ -313,6 +313,10 @@
             }
         });
       }
+    });
+
+    $('.downloadDetails').click(function(){
+      window.location.href = BASE_URL + '/crediting/details/pdf/' + $('#slug').val();
     });
   });
 </script>

@@ -251,6 +251,9 @@
   </div>
   <div class="row" style="margin-top: 2%;margin-bottom: 2%">
     <div class="col-md-12" style="text-align: right; margin-bottom: 1%">
+      @if($creditDetails->status == 3 || $creditDetails->status == 5)
+        <button type="button" class="btn btn-default downloadDetails">Download</button>
+      @endif
       <button type="button" class="btn btn-success viewDocument">View Document</button>
       <button type="button" class="btn btn-primary completeForm" disabled>Complete Form</button>
     </div>
@@ -277,9 +280,7 @@
           },
           dataType    :'json',
           success: function (data) {
-            // $('.completeForm').prop('disabled',true);
-            // $('.completeForm').prop('disabled',false);
-            $('.completeForm').prop('disabled',data.result);
+            $('.completeForm').prop('disabled',data.result);                        
           }
       });
     });
@@ -359,6 +360,10 @@
             }
         });
       }
+    });
+
+    $('.downloadDetails').click(function(){
+      window.location.href = BASE_URL + '/crediting/details/pdf/' + $('#slug').val();
     });
 
   });
