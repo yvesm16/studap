@@ -23,7 +23,7 @@
         <li <?php echo (str_contains($actual_link,'requests')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/requests/0'); }} ">Requests</a></li>
         
         @if ($isProfessorChairperson)
-          <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
+          <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/crediting/0'); }}" class="crediting">Crediting</a></li>
           <li <?php echo (str_contains($actual_link,'dashboard/cs')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/cs'); }}" class="">CS Dashboard</a></li>
           <li <?php echo (str_contains($actual_link,'dashboard/it')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/it'); }}" class="">IT Dashboard</a></li>
           <li <?php echo (str_contains($actual_link,'dashboard/is')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/is'); }}" class="">IS Dashboard</a></li>
