@@ -99,90 +99,98 @@ class ScheduleController extends Controller
           $start = $request->input('appointment_date') . ' ' . $appointment_start;
           $end = $request->input('appointment_date') . ' ' . $appointment_end;
 
-          $slotExist = $schedule->checkSlotOverlap($start,'professor_id',intval($request->input('professor_id')));
+          $consultation_hour = $schedule->isDateInConsultationHour($start,'professor_id',intval($request->input('professor_id')));
 
-          if($slotExist == 0){
+          if($consultation_hour == 0){
             return Response::json(array(
                 'result' => false,
                 'text' => 'Slot Not Available!'
             ));
           }else{
-            if($schedule->getLastID() == null){
-              $lastID = $schedule->getLastID() + 1;
-            }else{
-              $lastID = 1;
-            }
-
-            $concernList = '';
-            $concernText = '';
-
-            $i = 0;
-            $len = count($request->input('concerns'));
-
-            if($len > 0){
-              foreach($request->input('concerns') as $concern_id){
-                if($i == $len - 1){
-                  $concernList = $concernList . $concern_id;
-                }else{
-                  $concernList = $concernList . $concern_id . ';';
-                }
-                $concernDetails = $concerns->getDataByID($concern_id);
-                if($concernDetails->text == 'Others'){
-                  if($request->input('othersText') == ''){
-                    return Response::json(array(
-                      'result' => false,
-                      'text' => 'All fields are required!'
-                    ));
+            $overlap_schedule = $schedule->checkSlotOverlap($start,'professor_id',intval($request->input('professor_id')));
+            if($overlap_schedule == 0){
+              if($schedule->getLastID() == null){
+                $lastID = $schedule->getLastID() + 1;
+              }else{
+                $lastID = 1;
+              }
+  
+              $concernList = '';
+              $concernText = '';
+  
+              // $i = 0;
+              // $len = count($request->input('concerns'));
+  
+              // if($len > 0){
+                // foreach($request->input('concerns') as $concern_id){
+                  // if($i == $len - 1){
+                  //   $concernList = $concernList . $concern_id;
+                  // }else{
+                  //   $concernList = $concernList . $concern_id . ';';
+                  // }
+                  $concernDetails = $concerns->getDataByID($request->input('concerns'));
+                  if($concernDetails->text == 'Others'){
+                    if($request->input('othersText') == ''){
+                      return Response::json(array(
+                        'result' => false,
+                        'text' => 'All fields are required!'
+                      ));
+                    }
+                    $concernText = $request->input('othersText');
                   }
-                  $concernText = $request->input('othersText');
+                  // $i++;
+                // }
+                $department = $user->select('department')->where('id', $request->input('professor_id'))->value('department');
+              // dd($department);
+                $data = [
+                  'slug' => md5($lastID),
+                  'professor_id' => intval($request->input('professor_id')),
+                  'department' => intval($department),
+                  'student_id' => Auth::id(),
+                  'title' => 'Appointment',
+                  'start_time' => $start,
+                  'end_time' => $end,
+                  'concerns' => $concernList,
+                  'concerns_others' => $concernText,
+                  'status' => 0
+                ];
+  
+                $schedule->insertData($data);
+  
+                $data = [
+                  'slug' => md5($schedule->getLastID()),
+                  'table_name' => 'professor_schedule',
+                  'row_id' => $schedule->getLastID(),
+                  'targetReceiver' => intval($request->input('professor_id')),
+                  'triggeredBy' => Auth::id(),
+                  'status' => 0
+                ];
+  
+                $audit->insertData($data);
+  
+                $userDetails = $user->getData('id',$request->input('professor_id'));
+                try {
+                  Session::put('schedule_id', $schedule->getLastID());
+                  \Mail::to($userDetails->email)->send(new \App\Mail\ScheduleConsultation());
+                } catch(Exception $e) {
+                  return Response::json(array(
+                      'success' => true
+                  ));
                 }
-                $i++;
-              }
-              $department = $user->select('department')->where('id', $request->input('professor_id'))->value('department');
-            // dd($department);
-              $data = [
-                'slug' => md5($lastID),
-                'professor_id' => intval($request->input('professor_id')),
-                'department' => intval($department),
-                'student_id' => Auth::id(),
-                'title' => 'Appointment',
-                'start_time' => $start,
-                'end_time' => $end,
-                'concerns' => $concernList,
-                'concerns_others' => $concernText,
-                'status' => 0
-              ];
-
-              $schedule->insertData($data);
-
-              $data = [
-                'slug' => md5($schedule->getLastID()),
-                'table_name' => 'professor_schedule',
-                'row_id' => $schedule->getLastID(),
-                'targetReceiver' => intval($request->input('professor_id')),
-                'triggeredBy' => Auth::id(),
-                'status' => 0
-              ];
-
-              $audit->insertData($data);
-
-              $userDetails = $user->getData('id',$request->input('professor_id'));
-              try {
-                Session::put('schedule_id', $schedule->getLastID());
-                \Mail::to($userDetails->email)->send(new \App\Mail\ScheduleConsultation());
-              } catch(Exception $e) {
+  
                 return Response::json(array(
-                    'success' => true
+                    'result' => true
                 ));
-              }
-
+              // }else{
+              //   return Response::json(array(
+              //       'result' => false,
+              //       'text' => 'Check at least 1 concern.'
+              //   ));
+              // }
+            } else {
               return Response::json(array(
-                  'result' => true
-              ));
-            }else{
-              return Response::json(array(
-                  'result' => false,
-                  'text' => 'Check at least 1 concern.'
+                'result' => false,
+                'text' => 'Slot Not Available!'
               ));
             }
           }

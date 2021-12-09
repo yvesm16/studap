@@ -79,6 +79,17 @@ class Schedule extends Model
         ->where('start_time','<=',$date)
         ->where('end_time','>',$date)
         ->whereIn('status', [0, 1, 3])
+        ->whereNotNull('student_id')
+        ->count();
+    }
+
+    public function isDateInConsultationHour($date,$column,$id){
+      return DB::table('professor_schedule')
+        ->where($column,$id)
+        ->where('start_time','<=',$date)
+        ->where('end_time','>',$date)
+        ->whereIn('status', [0, 1, 3])
+        ->whereNull('student_id')
         ->count();
     }
 
