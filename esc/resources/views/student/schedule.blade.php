@@ -118,12 +118,12 @@
             <label>Concerns</label>
             @foreach($allActiveConcerns as $concerns)
               @if($concerns->text != 'Others')
-                <div class="checkbox">
-                  <label><input type="checkbox" class="concerns" value="{{ $concerns->id }}" name="concerns">{{ $concerns->text }}</label>
+                <div class="radio">
+                  <label><input type="radio" class="concerns" value="{{ $concerns->id }}" name="concerns">{{ $concerns->text }}</label>
                 </div>
               @else
-                <div class="checkbox">
-                  <label><input type="checkbox" class="concerns" value="{{ $concerns->id }}" id="others" name="concerns">{{ $concerns->text }}</label>
+                <div class="radio">
+                  <label><input type="radio" class="concerns" value="{{ $concerns->id }}" id="others" name="concerns">{{ $concerns->text }}</label>
                 </div>
               @endif
             @endforeach

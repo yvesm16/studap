@@ -16,7 +16,7 @@ $(document).ready(function() {
     'format': 'LT'
   });
 
-  $("#others").change(function() {
+  $(".concerns").change(function() {
     if($("#others").is(':checked') == true) {
         $('.othersInput').css('display','block');
         $('#othersText').val('');
@@ -26,13 +26,6 @@ $(document).ready(function() {
   });
 
   $('#submitConsultationForm').on('click', function (){
-
-      var concerns = [];
-
-      $("input:checkbox[name=concerns]:checked").each(function(){
-        concerns.push($(this).val());
-      });
-
       $.ajax({
           url: BASE_URL + '/student/postConsultation',
           headers: {
@@ -44,7 +37,7 @@ $(document).ready(function() {
               appointment_date : $('#appointment_date').val(),
               appointment_start : $('#appointment_start').val(),
               appointment_end : $('#appointment_end').val(),
-              concerns : concerns,
+              concerns : $('input:radio[name=concerns]:checked').val(),
               othersText : $('#othersText').val()
           },
           dataType    :'json',
