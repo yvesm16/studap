@@ -79,7 +79,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Terms And Condition</h4>
+                    {{-- <h4 class="modal-title">Terms And Condition</h4> --}}
                   </div>
                   <p style='margin-left:5%; margin-right:5%; text-align:justify'>
                    <b>Welcome to CICS e - Services!</b><br><br>

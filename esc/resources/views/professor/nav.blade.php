@@ -25,9 +25,7 @@
         @if ($isProfessorChairperson)
           <li <?php echo (str_contains($actual_link,'crediting')) ? 'class="active"' : ''; ?>><a href="#" class="crediting">Crediting</a></li>
           <li <?php echo (str_contains($actual_link,'dashboard/cs')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/cs'); }}" class="">CS Dashboard</a></li>
-          
           <li <?php echo (str_contains($actual_link,'dashboard/it')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/it'); }}" class="">IT Dashboard</a></li>
-          
           <li <?php echo (str_contains($actual_link,'dashboard/is')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('professor/dashboard/is'); }}" class="">IS Dashboard</a></li>
           
         @endif
@@ -140,7 +138,7 @@ $(document).ready(function(){
 });
 </script>
 
-{{-- <script>
+<script>
   $(document).ready(function(){
 
     var BASE_URL = $("#hdnBaseUrl").val();
@@ -168,29 +166,29 @@ $(document).ready(function(){
       });
     }); --}}
 
-    {{-- // $('.crediting').on('click',function(){
-    //   $.ajax({
-    //       url: BASE_URL + '/professor/getSignature',
-    //       headers: {
-    //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //       },
-    //       type: 'POST',
-    //       data: {},
-    //       dataType    :'json',
-    //       success: function (data) {
-    //         if(data.result == true){
-    //           window.location.href = BASE_URL + '/professor/crediting/0';
-    //         }else{
-    //           $('#signatureModal').modal('show');
-    //           return false;
-    //         }
-    //       }
-    //   });
-    // });
+    $('.crediting').on('click',function(){
+      $.ajax({
+          url: BASE_URL + '/professor/getSignature',
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'POST',
+          data: {},
+          dataType    :'json',
+          success: function (data) {
+            if(data.result == true){
+              window.location.href = BASE_URL + '/professor/crediting/0';
+            }else{
+              $('#signatureModal').modal('show');
+              return false;
+            }
+          }
+      });
+    });
 
   });
-</script> --}}
-{{-- 
+</script> 
+
 <div id="successModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -261,4 +259,4 @@ $(document).ready(function(){
     </div>
 
   </div>
-</div> --}}
+</div>
