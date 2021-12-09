@@ -6,7 +6,7 @@
 <body>
   <center>
     <h4>
-      UNIVERSITY OF SANTO THOMAS
+      UNIVERSITY OF SANTO TOMAS
     </h4>
     <label>
       España Boulevard, Sampaloc, Manila<br>
@@ -20,31 +20,23 @@
     <i>(to be accomplish by the transferees/shifters)</i>
   </center>
   <br>
+  
   <table>
     <tr>
-      <td><b>Student Number:</b></td>
-      <td width="50">&nbsp;</td>
-      <td>{{ $studentDetails->student_id }}</td>
+      <td><b>Student Number:</b>{{ $studentDetails->student_id }}</td>
+      
+      
     </tr>
     <tr>
-      <td><b>Student Name:</b></td>
+      <td><b>Student Name:</b>{{ $studentDetails->fname }} {{ $studentDetails->lname }}</td>
       <td width="50">&nbsp;</td>
-      <td>{{ $studentDetails->fname }} {{ $studentDetails->lname }}</td>
+      <td><b>New Program to Enroll:</b>{{ $newCourse->text }}</td>
     </tr>
+  
     <tr>
-      <td><b>New Program to Enroll:</b></td>
+      <td><b>Institute/College coming from:</b>{{ $creditDetails->institute }}</td>
       <td width="50">&nbsp;</td>
-      <td>{{ $newCourse->text }}</td>
-    </tr>
-    <tr>
-      <td><b>Institute/College coming from:</b></td>
-      <td width="50">&nbsp;</td>
-      <td>{{ $creditDetails->institute }}</td>
-    </tr>
-    <tr>
-      <td><b>Original Program Enrolled:</b></td>
-      <td width="50">&nbsp;</td>
-      <td>{{ $currentCourse->text }}</td>
+      <td><b>Original Program Enrolled:</b>{{ $currentCourse->text }}</td>
     </tr>
   </table>
   <br>

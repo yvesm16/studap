@@ -234,7 +234,7 @@ class CreditController extends Controller
       $creditDetails = $credit->getChairpersonSignatureBySlug($slug);
 
       if($creditDetails) {
-        dd($creditDetails);
+        // dd($creditDetails);
         $userDetails = $user->getData('id',$creditDetails->chairperson);
         if ($creditDetails) {
           return [
