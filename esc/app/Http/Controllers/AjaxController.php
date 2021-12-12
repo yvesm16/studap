@@ -286,9 +286,9 @@ class AjaxController extends Controller
                   break;
 
               case "studentCreditList":
-                  $dtResult = Helpers::setDatatable($credit->getStudentDataTable(Auth::id()),array('concerns','institute','credit_course.created_at','credit_course.status'));
+                  $dtResult = Helpers::setDatatable($credit->getStudentDataTable(Auth::id()),array('concerns','course_title','equivalent_course_title','institute','credit_course.created_at','credit_course.status'));
 
-                  foreach($dtResult['objResult'] as $aRow) {
+                  foreach($dtResult['objResult'] as $aRow) { 
 
                       $button = "<button class='btn btn-default viewDetails' data-id='$aRow->id'>View Details</button>";
 
@@ -304,6 +304,8 @@ class AjaxController extends Controller
                           $aRow->id,
                           $aRow->concerns,
                           $aRow->institute,
+                          $aRow->course_title,
+                          $aRow->equivalent_course_title,
                           $aRow->created_at,
                           $status,
                           $button

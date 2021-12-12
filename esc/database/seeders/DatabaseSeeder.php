@@ -599,5 +599,18 @@ class DatabaseSeeder extends Seeder
             'department' => 0,
             'status' => 1
         ]);
+        DB::table('users')->insert([
+            'id' => 38,
+            'slug' => md5(38),
+            'prefix'=> 'Mr.',
+            'fname' => 'CICS',
+            'lname' => 'Registrar',
+            'email' => 'registrar@ust.edu.ph',
+            'password' => Hash::make('123'),
+            'type' => 4,
+            'verified' => 1,
+            'department' => 0,
+            'status' => 1
+        ]);
     }
 }

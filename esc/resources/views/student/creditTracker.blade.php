@@ -66,9 +66,9 @@
                         <thead>
                         <tr>
                             <th>Trans. No.</th>
-                            <th>Concerns</th>
-                            <th>Institue</th>
-                            <th>Date Created</th>
+                            <th>Institute/ College coming from</th>
+                            <th>Course Title</th>
+                            <th>Equivalent Course Title</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>

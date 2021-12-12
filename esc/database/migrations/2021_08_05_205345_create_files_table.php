@@ -22,6 +22,8 @@ class CreateFilesTable extends Migration
           $table->foreign('new_course_id')->references('id')->on('course');
           $table->string('section',225);
           $table->string('concerns',225);
+          $table->string('course_title',225);
+          $table->string('equivalent_course_title',225); 
           $table->string('contact_number',225)->nullable();
           $table->string('email',225);
           $table->string('institute',225);

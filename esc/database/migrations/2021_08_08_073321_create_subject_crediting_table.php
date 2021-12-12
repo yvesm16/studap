@@ -20,8 +20,8 @@ class CreateSubjectCreditingTable extends Migration
           $table->foreign('credit_course_id')->references('id')->on('credit_course');
           $table->string('course_abbr',225);
           $table->string('course_title',225);
-          $table->string('equivalent_course_abbr',225);
-          $table->string('equivalent_course_title',225);
+          $table->string('equivalent_course_abbr',225)->nullable();
+          $table->string('equivalent_course_title',225)->nullable();
           $table->integer('admin_id')->unsigned()->comment('Admin')->nullable();
           $table->foreign('admin_id')->references('id')->on('users');
           $table->string('remarks',225)->nullable();
