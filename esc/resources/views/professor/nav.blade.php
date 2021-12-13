@@ -77,7 +77,9 @@
       <div class="modal-body">
         <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#home">Change Password</a></li>
-          <li><a data-toggle="tab" href="#menu1">Signature</a></li>
+          @if ($isProfessorChairperson)
+            <li><a data-toggle="tab" href="#menu1">Signature</a></li>
+          @endif
         </ul>
 
         <div class="tab-content">
@@ -238,6 +240,7 @@ $(document).ready(function(){
   </div>
 </div>
 
+@if ($isProfessorChairperson)
 <div id="signatureModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -263,3 +266,4 @@ $(document).ready(function(){
 
   </div>
 </div>
+@endif
