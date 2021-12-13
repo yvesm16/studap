@@ -18,6 +18,27 @@ $(document).ready(function() {
     'format': 'YYYY-MM-DD',
     'minDate': today
   });
+  
+  $('#datetimepicker1-2').datetimepicker({
+    'format': 'YYYY-MM-DD',
+    'minDate': today,
+    'maxDate': moment().add(6, 'day')
+  });
+  $('#datetimepicker2-2').datetimepicker({
+    'format': 'LT'
+  });
+  $('#datetimepicker3-2').datetimepicker({
+    'format': 'LT'
+  });
+  
+  $(".concerns").change(function() {
+    if($("#others").is(':checked') == true) {
+        $('.othersInput').css('display','block');
+        $('#othersText').val('');
+    }else{
+      $('.othersInput').css('display','none');
+    }
+  });
 
   $('input[type=radio][name=optradio]').change(function() {
     if (this.value == '1') {
@@ -157,6 +178,41 @@ $(document).ready(function() {
           }
       });
   });
+
+  $('#submitConsultationForm').on('click', function (){
+    $.ajax({
+        url: BASE_URL + '/professor/postProfessorConsultation',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        data: {
+            student_name : $('#student_name').val(),
+            student_email : $('#student_email').val(),
+            appointment_date : $('#appointment_date').val(),
+            appointment_start : $('#appointment_start').val(),
+            appointment_end : $('#appointment_end').val(),
+            meeting_link : $('#meeting_link').val(),
+            concerns : $('input:radio[name=concerns]:checked').val(),
+            othersText : $('#othersText').val()
+        },
+        dataType    :'json',
+        success: function (data) {
+          if(data.result == true){
+            $('#successModalNotification').css('display','block');
+            $('#failedModalNotification').css('display','none');
+          }else{
+            $('#successModalNotification').css('display','none');
+            $('#failedModalNotification').css('display','block');
+            document.getElementById("failedText").textContent = data.text;
+          }
+        }
+    });
+});
+
+$('.setAppointment').click(function(){
+  $('#successModalNotification').css('display','none');
+});
 
 });
 

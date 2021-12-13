@@ -35,6 +35,23 @@
 <div class="container indexMargin">
   <input class="form-control" type="hidden" name="slot_id" id="slot_id" />
   <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-5">
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group" style="text-align: right">
+            <button class="btn btn-primary setAppointment" data-toggle="modal" data-target="#consultationDialog" onclick="startIt()">Set Appointment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-2">
       <label>Slot Name</label>
       <input class="form-control" type="text" name="slot_name" id="slot_name" />
@@ -104,9 +121,9 @@
     </div>
   </div>
   <div class="row" style="overflow: scroll; margin-top: 1%">
-    <ul class="nav nav-tabs">
+    <!-- <ul class="nav nav-tabs">
       <li class="active"><a href="{{ URL::to('professor/schedule'); }}">Calendar</a></li>
-    </ul>
+    </ul> -->
     <div class="tab-content" style="margin-top: 2%">
       <div id="home" class="tab-pane fade in active">
         <input type="hidden" name="professor_id" id="professor_id" value="{{ $id }}">
@@ -148,9 +165,204 @@
 </body>
 </html>
 
+<div class="modal fade" id="consultationDialog" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Consultation Form</h4>
+      </div>
+      <div class="modal-body">
+        <!-- <form action="#"> -->
+          <input type="hidden" id="hdnBaseUrl" value="{{ URL::to('/') }}">
+          <meta name="csrf-token" content="{{ csrf_token() }}">
+  
+          <div class="form-group">
+            <label>Name of the Student</label>
+            <input type='text' class="form-control" id="student_name" name="student_name"/>
+          </div>
+          <div class="form-group">
+            <label>Email of the Student</label>
+            <input type='email' class="form-control" id="student_email" name="student_email"/>
+          </div>
+          <div class="form-group">
+            <label>Appointment Date</label>
+            <div class='input-group date' id='datetimepicker1-2'>
+               <input type='text' class="form-control" id="appointment_date" name="appointment_date"/>
+               <span class="input-group-addon">
+               <span class="glyphicon glyphicon-calendar"></span>
+               </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Appointment Start</label>
+            <div class='input-group date' id='datetimepicker2-2' onclick="validateAppointmentTime('start')">
+               <input type='text' class="form-control" id="appointment_start" name="appointment_start"  />
+               <span class="input-group-addon">
+               <span class="glyphicon glyphicon-time"></span>
+               </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Appointment End</label>
+            <div class='input-group date' id='datetimepicker3-2' onclick="validateAppointmentTime('end')">
+               <input type='text' class="form-control" id="appointment_end" name="appointment_end"/>
+               <span class="input-group-addon">
+               <span class="glyphicon glyphicon-time"></span>
+               </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Meeting Link</label>
+            <input type='text' class="form-control" id="meeting_link" name="meeting_link"/>
+          </div>
+          <div class="form-group">
+            <label>Concerns</label>
+            @foreach($allActiveConcerns as $concerns)
+              @if($concerns->text != 'Others')
+                <div class="radio">
+                  <label><input type="radio" class="concerns" value="{{ $concerns->id }}" name="concerns">{{ $concerns->text }}</label>
+                </div>
+              @else
+                <div class="radio">
+                  <label><input type="radio" class="concerns" value="{{ $concerns->id }}" id="others" name="concerns">{{ $concerns->text }}</label>
+                </div>
+              @endif
+            @endforeach
+          </div>
+          <div class="form-group othersInput" style="display: none">
+            <input type="text" class="form-control" id="othersText" name="othersText">
+          </div>
+          <div class="alert alert-success" style="display: none" id="successModalNotification">
+              Appointment was successfully submitted. Wait for further updates.
+          </div>
+          <div class="alert alert-danger" style="display: none" id="failedModalNotification">
+              <span id="failedText"></span>
+          </div>
+           <div class="alert alert-danger" style="display: none" id="failedNotificationTime">
+              <span id="failedTextTime"></span>
+          </div>
+        <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="submitConsultationForm">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script>
   $("#multiple").select2({
       placeholder: "",
       allowClear: true
   });
+</script>
+
+<script type="text/javascript">
+
+
+  function startIt(){
+
+   validateAppointmentTime("start");
+  }
+  function validateAppointmentTime(param){
+    //  7am  - 8pm
+
+    var hourArray = ["7","8","9","10","11","12","13","14","15","16","17","18","19","20"];
+
+    var start = $("#appointment_start").val();
+    start = convertTo24Hour(start.toLowerCase());
+
+    var sHr = start.split(":");
+    sHr     = sHr[0];
+
+    var end = $("#appointment_end").val();
+     end = convertTo24Hour(end.toLowerCase());
+    var eHr = end.split(":");
+    eHr     = eHr[0];
+     
+   
+    if(hourArray.indexOf(sHr) !== -1){
+   
+          $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+           SumHours(start,end);
+           
+      }else{
+       $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+        $("#submitConsultationForm").attr('disabled',true);
+       $("#failedNotificationTime").show();
+      }
+
+     if(hourArray.indexOf(eHr) !== -1){
+          $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+           SumHours(start,end);
+      } else{
+          $("#failedTextTime").text("Appointment Availiabilty : 7:00 AM - 8:00 PM");
+          $("#submitConsultationForm").attr('disabled',true);
+          $("#failedNotificationTime").show();
+      }
+
+     setTimeout(function(){ validateAppointmentTime("start"); }, 3000);
+   
+  }
+  function convertTo24Hour(time) {
+    var hours = parseInt(time.substr(0, 2));
+    if(time.indexOf('am') != -1 && hours == 12) {
+        time = time.replace('12', '0');
+    }
+    if(time.indexOf('pm')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+    return time.replace(/(am|pm)/, '');
+}
+
+
+  function SumHours(smon,fmon) {
+  // console.log(smon+"smon");
+  //  console.log(fmon+"fmon");
+  var diff = 0 ;
+  if (smon && fmon) 
+  {
+    smon = ConvertToSeconds(smon);
+    fmon = ConvertToSeconds(fmon);
+    diff = Math.abs( fmon - smon ) ;
+    if(diff < 1800){
+        // $("#failedText").text("");
+        $("#failedTextTime").text("Appointment Minimum Time : 30 Mins");
+        $("#failedNotificationTime").show();
+        $("#submitConsultationForm").attr('disabled',true);
+
+    }else if(diff >10800){
+       $("#failedTextTime").text("Appointment Maximum Time : 3 Hours");
+        $("#failedNotificationTime").show();
+        $("#submitConsultationForm").attr('disabled',true);
+
+    }else{
+         $("#failedNotificationTime").hide();
+          $("#failedNotificationTime").css('display','none');
+          $("#submitConsultationForm").attr('disabled',false);
+      }
+
+    }
+  }
+
+  function ConvertToSeconds(time) {
+    var splitTime = time.split(":");
+    return splitTime[0] * 3600 + splitTime[1] * 60;
+  }
+
+  function secondsTohhmmss(secs) {
+    var hours = parseInt(secs / 3600);
+    var seconds = parseInt(secs % 3600);
+    var minutes = parseInt(seconds / 60) ;
+    return hours + "hours : " + minutes + "minutes ";
+  }
+
 </script>

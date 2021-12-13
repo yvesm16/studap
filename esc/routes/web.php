@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'professor'], function(){
       Route::match(array('GET', 'POST'), 'home',[UserController::class, 'professorHome']);
       Route::match(array('GET', 'POST'), 'schedule',[ScheduleController::class, 'getUserSchedule']);
+      Route::match(array('GET', 'POST'), 'postProfessorConsultation',[ScheduleController::class, 'postProfessorConsultation']);
       Route::match(array('GET', 'POST'), 'getProfessorSchedule',[ScheduleController::class, 'getProfessorSchedule']);
       Route::match(array('GET', 'POST'), 'postSlot',[ScheduleController::class, 'postSlot']);
       Route::match(array('GET', 'POST'), 'updateSlotStatus',[ScheduleController::class, 'updateSlotStatus']);

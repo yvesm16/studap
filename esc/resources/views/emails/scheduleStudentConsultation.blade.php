@@ -18,13 +18,14 @@
           Good Day!
         </p>
         <p>
-          <h1>Requesting Consultation</h1>
+          <h1>Scheduled Consultation</h1>
         </p>
         <p>
           <ul>
-            <li><b>Student Name</b>: {{ $student_fname }} {{ $student_lname }}</li>
+            <li><b>Professor Name</b>: {{ $professor_fname }} {{ $professor_lname }}</li>
             <li><b>Start Datetime</b>: {{ $start_time }}</li>
             <li><b>End Datetime</b>: {{ $end_time }}</li>
+            <li><b>Meeting Link</b>: <a href="{{ $meeting_link }}">{{ $meeting_link }}</a></li>
           </ul>
         </p>
         <p style="margin-top: 5%">
