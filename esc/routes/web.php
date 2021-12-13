@@ -145,6 +145,13 @@ Route::group(['middleware' => 'auth'], function(){
 
     });
 
+    Route::group(['prefix' => 'download'], function(){
+      Route::match(array('GET', 'POST'), 'it-dashboard-report', [DashboardController::class, 'itdashReport']);
+      Route::match(array('GET', 'POST'), 'is-dashboard-report', [DashboardController::class, 'isdashReport']);
+      Route::match(array('GET', 'POST'), 'cs-dashboard-report', [DashboardController::class, 'csdashReport']);
+      Route::match(array('GET', 'POST'), 'dean-dashboard-report', [DashboardController::class, 'deandashReport']);
+
+    });
     
 
     Route::match(array('GET', 'POST'), 'ajax','AjaxController@ajax');
