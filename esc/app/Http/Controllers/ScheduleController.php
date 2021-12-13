@@ -25,23 +25,35 @@ class ScheduleController extends Controller
       $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
-      if($userDetails->course_id == 1) {
-        $department = 0;
-      }else if($userDetails->course_id == 2) {
-        $department = 2;
-      }else if($userDetails->course_id == 3) {
-        $department = 1;
-      }else{
-        $department = 3;
-      }
+      // if($userDetails->course_id == 1) {
+      //   $department = 0;
+      // }else if($userDetails->course_id == 2) {
+      //   $department = 2;
+      // }else if($userDetails->course_id == 3) {
+      //   $department = 1;
+      // }else{
+      //   $department = 3;
+      // }
 
-      $allProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$department);
+      // $allProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$department);
+
+      $it_department = 0;
+      $is_department = 1;
+      $cs_department = 2;
+
+      $allProfessor = $user->getAllDataByWhereIn('type',[1,2,3]);
+      $allITProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$it_department);
+      $allISProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$is_department);
+      $allCSProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$cs_department);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'allProfessor' => $allProfessor,
+        'allITProfessor' => $allITProfessor,
+        'allISProfessor' => $allISProfessor,
+        'allCSProfessor' => $allCSProfessor,
         'allActiveConcerns' => $concerns->getAllDataByStatus(1)
       ];
 
