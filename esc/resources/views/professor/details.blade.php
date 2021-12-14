@@ -195,7 +195,7 @@
                   @else
                     <img src="{{ url(str_replace('public','storage',$signature->path)) }}" width="15%"/>
                       <br>
-                      {{ $fname }} {{ $lname }}
+                      {{ $prefix }} {{ $fname }} {{ $lname }}
                   @endif
                 </div>
               </td>

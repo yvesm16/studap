@@ -195,7 +195,7 @@
                   @else
 										<img src="{{ url(str_replace('public','storage',$chairperson_signature_path)) }}" width="15%"/>
                     <br>
-										{{ $chairperson_fname }} {{ $chairperson_lname }}
+										{{ $chairperson_prefix }} {{ $chairperson_fname }} {{ $chairperson_lname }}
                   @endif
                 </div>
               </td>
@@ -222,7 +222,7 @@
         @else
           <img src="{{ url(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
           <br>
-          {{ $director_fname }} {{ $director_lname }}
+          {{ $director_prefix }} {{ $director_fname }} {{ $director_lname }}
         @endif
       </div>
     </div>

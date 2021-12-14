@@ -96,7 +96,7 @@
         <td>
           @if($subject->status != 0 && $subject->status != 5)
             <img src="{{ public_path(str_replace('public','storage',$chairperson_signature_path)) }}" width="10%"><br>
-            {{ $chairperson_fname }} {{ $chairperson_lname }}
+            {{ $chairperson_prefix }} {{ $chairperson_fname }} {{ $chairperson_lname }}
           @endif
         </td>
       </tr>
@@ -115,7 +115,7 @@
         @if($creditDetails->status >= 3 && $creditDetails->status != 5)
           <img src="{{ public_path(str_replace('public','storage',$director_signature_path)) }}" width="25%"/>
           <br>
-          {{ $director_fname }} {{ $director_lname }}
+          {{ $director_prefix }} {{ $director_fname }} {{ $director_lname }}
         @endif
       </td>
       <td width="100">&nbsp;</td>

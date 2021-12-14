@@ -239,12 +239,14 @@ class CreditController extends Controller
         if ($creditDetails) {
           return [
             'path' => $creditDetails->path,
+            'chairperson_prefix' => $userDetails->prefix,
             'chairperson_fname' => $userDetails->fname,
             'chairperson_lname' => $userDetails->lname
           ];
         } else {
           return [
             'path' => 'none',
+            'chairperson_prefix' => $userDetails->prefix,
             'chairperson_fname' => $userDetails->fname,
             'chairperson_lname' => $userDetails->lname
           ];
@@ -252,6 +254,7 @@ class CreditController extends Controller
       } else {
         return [
           'path' => 'none',
+          'chairperson_prefix' => '',
           'chairperson_fname' => '',
           'chairperson_lname' => ''
         ];
@@ -269,12 +272,14 @@ class CreditController extends Controller
         if($userDetails){
           return [
             'path' => $creditDetails->path,
+            'director_prefix' => $userDetails->prefix,
             'director_fname' => $userDetails->fname,
             'director_lname' => $userDetails->lname
           ];
         }else{
           return [
             'path' => 'none',
+            'director_prefix' => $userDetails->prefix,
             'director_fname' => $userDetails->fname,
             'director_lname' => $userDetails->lname
           ];
@@ -282,6 +287,7 @@ class CreditController extends Controller
       } else {
         return [
           'path' => 'none',
+          'director_prefix' => '',
           'director_fname' => '',
           'director_lname' => ''
         ];        
@@ -324,6 +330,7 @@ class CreditController extends Controller
 
       $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
       $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_prefix'] = $chairperson_data['chairperson_prefix'];
       $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
       $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
 
@@ -339,11 +346,13 @@ class CreditController extends Controller
 
       $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
       $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_prefix'] = $chairperson_data['chairperson_prefix'];
       $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
       $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
 
       $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
       $data['director_signature_path'] = $director_data['path'];
+      $data['director_prefix'] = $director_data['director_prefix'];
       $data['director_fname'] = $director_data['director_fname'];
       $data['director_lname'] = $director_data['director_lname'];
 
@@ -359,11 +368,13 @@ class CreditController extends Controller
 
       $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
       $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_prefix'] = $chairperson_data['chairperson_prefix'];
       $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
       $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
 
       $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
       $data['director_signature_path'] = $director_data['path'];
+      $data['director_prefix'] = $director_data['director_prefix'];
       $data['director_fname'] = $director_data['director_fname'];
       $data['director_lname'] = $director_data['director_lname'];
       return view('registrar.details',$data);
@@ -553,11 +564,13 @@ class CreditController extends Controller
 
       $chairperson_data = $this->getChairpersonDataForCreditDetailsPage($slug);
       $data['chairperson_signature_path'] = $chairperson_data['path'];
+      $data['chairperson_prefix'] = $chairperson_data['chairperson_prefix'];
       $data['chairperson_fname'] = $chairperson_data['chairperson_fname'];
       $data['chairperson_lname'] = $chairperson_data['chairperson_lname'];
 
       $director_data = $this->getDirectorDataForCreditDetailsPage($slug);
       $data['director_signature_path'] = $director_data['path'];
+      $data['director_prefix'] = $director_data['director_prefix'];
       $data['director_fname'] = $director_data['director_fname'];
       $data['director_lname'] = $director_data['director_lname'];
 
