@@ -25,23 +25,35 @@ class ScheduleController extends Controller
       $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
-      if($userDetails->course_id == 1) {
-        $department = 0;
-      }else if($userDetails->course_id == 2) {
-        $department = 2;
-      }else if($userDetails->course_id == 3) {
-        $department = 1;
-      }else{
-        $department = 3;
-      }
+      // if($userDetails->course_id == 1) {
+      //   $department = 0;
+      // }else if($userDetails->course_id == 2) {
+      //   $department = 2;
+      // }else if($userDetails->course_id == 3) {
+      //   $department = 1;
+      // }else{
+      //   $department = 3;
+      // }
 
-      $allProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$department);
+      // $allProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$department);
+
+      $it_department = 0;
+      $is_department = 1;
+      $cs_department = 2;
+
+      $allProfessor = $user->getAllDataByWhereIn('type',[1,2,3]);
+      $allITProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$it_department);
+      $allISProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$is_department);
+      $allCSProfessor = $user->getAllDataByWhereInAndByDepartment('type',[1,2,3],$cs_department);
 
       $data = [
         'id' => Auth::id(),
         'fname' => $userDetails->fname,
         'lname' => $userDetails->lname,
         'allProfessor' => $allProfessor,
+        'allITProfessor' => $allITProfessor,
+        'allISProfessor' => $allISProfessor,
+        'allCSProfessor' => $allCSProfessor,
         'allActiveConcerns' => $concerns->getAllDataByStatus(1)
       ];
 
@@ -115,7 +127,7 @@ class ScheduleController extends Controller
                 $lastID = 1;
               }
   
-              $concernList = '';
+              $concernList = $request->input('concerns');
               $concernText = '';
   
               // $i = 0;
@@ -203,6 +215,121 @@ class ScheduleController extends Controller
       }
     }
 
+    public function postProfessorConsultation(Request $request){
+      $schedule = new Schedule;
+      $concerns = new Concerns;
+      $audit = new AuditTrail;
+      $user = new User;
+
+      $appointment_start = date('H:i:s',strtotime($request->input('appointment_start')));
+      $appointment_end = date('H:i:s',strtotime($request->input('appointment_end')));
+
+      // dd($request->input());
+
+      if($request->input('student_name') == '' || 
+      $request->input('student_email') == '' || 
+      $request->input('appointment_date') == '' || 
+      $request->input('appointment_start') == '' || 
+      $request->input('appointment_end') == '' || 
+      $request->input('meeting_link') == '' || 
+      $request->input('concerns') == ''){
+        return Response::json(array(
+            'result' => false,
+            'text' => 'All fields are required!'
+        ));
+      }else{
+        $student_data =  $user->getStudentDataByParameter('email',$request->input('student_email'));
+        $student_id = '';
+
+        if(!$student_data){
+          return Response::json(array(
+              '' => false,
+              'text' => 'Cannot Find Student Email in the Database!'
+          ));
+        }else{
+          $student_id = $student_data->id;
+
+          if($appointment_start < $appointment_end){
+            $start = $request->input('appointment_date') . ' ' . $appointment_start;
+            $end = $request->input('appointment_date') . ' ' . $appointment_end;
+
+            // dd($request->input());
+
+            $overlap_schedule = $schedule->checkSlotOverlap($start,'professor_id',Auth::id());
+            if($overlap_schedule == 0){
+              if($schedule->getLastID() == null){
+                $lastID = $schedule->getLastID() + 1;
+              }else{
+                $lastID = 1;
+              }
+
+              $concernList = $request->input('concerns');
+              $concernText = '';
+              $concernDetails = $concerns->getDataByID($request->input('concerns'));
+
+              if($concernDetails->text == 'Others'){
+                if($request->input('othersText') == ''){
+                  return Response::json(array(
+                    'result' => false,
+                    'text' => 'All fields are required!'
+                  ));
+                }
+                $concernText = $request->input('othersText');
+              }
+
+              $department = $user->select('department')->where('id', Auth::id())->value('department');
+              // dd($department);
+              $data = [
+                'slug' => md5($lastID),
+                'professor_id' => Auth::id(),
+                'department' => intval($department),
+                'student_id' => $student_id,
+                'title' => 'Appointment',
+                'start_time' => $start,
+                'end_time' => $end,
+                'meeting_link' => $request->input('meeting_link'),
+                'concerns' => $concernList,
+                'concerns_others' => $concernText,
+                'status' => 1
+              ];
+
+              $schedule->insertData($data);
+
+              $data = [
+                'slug' => md5($schedule->getLastID()),
+                'table_name' => 'professor_schedule',
+                'row_id' => $schedule->getLastID(),
+                'targetReceiver' => $student_id,
+                'triggeredBy' => Auth::id(),
+                'status' => 1
+              ];
+
+              $audit->insertData($data);
+
+              $userDetails = $user->getData('id',Auth::id());
+              try {
+                Session::put('schedule_id', $schedule->getLastID());
+                \Mail::to($request->input('student_email'))->send(new \App\Mail\ScheduleStudentConsultation());
+              } catch(Exception $e) {
+                return Response::json(array(
+                    'success' => true
+                ));
+              }
+
+              return Response::json(array(
+                  'result' => true
+              ));
+            } else {
+              return Response::json(array(
+                'result' => false,
+                'text' => 'Slot Not Available!'
+              ));
+            }
+          }
+        }
+      }
+    }
+
     private function getSuffix() {
       $user = new User;
       $userDetails = $user->getData('id',Auth::id());
@@ -232,6 +359,7 @@ class ScheduleController extends Controller
 
     public function getUserSchedule(Request $request){
       $user = new User;
+      $concerns = new Concerns;
       $userDetails = $user->getData('id',Auth::id());
 
       $data = [
@@ -242,6 +370,7 @@ class ScheduleController extends Controller
         'lname' => $userDetails->lname,
         'user_type' => $userDetails->type,
         'department' => $userDetails->department,
+        'allActiveConcerns' => $concerns->getAllDataByStatus(1),
         'isProfessorChairperson' => $this->isProfessorChairperson(Auth::id())
       ];
 

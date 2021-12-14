@@ -288,18 +288,23 @@ class AjaxController extends Controller
               case "studentCreditList":
                   $dtResult = Helpers::setDatatable($credit->getStudentDataTable(Auth::id()),array('concerns','institute','credit_course.created_at','credit_course.status'));
 
+<<<<<<< HEAD
                   foreach($dtResult['objResult'] as $aRow) {
+=======
+                  foreach($dtResult['objResult'] as $aRow) { 
+                    $subject_crediting_details = $subject_crediting->getAllDataByCreditID($aRow->id);
+                    $course_title = '';
+                    $equivalent_course_title = '';
+>>>>>>> 52ca5ad2f4d81452cf460da78548907ebff3fa76
 
-                      $button = "<button class='btn btn-default viewDetails' data-id='$aRow->id'>View Details</button>";
+                    foreach($subject_crediting_details as $subject_crediting_detail) {
+                      $course_title = $course_title . $subject_crediting_detail->course_title . '<br>';
+                      $equivalent_course_title = $equivalent_course_title . $subject_crediting_detail->equivalent_course_title . '<br>';
+                    }
 
-                      if($aRow->status == 0){
-                        $status = "<span class='label label-default'>Pending</span>";
-                      }else if($aRow->status > 2){
-                        $status = "<span class='label label-success'>Completed</span>";
-                      }else{
-                        $status = "<span class='label label-primary'>Ongoing</span>";
-                      }
+                    $button = "<button class='btn btn-default viewDetails' data-id='$aRow->id'>View Details</button>";
 
+<<<<<<< HEAD
                       $data = array(
                           $aRow->id,
                           $aRow->concerns,
@@ -309,6 +314,27 @@ class AjaxController extends Controller
                           $button
                       );
                       $dtResult['aaData'][] = $data;
+=======
+                    if($aRow->status == 0){
+                      $status = "<span class='label label-default'>Pending</span>";
+                    }else if($aRow->status > 2){
+                      $status = "<span class='label label-success'>Completed</span>";
+                    }else{
+                      $status = "<span class='label label-primary'>Ongoing</span>";
+                    }
+
+                    $data = array(
+                        $aRow->id,
+                        $aRow->concerns,
+                        $aRow->institute,
+                        $course_title,
+                        $equivalent_course_title,
+                        $aRow->created_at,
+                        $status,
+                        $button
+                    );
+                    $dtResult['aaData'][] = $data;
+>>>>>>> 52ca5ad2f4d81452cf460da78548907ebff3fa76
                   }
                   unset($dtResult['objResult']);
                   echo json_encode($dtResult);

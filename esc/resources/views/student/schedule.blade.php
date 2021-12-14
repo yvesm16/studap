@@ -81,9 +81,21 @@
           <div class="form-group">
             <select class="form-control" id="professor_id" name="professor_id">
               <option disabled selected>Select Professor</option>
-              @foreach($allProfessor as $professor)
-                <option value="{{ $professor->id }}">{{ $professor->fname }} {{ $professor->lname }}</option>
-              @endforeach
+                <optgroup label="IT Department">
+                  @foreach($allITProfessor as $it_professor)
+                    <option value="{{ $it_professor->id }}">{{ $it_professor->fname }} {{ $it_professor->lname }}</option>
+                  @endforeach
+                </optgroup>
+                <optgroup label="IS Department">
+                  @foreach($allISProfessor as $is_professor)
+                    <option value="{{ $is_professor->id }}">{{ $is_professor->fname }} {{ $is_professor->lname }}</option>
+                  @endforeach
+                </optgroup>
+                <optgroup label="CS Department">
+                  @foreach($allCSProfessor as $cs_professor)
+                    <option value="{{ $cs_professor->id }}">{{ $cs_professor->fname }} {{ $cs_professor->lname }}</option>
+                  @endforeach
+                </optgroup>
             </select>
           </div>
   
