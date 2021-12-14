@@ -38,6 +38,42 @@
     <div class="col-sm-12">
       <div class="row">
         <div class="col-sm-2">
+          <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">Guidelines</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Guidelines for Setting of Schedule</h4>
+                  </div>
+                  <p >
+                    <ul style='text-align:left; margin-right:5%'>
+                        <li>The professor must set his/her consultation hours using the provided inputs</li>
+                        <li>Slot Name input is where you put the name of the slot that you are about to set (Example: Consultation hours)</li>
+                        <li>For the Date input, the professor must set when is their respective consultation day</li>
+                        <li>For the Start and End input, the professor must set the time when is the start time of the consultation (in the start input) and end time of the consultation (in the end input) of his/her consultation hours</li>
+                        <li>By click on the "Yes" radio button, the input slot name, date, start time, and end time will be repeated continuously until the end date that must be set as well 
+                          (Example: Date input is on monday and the end date is on wednesday, there will be a slot indicated for monday, tuesday, and wednesday)
+                        </li>
+                        <li> The calendar shows the slot that has been added through the mentioned process of setting the professor's consultation hours</li>
+                        
+
+                        
+
+                        <br><br>
+                    </ul>
+                  </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
         </div>
         <div class="col-sm-5">
         </div>
@@ -45,6 +81,8 @@
         </div>
         <div class="col-sm-3">
           <div class="form-group" style="text-align: right">
+            <p style='text-align: justify'>If a consultation will take place not within your consultation hours, please click the "Set Appointment" button to schedule the meeting</p>
+
             <button class="btn btn-primary setAppointment" data-toggle="modal" data-target="#consultationDialog" onclick="startIt()">Set Appointment</button>
           </div>
         </div>
