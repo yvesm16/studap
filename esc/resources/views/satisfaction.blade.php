@@ -28,7 +28,7 @@
 
          <h1 style='font-size:60px'>Rate our service</h1> 
          <br><br>
-        <form action="{{ URL::to('statisfaction') }}" method="post">   
+        <form action="{{ URL::to('satisfaction') }}" method="post">   
         @csrf
 
       <fieldset class="stars ">

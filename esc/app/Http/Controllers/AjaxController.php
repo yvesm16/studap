@@ -310,13 +310,12 @@ class AjaxController extends Controller
 
                     $data = array(
                         $aRow->id,
-                        $aRow->concerns,
                         $aRow->institute,
                         $course_title,
                         $equivalent_course_title,
-                        $aRow->created_at,
                         $status,
-                        $button
+                        $button,
+                        $aRow->created_at
                     );
                     $dtResult['aaData'][] = $data;
                   }

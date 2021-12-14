@@ -71,6 +71,7 @@
                             <th>Equivalent Course Title</th>
                             <th>Status</th>
                             <th>Actions</th>
+                            <th>Created At</th>
                         </tr>
                         </thead>
                       </table>

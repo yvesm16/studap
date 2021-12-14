@@ -702,7 +702,7 @@ class UserController extends Controller
 
     }
 
-    public function statisfaction(Request $request) {
+    public function satisfaction(Request $request) {
       $rate = $request->stars;
       $rating = new ratings;
 
