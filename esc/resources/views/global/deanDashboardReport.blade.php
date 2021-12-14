@@ -11,15 +11,23 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 </head>
 <body>
-
-<div class="container indexMargiN home">
-    <div id="outer-box-dashboard" class='row'>
-        {{-- <table id="dashboard-table"> --}}
-            {{-- <tr id="tr-dashboard"> --}}
+    <a href="#" id="downloadPdf">Download Report Page as PDF</a>
+    <br/><br/>
+    <div class="container indexMargiN home" id="reportPage">
+        <div id="outer-box-dashboard" class='row'>
+            <p>
+                <img src="{{ URL::asset('img/iicslogo.png')}}" width="100px" style="margin-top: 1%">
+                <h2>CICS E-Services</h2>
+                <h3>Dean Dashboard</h3>
+            </p>
+        </div>
+        <br><br>
         <div class='container'>
-            <div classs='row'>
+            <div class='row'>
                 <div class='col-sm-12 col-md-6 col-lg-2'style='text-align:center'>
                     <p>Average level of satisfaction from the request</p>
                     <p>{{$ave}}</p>
@@ -46,42 +54,39 @@
                 </div>
             </div>
         </div>
-          
-            <hr id="hr-dashboard">
+            
+        <hr id="hr-dashboard">
+        <div class='container'>
+            <div class='row'>
+                <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                    <p>The Average level of satisfaction from the request</p>
+                    <canvas id="rate" class="imgdash" height='70px'>
+                </div>
+                <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                    <p> The Number of backlog of service request</p>
+                    <canvas id="backlog" class="imgdash" height='70px'>
 
+                </div>
+                <div  class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                    <p id="th-dashboard2">Average of Elapsed Time</p>  
+                    <canvas id="ETime" class="imgdash" height='70px'>
+                </div>
+                <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
+                    <p id="th-dashboard2">The Average Time the Request is Completed</p> 
+                    <canvas id="completed" class="imgdash" height='70px'>
+                </div>
+                <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
+                    <p id="th-dashboard2">Number of Accepted Consultation Appointment</p>
+                    <canvas id="acceptReq" class="imgdash" height='70px'>
+                </div>
+                <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
+                    <p id="th-dashboard2">Number of Declined Request</p>
+                    <canvas id="decline" class="imgdash" height='70px'>
+                </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <div class='container'>
-        <div class='row'>
-            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
-                <p>The Average level of satisfaction from the request</p>
-                <canvas id="rate" class="imgdash" >
             </div>
-            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
-                <p> The Number of backlog of service request</p>
-                <canvas id="backlog" class="imgdash" >
-
-            </div>
-            <div  class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
-                <p id="th-dashboard2">Average of Elapsed Time</p>  
-                <canvas id="ETime" class="imgdash" >
-            </div>
-            <div class='col-sm-12 col-md-6 col-lg-6' style='align-content:center'>
-                <p id="th-dashboard2">The Average Time the Request is Completed</p> 
-                <canvas id="completed" class="imgdash" >
-            </div>
-            <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
-                <p id="th-dashboard2">Number of Accepted Consultation Appointment</p>
-                <canvas id="acceptReq" class="imgdash" >
-            </div>
-            <div class='col-sm-12 col-md-12 col-lg-6' style='align-content:center'>
-                <p id="th-dashboard2">Number of Declined Request</p>
-                <canvas id="decline" class="imgdash" >
-            </div>
-
         </div>
-    </div>
-</div>          
+    </div>          
 <!-- The Modal -->
 <div id="dashmodal" class="modaldash">
 
@@ -350,6 +355,14 @@
                         }
                     }
                 });
+                
+        $('#downloadPdf').click(function(event) {
+            const elementToPrint = document.getElementById('reportPage'); //The html element to become a pdf
+            const pdf = new jsPDF();
+            pdf.addHTML(elementToPrint, () => {
+                pdf.save('Dean Dashboard Report.pdf');
+            });
+        });
   </script>
 </div>
 </body>

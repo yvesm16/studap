@@ -20,6 +20,15 @@
       <ul class="nav navbar-nav">
         <li <?php echo (str_contains($actual_link,'home')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('clerk/home'); }} ">Home</a></li>
         <li <?php echo (str_contains($actual_link,'manage')) ? 'class="active"' : ''; ?>><a href="{{ URL::to('clerk/manage'); }}">Manage Users</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Download Dashboard Report <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ URL::to('download/it-dashboard-report') }}">IT Dashboard Report</a></li>
+            <li><a href="{{ URL::to('download/is-dashboard-report') }}">IS Dashboard Report</a></li>
+            <li><a href="{{ URL::to('download/cs-dashboard-report') }}">CS Dashboard Report</a></li>
+            <li><a href="{{ URL::to('download/dean-dashboard-report') }}">Dean Dashboard Report</a></li>
+          </ul>
+        </li>
         <!-- <li><a href="#">Crediting</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tracker <span class="caret"></span></a>
