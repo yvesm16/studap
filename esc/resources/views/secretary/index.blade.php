@@ -16,6 +16,14 @@
 
 <div class="container indexMargin home">
   <p>
+  <div class="alert alert-warning" role="alert">
+    <span class='glyphicon glyphicon-exclamation-sign' style='width:20px'></span><h3>Attention Professors</h3><br>
+    Please go to the "Set a Schedule" Tab to input your consultation hours. <br>
+    To schedule consultation meeting outside of your consultation hours, please click on the "Set a Schedule" tab to schedule an appointment <br>
+    Thank You!
+
+
+  </div>
     <img src="{{ URL::asset('img/iicslogo.png')}}" width="100px" style="margin-top: 1%">
     <h1>Welcome to CICS E-Services</h1>
     Student Consultation || Student Appeal on Course Grade || Course Crediting

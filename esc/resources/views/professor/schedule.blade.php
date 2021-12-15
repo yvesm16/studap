@@ -108,7 +108,7 @@
       <div class='input-group date' id='datetimepicker2'>
          <input type='text' class="form-control" id="slot_start" name="slot_start" />
          <span class="input-group-addon">
-         <span class="glyphicon glyphicon-calendar"></span>
+         <span class="glyphicon glyphicon-time"></span>
          </span>
       </div>
     </div>
@@ -117,7 +117,7 @@
       <div class='input-group date' id='datetimepicker3'>
          <input type='text' class="form-control" id="slot_end" name="slot_end" />
          <span class="input-group-addon">
-         <span class="glyphicon glyphicon-calendar"></span>
+         <span class="glyphicon glyphicon-time"></span>
          </span>
       </div>
     </div>
