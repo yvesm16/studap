@@ -58,7 +58,7 @@
                         <li>On the dropdown list, you can see the list of professor that are currently registered in the system</li>
                         <li>By clicking on your chosen professor, his/her consultation hour schedule is shown in the calendar below</li>
                         <li>There are two tabs placed in the Calendar, "month" tab to view the professor's consultation schedule for the whole month and "week" tab to view the professor's schedule for the week</li>
-                        <li>It is better to use the "week" tab to have a clear view on the professor's schedule</li>
+                        <li>It's better to use the "week" tab to have a clear view on the professor's schedule</li>
                     
                         
                     </ul><br><br>
