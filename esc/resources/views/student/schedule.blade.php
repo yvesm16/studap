@@ -43,6 +43,45 @@
           </div>
         </div>
         <div class="col-md-2">
+          <button data-toggle="modal" data-target="#tc" id="add"type="button" class="btn btn-light">How to set Consultation</button><br>
+            <div class="modal fade" id="tc" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Steps on Scheduling a consultation</h4>
+                  </div>
+                  <p >
+                    <ul style='text-align:left; margin-right:5%'>                
+                        <li>On the dropdown list, you can see the list of professor that are currently registered in the system</li>
+                        <li>By clicking on your chosen professor, his/her consultation hour schedule is shown in the calendar below</li>
+                        <li>There are two tabs placed in the Calendar, "month" tab to view the professor's consultation schedule for the whole month and "week" tab to view the professor's schedule for the week</li>
+                        <li>It is better to use the "week" tab to have a clear view on the professor's schedule</li>
+                    
+                        
+                    </ul><br><br>
+                    <center>
+                      <p style='text-align: justify; margin-left: 5%; margin-right: 5%;'>
+                      <b ><i>You must take note on the consultation hours of the specified professor as the system will restrict you from scheduling an appointment not within the professor's consultation hours</i></b><br><br>
+                      </p>
+                    </center>
+                    <center>
+                      <p style='text-align: justify; margin-left: 5%; margin-right: 5%;'>
+                      <b><i>If you wish to have a consultation with the professor outside the consultation hours, the professor must set the appointment in their respective accounts in the system and you will receive an email notification and a status tracker regarding the consultation meeting details</i></b><br><br>
+                      </p>
+                    </center></p>
+                  </p>
+                  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+                  </div>
+                </div>
+            
+              </div>
+            </div><br>
         </div>
       </div>
     </div>
